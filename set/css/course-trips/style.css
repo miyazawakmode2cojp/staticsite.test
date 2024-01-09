@@ -1,0 +1,407 @@
+@charset "utf-8";
+
+#course-trips-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+#course-trips-list .course {
+  width: 280px;
+  min-height: 100%;
+  overflow: hidden;
+  overflow: auto;
+  padding: 0 25px;
+  position: relative;
+  z-index: 99;
+}
+#course-trips-list .course.floating {
+  box-shadow: 1px 0 8px 0 rgba(0,0,0,0.15);
+}
+#course-trips-list .course form {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-top: 20px;
+}
+#course-trips-list .course form .btn-switch {
+  width: 100px;
+}
+#course-trips-list .course .trips {
+  list-style: none;
+  margin-bottom: 25px;
+  padding-left: 25px;
+}
+#course-trips-list .course .trips > li {
+  position: relative;
+}
+#course-trips-list .course .trips > li:after {
+  content: "";
+  border-left: 2px dotted #abb0c8;
+  width: 0;
+  height: calc(50% + 60px);
+  position: absolute;
+  bottom: -60px;
+  left: -17px;
+  display: block;
+}
+#course-trips-list .course .trips > li:last-child:after {
+  display: none;
+}
+#course-trips-list .course .trips h3 {
+  font-size: 13px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 3px;
+}
+#course-trips-list .course .trips .stop-times {
+  background-color: transparent;
+  border: 1px solid #dcdee0;
+  border-right: none;
+  border-left: none;
+  min-height: 0;
+  padding: 15px 25px 9px 0;
+}
+#course-trips-list .course .trips .stop-times li {
+  left: -17px;
+}
+#course-trips-list .course .trips .stop-times li:last-child:before {
+  background-color: #f0f2f5;
+}
+#course-trips-list .workspace {
+  width: calc(100% - 280px);
+  height: calc(100% - 110px);
+  overflow: auto;
+  display: flex;
+}
+#course-trips-list .workspace .trips {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex;
+}
+#course-trips-list .workspace .trips > li {
+  width: 250px;
+  margin-right: 25px;
+  position: relative;
+  flex-shrink: 0;
+}
+#course-trips-list .workspace .trips > li + li:before {
+  content: "";
+  background: url(../../img/course-trips/course-trips-list-connection.svg) no-repeat;
+  background-size: 100% 100%;
+  width: 38px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: -32px;
+  z-index: 99;
+  display: block;
+}
+#course-trips-list .workspace .trips header {
+  height: 115px;
+  position: relative;
+}
+#course-trips-list .workspace .trips header a.delete {
+  background: url(../../img/common/icon-delete-forever.svg) no-repeat;
+  background-size: 100% 100%;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 26px;
+  left: 0;
+  cursor: pointer;
+  display: block;
+}
+#course-trips-list .workspace .trips header h3 {
+  font-size: 16px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 187px;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  position: absolute;
+  top: 26px;
+  left: 23px;
+  display: inline-block;
+}
+#course-trips-list .workspace .trips header a.move-left,
+#course-trips-list .workspace .trips header a.move-right {
+  color: #8e8e93;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  position: absolute;
+  top: 24px;
+  cursor: pointer;
+  display: block;
+}
+#course-trips-list .workspace .trips header a.move-left {
+  right: 20px;
+}
+#course-trips-list .workspace .trips header a.move-right {
+  right: 0;
+}
+#course-trips-list .workspace .trips header a.move-left i,
+#course-trips-list .workspace .trips header a.move-right i {
+  font-size: 30px;
+  position: absolute;
+  top: -5px;
+}
+#course-trips-list .workspace .trips header a.move-left i {
+  left: -10px;
+}
+#course-trips-list .workspace .trips header a.move-right i {
+  right: -10px;
+}
+#course-trips-list .workspace .trips header .info {
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid #dcdee0;
+  width: 100%;
+  height: 65px;
+  margin-bottom: 0;
+  padding: 0 25px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+}
+#course-trips-list .workspace .trips header .info li {
+  width: 100%;
+  max-height: 42px;
+  overflow: hidden;
+}
+#course-trips-list .workspace .trips + .empty {
+  width: 275px;
+  padding-top: 50px;
+  padding-right: 25px;
+  flex-shrink: 0;
+}
+#course-trips-list .workspace .trips + .empty a {
+  text-decoration: none;
+  text-align: center;
+  border: 4px dashed #ffffff;
+  height: 345px;
+  cursor: pointer;
+  display: block;
+}
+#course-trips-list .workspace .trips + .empty i {
+  font-size: 48px;
+  color: #adb2ca;
+  margin-top: 120px;
+  margin-bottom: 5px;
+  display: block;
+}
+#course-trips-list .stop-times {
+  list-style: none;
+  background-color: #f7f9fa;
+  border: 1px solid #dcdee0;
+  border-top: none;
+  min-height: calc(100% - 140px);
+  margin-bottom: 25px;
+  padding: 20px 25px 20px 31px;
+}
+#course-trips-list .stop-times li {
+  border-left: 2px solid #abb0c8;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+#course-trips-list .stop-times li:last-child {
+  border-color: transparent;
+  padding-bottom: 0;
+}
+#course-trips-list .stop-times li:last-child:before {
+  content: "";
+  background-color: #f7f9fa;
+  width: 2px;
+  height: 5px;
+  position: absolute;
+  top: -5px;
+  left: -2px;
+  z-index: 99;
+  display: block;
+}
+#course-trips-list .stop-times li:last-child:after {
+  content: "";
+  border: 6px solid transparent;
+  border-top: 8px solid #abb0c8;
+  border-bottom: none;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: -12px;
+  left: -7px;
+  z-index: 99;
+  display: block;
+}
+#course-trips-list .stop-times li p {
+  margin-bottom: 0;
+  position: relative;
+  top: -3px;
+}
+#course-trips-list .stop-times li p:nth-child(1) {
+  width: 100%;
+}
+#course-trips-list .stop-times li p:nth-child(1):before {
+  content: "";
+  background-color: #abb0c8;
+  border-radius: 6px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 3px;
+  left: -22px;
+  display: block;
+}
+#course-trips-list .stop-times li p:nth-child(2),
+#course-trips-list .stop-times li p:nth-child(3) {
+  font-size: 12px;
+  color: #abb0c8;
+}
+#course-trips-list .stop-times li p:nth-child(2):after {
+  content: "-";
+  text-align: center;
+  width: 15px;
+  display: inline-block;
+}
+#course-trips-list .stop-times li p:nth-child(2):first-letter,
+#course-trips-list .stop-times li p:nth-child(3):first-letter {
+  margin-right: 3px;
+}
+#course-trips-list .stop-times li p time {
+  font-size: 15px;
+  color: #424242;
+  display: inline-block;
+}
+#course-trips-list .workspace-footer {
+  text-align: center;
+  height: 110px;
+  padding-top: 25px;
+}
+#course-trips-list .workspace-footer .btn-primary {
+  font-size: 24px;
+  border-radius: 8px;
+  width: 290px;
+  height: 60px;
+  margin-right: 20px;
+}
+#course-trips-list .workspace-footer .btn-gray {
+  width: 180px;
+}
+
+#course-trips-editor {
+  height: 100%;
+}
+#course-trips-editor .form-horizontal {
+  height: calc(100% - 45px);
+  overflow: auto;
+  margin-right: -25px;
+  margin-left: -25px;
+  padding: 25px 10px 0 10px;
+}
+#course-trips-editor .form-group {
+  margin: 0 0 10px 0;
+}
+#course-trips-editor .form-group:last-child {
+  margin-bottom: 0;
+}
+#course-trips-editor .form-group .control-label {
+  padding-left: 0;
+}
+#course-trips-editor .form-group .control-label + div {
+  padding-left: 5px;
+}
+#course-trips-editor .form-group select {
+  width: 200px;
+}
+#course-trips-editor .form-group .btn-primary {
+  width: 180px;
+}
+#course-trips-editor .results {
+  margin-right: -10px;
+  margin-left: -10px;
+}
+#course-trips-editor .results h3 {
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #dcdee0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 15px 25px;
+}
+#course-trips-editor .trips {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+#course-trips-editor .trips li {
+  border-bottom: 1px solid #dcdee0;
+  position: relative;
+}
+#course-trips-editor .trips dl {
+  margin-bottom: 0;
+  padding: 15px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+#course-trips-editor .trips dt {
+  font-weight: bold;
+  text-align: right;
+  width: 25%;
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+#course-trips-editor .trips dd {
+  width: 75%;
+  margin-bottom: 10px;
+  padding-right: 60px;
+  padding-left: 10px;
+}
+#course-trips-editor .trips dt:nth-of-type(3),
+#course-trips-editor .trips dd:nth-of-type(3) {
+  margin-bottom: 0;
+}
+#course-trips-editor .trips a.add {
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  display: block;
+}
+#course-trips-editor .trips a.add i {
+  font-size: 36px;
+  color: #8e8e93;
+  position: absolute;
+  top: calc(50% - 18px);
+  right: 20px;
+}
+
+@media (hover) {
+  #course-trips-list .workspace .trips header a.delete:hover {
+    background-image: url(../../img/common/icon-delete-forever-active.svg);
+  }
+  #course-trips-list .workspace .trips header a.move-left:hover,
+  #course-trips-list .workspace .trips header a.move-right:hover {
+    color: #424242;
+  }
+  #course-trips-list .workspace .trips + .empty a:hover {
+    background-color: #e6e6e6;
+  }
+  #course-trips-editor .trips li:hover {
+    background-color: #fffcdb;
+  }
+}

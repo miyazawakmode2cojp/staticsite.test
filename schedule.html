@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/moment-with-locales.min.js"></script>
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/schedule/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule active"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <h1>運行スケジュール</h1>
+  </nav>
+  <main>
+    <div id="main-container">
+      <!-- schedule-calendar -->
+      <section id="schedule-calendar">
+        <header>
+          <h2><!--YYYY年M月--></h2>
+          <nav>
+            <a onClick="ScheduleCalendar.prev(); sample()" class="prev"></a>
+            <a onClick="ScheduleCalendar.next(); sample()" class="next"></a>
+          </nav>
+        </header>
+        <ul class="wdays">
+          <li>日</li>
+          <li>月</li>
+          <li>火</li>
+          <li>水</li>
+          <li>木</li>
+          <li>金</li>
+          <li>土</li>
+        </ul>
+        <ul class="days">
+          <!--<li class="today"><a onClick="ScheduleCalendar.select(event, '2017-08-28')">28</a></li>-->
+          <!-- .today=今日, .past=過去, .outside=前後月, .active=選択状態, .unassigned=未アサイン -->
+          <script>
+          var unassignedDates = [
+            "2017-08-24",
+            "2017-08-26",
+            "2017-08-29",
+            "2017-09-01",
+            "2017-09-03",
+            "2017-09-04",
+            "2017-09-06"
+          ];
+
+          function sample() {
+            document.querySelector('#schedule-calendar h2').textContent =
+              ScheduleCalendar.moment.format('YYYY年M月');
+
+            var list = document.querySelector('#schedule-calendar .days');
+            list.textContent = null;
+
+            ScheduleCalendar.days().forEach(function (day) {
+              var date = day.moment.format('YYYY-MM-DD');
+              if (unassignedDates.includes(date)) {
+                day.classList.push('unassigned');
+              }
+              list.insertAdjacentHTML('beforeend', '\
+                <li class="' + day.classList.join(' ') + '">\
+                  <a onClick="ScheduleCalendar.select(event, \'' + date + '\')">'
+                    + day.moment.date() +
+                  '</a>\
+                </li>\
+              ');
+            });
+          }
+
+          document.addEventListener('DOMContentLoaded', sample);
+          </script>
+        </ul>
+      </section>
+
+      <!-- schedule-operators -->
+      <section id="schedule-operators">
+        <h2>遠隔監視者</h2>
+        <ul class="operators">
+          <li class="unassigned">上村 繁</li><!-- .unassigned=未アサイン -->
+          <li>安藤 秀行</li>
+          <li class="unassigned">松藤 英司</li>
+          <li>藤木 孝明</li>
+          <li class="unassigned">立石 幸弘</li>
+          <li>鶴田 崇史</li>
+          <li class="unassigned">園田 克則</li>
+          <li>安永 忠男</li>
+          <li>吉武 尚久</li>
+          <li>野見山 智司</li>
+          <li>香月 聡司</li>
+          <li>甲斐 慎悟</li>
+        </ul>
+      </section>
+
+      <!-- schedule -->
+      <section id="schedule">
+        <header><h2>2017年8月28日 (月)</h2></header>
+        <div class="timeline-header">
+          <ul class="courses">
+            <li><!-- .active=選択状態 -->
+              <header>
+                <h3>行路1</h3>
+                <ul class="assignments">
+                  <li class="driver">堀下 史郎</li><!-- .unassigned=未アサイン -->
+                  <li class="vehicle">A-03</li><!-- .unassigned=未アサイン -->
+                </ul>
+                <a onClick="Schedule.select(event)" class="edit"></a>
+              </header>
+            </li>
+            <li><header><h3>行路2</h3><ul class="assignments"><li class="driver">高山 六輔</li><li class="vehicle">A-04</li></ul><a onClick="Schedule.select(event)" class="edit"></a></header></li>
+            <li><header><h3>行路3</h3><ul class="assignments"><li class="driver">原島 史郎</li><li class="vehicle">B-01</li></ul><a onClick="Schedule.select(event)" class="edit"></a></header></li>
+            <li><header><h3>行路4</h3><ul class="assignments"><li class="driver unassigned">未設定</li><li class="vehicle">B-02</li></ul><a onClick="Schedule.select(event)" class="edit"></a></header></li>
+            <li><header><h3>行路5</h3><ul class="assignments"><li class="driver">新原 三郎</li><li class="vehicle unassigned">未設定</li></ul><a onClick="Schedule.select(event)" class="edit"></a></header></li>
+            <li><header><h3>行路6</h3><ul class="assignments"><li class="driver unassigned">未設定</li><li class="vehicle unassigned">未設定</li></ul><a onClick="Schedule.select(event)" class="edit"></a></header></li>
+            <li><header><h3>行路7</h3><ul class="assignments"><li class="driver">栗原 一郎</li><li class="vehicle">B-03</li></ul><a onClick="Schedule.select(event)" class="edit"></a></header></li>
+          </ul>
+        </div>
+        <div class="timeline-side">
+          <ul class="hours">
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+            <li>12</li>
+            <li>13</li>
+            <li>14</li>
+            <li>15</li>
+            <li>16</li>
+            <li>17</li>
+            <li>18</li>
+            <li>19</li>
+            <li>20</li>
+            <li>21</li>
+            <li>22</li>
+            <li>23</li>
+          </ul>
+        </div>
+        <div class="timeline">
+          <ul class="hours">
+            <li><time>00:00</time></li>
+            <li><time>01:00</time></li>
+            <li><time>02:00</time></li>
+            <li><time>03:00</time></li>
+            <li><time>04:00</time></li>
+            <li><time>05:00</time></li>
+            <li><time>06:00</time></li>
+            <li><time>07:00</time></li>
+            <li><time>08:00</time></li>
+            <li><time>09:00</time></li>
+            <li><time>10:00</time></li>
+            <li><time>11:00</time></li>
+            <li><time>12:00</time></li>
+            <li><time>13:00</time></li>
+            <li><time>14:00</time></li>
+            <li><time>15:00</time></li>
+            <li><time>16:00</time></li>
+            <li><time>17:00</time></li>
+            <li><time>18:00</time></li>
+            <li><time>19:00</time></li>
+            <li><time>20:00</time></li>
+            <li><time>21:00</time></li>
+            <li><time>22:00</time></li>
+            <li><time>23:00</time></li>
+          </ul>
+          <ul class="courses">
+            <li><!-- .unassigned=未アサイン, .active=選択状態, before=前日の行路 -->
+              <ul class="info">
+                <li>
+                  <h3>走行便</h3>
+                  <ul>
+                    <li>1001</li>
+                    <li>1002</li>
+                    <li>1003</li>
+                    <li>1004</li>
+                    <li>1005</li>
+                  </ul>
+                </li>
+                <li><h3>開始時間</h3><time class="dep">04:15</time></li>
+                <li><h3>終了時間</h3><time class="arr">11:30</time></li>
+                <li><h3>勤務時間</h3><time>06:15</time></li>
+                <li><h3>休憩時間</h3><time>01:00</time></li>
+              </ul>
+            </li>
+            <li><ul class="info"><li><h3>走行便</h3><ul><li>2001</li><li>2002</li></ul></li><li><h3>開始時間</h3><time class="dep">06:00</time></li><li><h3>終了時間</h3><time class="arr">08:30</time></li><li><h3>勤務時間</h3><time>02:15</time></li><li><h3>休憩時間</h3><time>00:15</time></li></ul></li>
+            <li><ul class="info"><li><h3>走行便</h3><ul><li>3001</li><li>3002</li><li>3003</li><li>3004</li><li>3005</li></ul></li><li><h3>開始時間</h3><time class="dep">07:00</time></li><li><h3>終了時間</h3><time class="arr">14:00</time></li><li><h3>勤務時間</h3><time>06:00</time></li><li><h3>休憩時間</h3><time>01:00</time></li></ul></li>
+            <li class="unassigned"><ul class="info"><li><h3>走行便</h3><ul><li>4001</li><li>4002</li><li>4003</li><li>4004</li><li>4005</li><li>4006</li><li>4007</li><li>4008</li><li>4009</li><li>4010</li></ul></li><li><h3>開始時間</h3><time class="dep">09:00</time></li><li><h3>終了時間</h3><time class="arr">19:00</time></li><li><h3>勤務時間</h3><time>08:30</time></li><li><h3>休憩時間</h3><time>01:30</time></li></ul></li>
+            <li class="unassigned"><ul class="info"><li><h3>走行便</h3><ul><li>5001</li><li>5002</li><li>5003</li><li>5004</li><li>5005</li></ul></li><li><h3>開始時間</h3><time class="dep">11:00</time></li><li><h3>終了時間</h3><time class="arr">18:00</time></li><li><h3>勤務時間</h3><time>06:00</time></li><li><h3>休憩時間</h3><time>01:00</time></li></ul></li>
+            <li class="unassigned"><ul class="info"><li><h3>走行便</h3><ul><li>6001</li><li>6002</li><li>6003</li><li>6004</li><li>6005</li></ul></li><li><h3>開始時間</h3><time class="dep">13:00</time></li><li><h3>終了時間</h3><time class="arr">20:00</time></li><li><h3>勤務時間</h3><time>06:00</time></li><li><h3>休憩時間</h3><time>01:00</time></li></ul></li>
+            <li><ul class="info"><li><h3>走行便</h3><ul><li>7001</li><li>7002</li><li>7003</li><li>7004</li><li>7005</li></ul></li><li><h3>開始時間</h3><time class="dep">15:00</time></li><li><h3>終了時間</h3><time class="arr">22:00</time></li><li><h3>勤務時間</h3><time>06:00</time></li><li><h3>休憩時間</h3><time>01:00</time></li></ul></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+  <aside id="drawer">
+    <!-- schedule-editor -->
+    <section id="schedule-editor" class="container-fluid">
+      <header>
+        <h2>行路別アサイン情報</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">行路ID</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">5062</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">行路名</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">新橋・渋谷／渋谷・新橋／新橋・渋谷</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">勤務時間</label>
+            <div class="col-xs-8">
+              <p class="form-control-static"><time>06:00</time></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">休憩時間</label>
+            <div class="col-xs-8">
+              <p class="form-control-static"><time>01:00</time></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">従業員</label>
+            <div class="col-xs-10">
+              <select class="form-control">
+                <option>原島 史郎</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-4 control-label">車種</label>
+            <div class="col-xs-8">
+              <select class="form-control">
+                <option>リエッセ</option>
+              </select>
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">車両</label>
+            <div class="col-xs-9">
+              <select class="form-control">
+                <option>B-01</option>
+              </select>
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">走行便</label>
+            <div class="col-xs-10">
+              <ul class="trips">
+                <li>
+                  <h3>3001</h3>
+                  <ol class="stop-times">
+                    <li>
+                      <p>豊洲車庫</p>
+                      <p><!--翌--><time class="dep">07:00</time> 発</p>
+                    </li>
+                    <li>
+                      <p>新橋</p>
+                      <p><!--翌--><time class="arr">07:30</time> 着</p>
+                    </li>
+                  </ol>
+                </li>
+                <li><h3>3002</h3><ol class="stop-times"><li><p>新橋</p><p><time class="dep">08:00</time> 発</p></li><li><p>渋谷駅西口バスターミナル</p><p><time class="arr">09:00</time> 着</p></li></ol></li>
+                <li><h3>3003</h3><ol class="stop-times"><li><p>渋谷駅西口バスターミナル</p><p><time class="dep">09:30</time> 発</p></li><li><p>新橋</p><p><time class="arr">10:30</time> 着</p></li></ol></li>
+                <li><h3>3004</h3><ol class="stop-times"><li><p>新橋</p><p><time class="dep">12:00</time> 発</p></li><li><p>渋谷駅西口バスターミナル</p><p><time class="arr">13:00</time> 着</p></li></ol></li>
+                <li><h3>3005</h3><ol class="stop-times"><li><p>渋谷駅西口バスターミナル</p><p><time class="dep">13:30</time> 発</p></li><li><p>豊洲車庫</p><p><time class="arr">14:00</time> 着</p></li></ol></li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <p class="alert alert-message">通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6">
+              <button type="submit" class="btn btn-primary btn-lg pull-right">更新</button>
+            </div>
+            <div class="col-xs-6">
+              <button onClick="Drawer.hide()" type="button" class="btn btn-default btn-gray btn-lg">キャンセル</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var ScheduleCalendar = (function () {
+  return {
+    moment: moment().startOf('month'),
+    active: moment().startOf('day'),
+    prev: function () {
+      this.moment.subtract(1, 'M');
+    },
+    next: function () {
+      this.moment.add(1, 'M');
+    },
+    days: function () {
+      var days = [];
+      var today = moment().startOf('day');
+      var from = moment(this.moment).subtract(this.moment.day(), 'd');
+      var to = moment(this.moment).date(this.moment.daysInMonth());
+          to = to.add(Math.max(0, 7-1 - to.day()), 'd');
+      while (from.diff(to, 'day') <= 0) {
+        var classList = [];
+        if (from.diff(today, 'day') == 0) {
+          classList.push('today');
+        }
+        if (from.diff(today, 'day') < 0) {
+          classList.push('past');
+        }
+        if (from.month() != this.moment.month()) {
+          classList.push('outside');
+        }
+        if (from.diff(this.active, 'day') == 0) {
+          classList.push('active');
+        }
+        days.push({ moment: moment(from), classList: classList });
+        from.add(1, 'd');
+      }
+      return days;
+    },
+    select: function (e, date) {
+      var current = document.querySelector('#schedule-calendar li.active');
+      if (current) {
+        current.classList.remove('active');
+      }
+
+      var item = e.target.parentNode;
+      item.classList.add('active');
+
+      ScheduleCalendar.active = moment(date, 'YYYY-MM-DD');
+    }
+  };
+})();
+
+var Schedule = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // スクロール位置を同期
+    (function () {
+      document.querySelector('#schedule .timeline-header').addEventListener('wheel', function (e) {
+        document.querySelector('#schedule .timeline').scrollLeft += e.deltaX;
+      });
+      document.querySelector('#schedule .timeline-side').addEventListener('wheel', function (e) {
+        document.querySelector('#schedule .timeline').scrollTop += e.deltaY;
+      });
+      document.querySelector('#schedule .timeline').addEventListener('scroll', function (e) {
+        document.querySelector('#schedule .timeline-header').scrollLeft = e.target.scrollLeft;
+        document.querySelector('#schedule .timeline-side').scrollTop = e.target.scrollTop;
+      });
+    })();
+
+    // スクロール領域を調整
+    (function () {
+      function setSize() {
+        document.querySelector('#schedule .timeline').style.height =
+        document.querySelector('#schedule .timeline-side').style.height =
+          document.querySelector('main').clientHeight
+        - document.querySelector('#schedule > header').getBoundingClientRect().height
+        - document.querySelector('#schedule .timeline-header').getBoundingClientRect().height + 'px';
+
+        document.querySelector('#schedule .timeline .hours').style.minWidth =
+          document.querySelector('#schedule .timeline .courses').getBoundingClientRect().width + 'px';
+      }
+
+      setSize();
+      window.addEventListener('load', setSize);
+      window.addEventListener('resize', setSize);
+      new MutationObserver(setSize)
+        .observe(document.querySelector('#schedule .timeline-header .courses'),
+          { characterData: true, subtree: true });
+    })();
+
+    // 行路の位置を設定
+    (function () {
+      function setBounds() {
+        var height = document.querySelector('#schedule .timeline .hours li').getBoundingClientRect().height;
+        document.querySelectorAll('#schedule .timeline .courses .info').forEach(function (item) {
+          var dep = moment(item.querySelector('.dep').textContent, 'HH:mm');
+          var arr = moment(item.querySelector('.arr').textContent, 'HH:mm');
+          var duration = moment.duration(arr.diff(dep)).asMinutes();
+          if (duration < 0) {
+            if (item.classList.contains('before')) {
+              dep = moment({ hour: 0, minute: 0 });
+            }
+            else {
+              arr = moment({ hour: 23, minute: 59 });
+            }
+            duration = moment.duration(arr.diff(dep)).asMinutes();
+          }
+          var minute = Math.min(dep.hour() == 23 ? 30 : 59, dep.minute());
+          item.style.top = dep.hour() * height + Math.round(height / 60 * minute) + 'px';
+          item.style.height = Math.round(height / 60 * duration) + 'px';
+        });
+      }
+
+      setBounds();
+    })();
+
+    // ドロワーを閉じた際に選択状態を解除
+    (function () {
+      new MutationObserver(function (mutations) {
+        if (!mutations[0].target.classList.contains('with-drawer')) {
+          document.querySelectorAll('#schedule li.active').forEach(function (item) {
+            item.classList.remove('active');
+          });
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {
+    select: function (e) {
+      var current;
+      document.querySelectorAll('#schedule li.active').forEach(function (item, i) {
+        if (i == 0) {
+          current = item;
+        }
+        item.classList.remove('active');
+      });
+
+      var item = e.target.parentNode.parentNode;
+      if (item != current) {
+        var index = 0;
+        var node = item;
+        while (node = node.previousSibling) {
+          if (node.nodeName == 'LI') {
+            index++;
+          }
+        }
+        var itemBody = document.querySelector('#schedule .timeline .courses').children[index];
+        item.classList.add('active');
+        itemBody.classList.add('active');
+        Drawer.show();
+        Schedule.scroll(itemBody);
+      }
+      else {
+        Drawer.hide();
+      }
+    },
+    scroll: function (item) {
+      var container = document.querySelector('#schedule .timeline');
+      var scrollLeft = item.offsetLeft + item.getBoundingClientRect().width + 25
+        - container.getBoundingClientRect().width;
+
+      if (scrollLeft > container.scrollLeft) {
+        $(container).stop().animate({ scrollLeft: scrollLeft });
+      }
+    }
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="https://map.yahooapis.jp/js/V1/jsapi?appid=dj00aiZpPXVhalV6amVOTXJTNSZzPWNvbnN1bWVyc2VjcmV0Jng9Yzc-"></script>
+<script src="lib/js/moment-with-locales.min.js"></script>
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/live-map/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app" class="with-drawer">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map active"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar" class="flexible">
+    <h1>走行中車両位置情報マップ</h1>
+    <a onClick="Drawer.toggle()" class="drawer"></a>
+  </nav>
+  <main>
+    <!-- live-map -->
+    <section id="live-map"></section>
+  </main>
+  <aside id="drawer">
+    <!-- clock -->
+    <section id="clock">
+      <p class="date"></p>
+      <p class="weekday"></p>
+      <time>00:00:00</time>
+    </section>
+
+    <!-- live-map-vehicles -->
+    <section id="live-map-vehicles">
+      <header>
+        <h2>運行バス一覧</h2>
+        <a href="#" class="goto-list">一覧を見る</a>
+      </header>
+      <ul class="vehicles">
+        <li class="fault"><!-- .fault=異常発生中, .out=回送中 -->
+          <a href="#">
+            <p class="number">B-03</p>
+            <p class="route" style="color:#ffffff;background:#00beea">下3</p>
+            <p class="state">異常</p>
+            <ul class="info">
+              <li>遅延時間：<strong>10分</strong></li>
+              <li>乗客数：<strong>12名</strong></li>
+              <li>次降車：<strong>あり</strong></li>
+              <li>車椅子客：<strong>なし</strong></li>
+            </ul>
+          </a>
+        </li>
+        <li><a href="#"><p class="number">B-01</p><p class="route" style="color:#ffffff;background:#066bbd">上12</p> <p class="state">正常</p><ul class="info"><li>遅延時間：<strong>5分</strong></li><li>乗客数：<strong>5名</strong></li><li>次降車：<strong>なし</strong></li><li>車椅子客：<strong>なし</strong></li></ul></a></li>
+        <li><a href="#"><p class="number">B-02</p><p class="route" style="color:#ffffff;background:#066bbd">上7</p> <p class="state">正常</p><ul class="info"><li>遅延時間：<strong>0分</strong></li><li>乗客数：<strong>9名</strong></li><li>次降車：<strong>あり</strong></li><li>車椅子客：<strong>あり</strong></li></ul></a></li>
+        <li class="out"><a href="#"><p class="number">B-04</p><p class="route" style="color:#ffffff;background:#ec8c2b">上2</p> <p class="state">回送</p><ul class="info"><li>遅延時間：<strong>-5分</strong></li><li>乗客数：<strong>0名</strong></li><li>次降車：<strong>なし</strong></li><li>車椅子客：<strong>なし</strong></li></ul></a></li>
+        <li class="out"><a href="#"><p class="number">B-05</p><p class="route" style="color:#ffffff;background:#00beea">下12</p> <p class="state">回送</p><ul class="info"><li>遅延時間：<strong>0分</strong></li><li>乗客数：<strong>0名</strong></li><li>次降車：<strong>なし</strong></li><li>車椅子客：<strong>なし</strong></li></ul></a></li>
+        <li><a href="#"><p class="number">B-06</p><p class="route" style="color:#ffffff;background:#066bbd">上9</p> <p class="state">正常</p><ul class="info"><li>遅延時間：<strong>0分</strong></li><li>乗客数：<strong>0名</strong></li><li>次降車：<strong>なし</strong></li><li>車椅子客：<strong>なし</strong></li></ul></a></li>
+      </ul>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var Clock = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 時計を更新
+    (function () {
+      moment.locale('ja');
+      var app = document.querySelector('#app');
+      var yyyymmdd = document.querySelector('#clock .date');
+      var ddd = document.querySelector('#clock .weekday');
+      var hhmmss = document.querySelector('#clock time');
+
+      function update() {
+        if (app.classList.contains('with-drawer')) {
+          var m = moment();
+          var holiday = m.day() == 0 || Clock.holidays.includes(m.format('YYYY-MM-DD'));
+          yyyymmdd.textContent = m.format('YYYY.MM.DD');
+          ddd.textContent = m.format('ddd曜 ' + (holiday ? '休日' : '平日'));
+          hhmmss.textContent = m.format('HH:mm:ss');
+        }
+      };
+
+      setInterval(update, 1000), update();
+    })();
+  });
+
+  return { holidays: [] };
+})();
+
+var LiveMap = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://developer.yahoo.co.jp/webapi/map/openlocalplatform/v1/js/
+    (function () {
+      var ymap = new Y.Map('live-map');
+      ymap.drawMap(new Y.LatLng(35.6628989, 139.7599699), 17, Y.LayerSetId.NORMAL);
+      ymap.addControl(new Y.SliderZoomControlVertical());
+
+      window.addEventListener('resize', ymap.updateSize);
+      new MutationObserver(function (mutations) {
+        if (mutations[0].attributeName == 'class') {
+          ymap.updateSize();
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {};
+})();
+
+// debug
+Clock.holidays = [
+  "2017-01-01",
+  "2017-01-02",
+  "2017-01-09",
+  "2017-02-11",
+  "2017-03-20",
+  "2017-04-29",
+  "2017-05-03",
+  "2017-05-04",
+  "2017-05-05",
+  "2017-07-17",
+  "2017-08-11",
+  "2017-09-18",
+  "2017-09-23",
+  "2017-10-09",
+  "2017-11-03",
+  "2017-11-23",
+  "2017-12-23",
+  "2018-01-01",
+  "2018-01-08",
+  "2018-02-11",
+  "2018-02-12",
+  "2018-03-21",
+  "2018-04-29",
+  "2018-04-30",
+  "2018-05-03",
+  "2018-05-04",
+  "2018-05-05",
+  "2018-07-16",
+  "2018-08-11",
+  "2018-09-17",
+  "2018-09-23",
+  "2018-09-24",
+  "2018-10-08",
+  "2018-11-03",
+  "2018-11-23",
+  "2018-12-23",
+  "2018-12-24"
+];
+</script>
+</body>
+</html>

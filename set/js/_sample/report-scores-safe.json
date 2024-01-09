@@ -1,0 +1,20 @@
+{
+  "title": "安全運転",
+  "labels": ["急発進", "急加速", "急減速", "急旋回", "速度超過"],
+  "datasets": [
+    {
+      "label": "汐留 太郎さん",
+      "type": "scores",
+      "score": "B+",
+      "comparison": "self",
+      "data": [5, 6, 13, 18, 10]
+    },
+    {
+      "label": "モデルドライバー",
+      "type": "scores",
+      "score": "A",
+      "comparison": "modelcase",
+      "data": [19, 17, 16, 18, 20]
+    }
+  ]
+}

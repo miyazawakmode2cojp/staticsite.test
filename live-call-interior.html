@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/moment-with-locales.min.js"></script>
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/live-call/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <!-- live-call -->
+  <section id="live-call" class="interior"><!-- .interior=車内, .exterior=車外 -->
+    <h2>車内通話中...</h2>
+    <time>00:00</time>
+    <ul class="info">
+      <li><strong>車両番号：</strong>B-01</li>
+      <li><strong>便番号／便名：</strong>3004</li>
+      <li><strong>経路名：</strong>渋谷→新橋</li>
+    </ul>
+    <a onClick="window.close()" class="btn btn-end-call"><i class="material-icons">call</i> 通話終了</a>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#camera-1" data-toggle="tab">入口</a></li>
+      <li><a href="#camera-2" data-toggle="tab">車内</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="camera-1" class="camera tab-pane active">
+        <img src="set/img/_sample/live-cameras-camera-1.jpg" width="100%" />
+      </div>
+      <div id="camera-2" class="camera tab-pane">
+        <img src="set/img/_sample/live-cameras-camera-2.jpg" width="100%" />
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+var LiveCall = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 通話時間を更新
+    (function () {
+      var startOfDay = moment().startOf('day');
+      var start = moment();
+      var mmss = document.querySelector('#live-call time');
+
+      setInterval(function () {
+        var m = moment(startOfDay).add(moment().diff(start), 'ms');
+        mmss.textContent = m.format(m.hour() > 0 ? 'H:mm:ss' : 'mm:ss');
+      }, 1000);
+    })();
+  });
+
+  return {};
+})();
+</script>
+</body>
+</html>

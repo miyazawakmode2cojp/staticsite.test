@@ -1,0 +1,20 @@
+{
+  "title": "エコ運転",
+  "labels": ["アイドリング率", "急加速", "最大エンジン回転数", "最大速度"],
+  "datasets": [
+    {
+      "label": "汐留 太郎さん",
+      "type": "scores",
+      "score": "C",
+      "comparison": "self",
+      "data": [10, 6, 9, 8]
+    },
+    {
+      "label": "モデルドライバー",
+      "type": "scores",
+      "score": "A",
+      "comparison": "modelcase",
+      "data": [20, 17, 18, 19]
+    }
+  ]
+}

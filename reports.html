@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/moment-with-locales.min.js"></script>
+<script src="lib/js/bootstrap-datetimepicker.min.js"></script>
+<script src="lib/js/bootstrap-select.min.js"></script>
+<script src="lib/js/chart.min.js"></script>
+<link href="lib/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<link href="lib/css/bootstrap-select.min.css" rel="stylesheet">
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/reports/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app" class="with-drawer">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report active"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar" class="flexible">
+    <h1>レポート一覧</h1>
+    <a onClick="Drawer.toggle()" class="drawer"></a>
+  </nav>
+  <main>
+    <!-- reports-filter -->
+    <section id="reports-filter" class="container-fluid">
+      <form onSubmit="ReportsFilter.submit(event)">
+        <fieldset>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="datetimepicker-group">
+                <div class="btn-group btn-switch-group no" data-toggle="buttons">
+                  <label class="btn btn-default btn-switch active"><input type="radio" name="date-range" value="no" checked /> 1日</label>
+                  <label class="btn btn-default btn-switch"><input type="radio" name="date-range" value="yes" /> 期間</label>
+                </div>
+                <div class="form-group">
+                  <div class="datetimepicker">
+                    <div class="input-group">
+                      <input type="text" name="date-from" class="form-control" />
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group"><span class="glyphicon glyphicon-minus"></span></div>
+                <div class="form-group">
+                  <div class="datetimepicker">
+                    <div class="input-group">
+                      <input type="text" name="date-to" class="form-control" />
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg">反映</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+
+    <!-- reports-list -->
+    <section id="reports-list" class="container-fluid">
+      <ul class="reports">
+        <li data-type="sales">
+          <header>
+            <h2>売上</h2>
+            <a class="setting"></a>
+            <a class="btn btn-default btn-download btn-sm"><i class="material-icons">file_download</i> XLS</a>
+            <a class="btn btn-default btn-download btn-sm"><i class="material-icons">file_download</i> CSV</a>
+          </header>
+          <div class="chart"><canvas height="300"></canvas></div>
+        </li>
+        <li data-type="alerts">
+          <header>
+            <h2>アラート有無</h2>
+            <a class="setting"></a>
+            <a class="btn btn-default btn-download btn-sm"><i class="material-icons">file_download</i> XLS</a>
+            <a class="btn btn-default btn-download btn-sm"><i class="material-icons">file_download</i> CSV</a>
+          </header>
+          <div class="chart"><canvas height="300"></canvas></div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <aside id="drawer">
+    <!-- reports-setting -->
+    <section id="reports-setting" class="container-fluid">
+      <header><h2>レポート表示設定</h2></header>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-xs-4 control-label">表示選択／順序</label>
+            <div class="col-xs-8">
+              <select class="form-control">
+                <option>標準セット</option>
+                <option>運転管理セット</option>
+                <option>売上分析セット</option>
+                <option>車両管理セット</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <ul class="reports">
+                <li><label><input type="checkbox" checked /><i></i> <span>速度</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" checked /><i></i> <span>エンジン回転数</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" checked /><i></i> <span>乗客人数</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" checked /><i></i> <span>走行距離</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" checked /><i></i> <span>売上</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" checked /><i></i> <span>アラート有無</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>走行モード</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>車椅子人数</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>加速度</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>室温</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>通信品質</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>通信強度</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>送信データ量</span></label><a class="drag"></a></li>
+                <li><label><input type="checkbox" /><i></i> <span>受信データ量</span></label><a class="drag"></a></li>
+              </ul>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var ReportsFilter = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://eonasdan.github.io/bootstrap-datetimepicker/Options/
+    $('#reports-filter .datetimepicker .input-group').datetimepicker({
+      locale: 'ja', format: 'YYYY/MM/DD', defaultDate: new Date()
+    });
+
+    // 1日／期間の切替え
+    (function () {
+      document.querySelectorAll('#reports-filter .btn-switch').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          var formgroup = e.target.parentNode;
+          formgroup.classList.remove('yes');
+          formgroup.classList.remove('no');
+          formgroup.classList.add(e.target.querySelector('input').value);
+        });
+      });
+    })();
+  });
+
+  return {
+    formData: function () {
+      return new FormData(document.querySelector('#reports-filter form'));
+    },
+    submit: function (e) {
+      e.preventDefault();
+      document.querySelectorAll('#reports-list .reports > li').forEach(function (item) {
+        var chart = ReportsList.Chart.instance(item);
+        chart.canvas.dispatchEvent(new CustomEvent('formchange', {
+          detail: { chart: chart, item: item }
+        }));
+      });
+    }
+  };
+})();
+
+var ReportsList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // グラフ毎の設定フォームを生成
+    (function () {
+      document.querySelectorAll('#reports-list .reports > li').forEach(function (item) {
+        var btn = item.querySelector('.setting');
+        btn.addEventListener('click', function (e) {
+          ReportsList.Popover.toggle(item);
+        });
+
+        // https://getbootstrap.com/docs/3.3/javascript/#popovers
+        $(btn).popover({
+          trigger: 'manual',
+          placement: 'bottom',
+          animation: false,
+          html: true,
+          title: ' ', // https://github.com/twbs/bootstrap/issues/12563
+          content: function () {
+            return ReportsList.Popover.content(item);
+          }
+        })
+
+        $(btn).popover('show');
+        item.querySelector('.popover').style.display = 'none';
+      });
+    })();
+  });
+
+  return {
+    Chart: {
+      colors: [
+        '#f491b6',
+        '#a3c3f1',
+        '#ffb666',
+        '#82dcb9',
+        '#f8e86d',
+        '#afd78b',
+        '#89d5ef',
+        '#ff8f8a',
+        '#76dadd',
+        '#c29dfb'
+      ],
+      color: function (index) {
+        return this.colors[index % this.colors.length];
+      },
+      bgcolor: function (index) {
+        var color = this.color(index);
+        var hex = color.match(/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+        if (hex) {
+          var r = parseInt(hex[1], 16);
+          var g = parseInt(hex[2], 16);
+          var b = parseInt(hex[3], 16);
+          return 'rgba(' + r + ',' + g + ',' + b + ',0.25)';
+        }
+        return color;
+      },
+      defaultFormat: function (value) {
+        var value = value.toString();
+        var number = value.match(/^(\-)?(\d+)(\.\d+)?$/);
+        if (number) {
+          return (number[1] || '') + number[2].replace(/(\d)(?=(\d{3})+$)/g , '$1,') + (number[3] || '');
+        }
+        return value;
+      },
+      defaultOptions: function () {
+        // http://www.chartjs.org/docs/latest/
+        return {
+          defaultFontFamily: '"Roboto", "Noto Sans JP", sans-serif',
+          responsive: true,
+          maintainAspectRatio: false,
+          hover: { mode: 'point' },
+          elements: {
+            point: { radius: 3, hitRadius: 6, hoverRadius: 6 },
+            line: { tension: 0, fill: false, borderWidth: 1.5 }
+          },
+          tooltips: {
+            titleFontSize: 16, titleFontStyle: 'normal', bodyFontSize: 14,
+            caretSize: 6, caretPadding: 10, xPadding: 15, yPadding: 10,
+            format: '{value}',
+            callbacks: {
+              title: function (tooltipItems, data) {
+                var tooltipItem = tooltipItems[0];
+                var dataset = data.datasets[tooltipItem.datasetIndex];
+                var raw = dataset.data[tooltipItem.index];
+                return tooltipItem.xLabel + ' ' + (raw.info || '');
+              },
+              label: function (tooltipItem, data) {
+                var dataset = data.datasets[tooltipItem.datasetIndex];
+                var value = tooltipItem.yLabel;
+                var format = this.tooltips.format;
+                if (format instanceof Function) {
+                  value = format(value);
+                }
+                else {
+                  value = format.replace('{value}', ReportsList.Chart.defaultFormat(value));
+                }
+                return dataset.label + ': ' + value;
+              }
+            }
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              position: 'bottom',
+              time: {
+                unitStepSize: 1,
+                displayFormats: { minute: 'H:mm', hour: 'H:mm', day: 'M/D' }
+              },
+              gridLines: { zeroLineWidth: 0 },
+              ticks: { fontSize: 14, maxRotation: 0 }
+            }],
+            yAxes: [{
+              position: 'left',
+              scaleLabel: { display: true, labelString: '' },
+              gridLines: { drawOnChartArea: false },
+              ticks: {
+                format: '{value}',
+                padding: 5,
+                callback: function (value, index, values) {
+                  var value = value;
+                  var format = this.scales.yAxes[0].ticks.format;
+                  if (format instanceof Function) {
+                    value = format(value);
+                  }
+                  else {
+                    value = format.replace('{value}', ReportsList.Chart.defaultFormat(value));
+                  }
+                  return value;
+                }
+              }
+            }]
+          }
+        };
+      },
+      init: function (canvas, options) {
+        var tooltipTitle = options.tooltips.callbacks.title;
+        options.tooltips.callbacks.title = function () {
+          return tooltipTitle.apply(chart ? chart.options : options, arguments);
+        };
+        var tooltipLabel = options.tooltips.callbacks.label;
+        options.tooltips.callbacks.label = function () {
+          return tooltipLabel.apply(chart ? chart.options : options, arguments);
+        };
+        var yAxisTicks = options.scales.yAxes[0].ticks.callback;
+        options.scales.yAxes[0].ticks.callback = function () {
+          return yAxisTicks.apply(chart ? chart.options : options, arguments);
+        };
+
+        var chart = new Chart(canvas.getContext('2d'), {
+          type: 'line',
+          options: options,
+          data: { datasets: [] },
+          plugins: [{ beforeUpdate: this.beforeUpdate }]
+        });
+        chart.set = this.set;
+        chart.setDatasets = this.setDatasets;
+        return chart;
+      },
+      instance: function (item) {
+        var instance = [];
+        var canvas = item.querySelector('canvas');
+        Chart.helpers.each(Chart.instances, function (chart) {
+          if (chart.canvas == canvas) {
+            instance = chart;
+          }
+        });
+        return instance;
+      },
+      set: function (dataSource) {
+        this.dataSource = dataSource;
+        this.setDatasets();
+      },
+      setDatasets: function () {
+        var chart = this;
+        chart.data.datasets = chart.dataSource.datasets.reduce(function (datasets, dataset, i) {
+          datasets.push({
+            label: dataset.label,
+            pointBackgroundColor: ReportsList.Chart.color(i),
+            backgroundColor: ReportsList.Chart.bgcolor(i),
+            borderColor: ReportsList.Chart.color(i),
+            data: dataset.data.reduce(function (data, raws, t) {
+              var timeline = dataset.timeline[t];
+              data.push({ x: timeline.from.x, y: NaN });
+              raws.forEach(function (raw) {
+                data.push({ x: raw.x, y: raw.y, info: raw.info });
+              });
+              return data;
+            }, [])
+          });
+          return datasets;
+        }, []);
+      },
+      beforeUpdate: function (chart) {
+        var xAxis = chart.options.scales.xAxes[0];
+        var yAxis = chart.options.scales.yAxes[0];
+        var hidden = chart.data.datasets.every(function (dataset, i) {
+          return chart.getDatasetMeta(i).hidden;
+        });
+        if (chart.data.datasets.length > 0) {
+          if (/T\d{2}:\d{2}:\d{2}/.test(chart.data.datasets[0].data[0].x)) {
+            xAxis.time.unit = 'hour';
+            xAxis.time.tooltipFormat = 'H:mm';
+          }
+          else {
+            xAxis.time.unit = 'day';
+            xAxis.time.tooltipFormat = 'YYYY/MM/DD';
+          }
+        }
+        xAxis.ticks.display = !hidden;
+        yAxis.ticks.display = !hidden;
+      }
+    },
+    Popover: {
+      content: function (item) {
+        var content = document.createElement('div');
+        content.insertAdjacentHTML('beforeend', '\
+          <a class="close"></a>\
+          <form>\
+            <fieldset>\
+              <div class="form-group">\
+                <div class="btn-group btn-switch-group" data-toggle="buttons">\
+                  <label class="btn btn-default btn-switch active"><input type="radio" name="radio1" value="vehicle" checked /> 車両</label>\
+                  <label class="btn btn-default btn-switch"><input type="radio" name="radio1" value="driver" /> 社員</label>\
+                  <label class="btn btn-default btn-switch"><input type="radio" name="radio1" value="trip" /> 便</label>\
+                  <label class="btn btn-default btn-switch"><input type="radio" name="radio1" value="course" /> 行路</label>\
+                </div>\
+                <select name="select1" class="selectpicker" multiple></select>\
+              </div>\
+              <div class="form-group">\
+                <div class="btn-group btn-switch-group" data-toggle="buttons">\
+                  <label class="btn btn-default btn-switch active"><input type="radio" name="radio2" value="vehicle" checked /> 車両</label>\
+                  <label class="btn btn-default btn-switch"><input type="radio" name="radio2" value="driver" /> 社員</label>\
+                  <label class="btn btn-default btn-switch"><input type="radio" name="radio2" value="trip" /> 便</label>\
+                  <label class="btn btn-default btn-switch"><input type="radio" name="radio2" value="course" /> 行路</label>\
+                </div>\
+                <select name="select2" class="selectpicker" multiple></select>\
+              </div>\
+              <div class="form-group">\
+                <button type="submit" class="btn btn-primary center-block">反映</button>\
+              </div>\
+            </fieldset>\
+          </form>\
+        ');
+
+        // https://silviomoreto.github.io/bootstrap-select/options/
+        $(content).find('.selectpicker').selectpicker({
+          actionsBox: true,
+          noneSelectedText: '未選択', selectAllText: 'すべて', deselectAllText: '選択解除',
+          selectedTextFormat: 'count > 3',
+          countSelectedText: function (count, total) {
+            return (count == total) ? 'すべて' : count + '個選択';
+          }
+        });
+
+        // 車両／社員／便／行路の切替え
+        (function () {
+          content.querySelectorAll('.btn-switch').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+              if (!e.isTrusted || !e.target.classList.contains('active')) {
+                var select = btn.parentNode.parentNode.querySelector('.selectpicker');
+                select.textContent = null;
+                select.insertAdjacentHTML('beforeend', '\
+                  <option selected>B-01</option>\
+                  <option selected>B-02</option>\
+                  <option selected>B-03</option>\
+                  <option selected>B-04</option>\
+                ');
+                $(select).selectpicker('refresh');
+              }
+            });
+            if (btn.classList.contains('active')) {
+              btn.dispatchEvent(new Event('click'));
+            }
+          });
+        })();
+
+        content.querySelector('.close').addEventListener('click', function (e) {
+          ReportsList.Popover.hide(item);
+        });
+        content.querySelector('form').addEventListener('submit', function (e) {
+          ReportsList.Popover.submit(e);
+          ReportsList.Popover.hide(item);
+        });
+        return content;
+      },
+      toggle: function (item) {
+        var popover = item.querySelector('.popover');
+        popover.style.display = popover.style.display != 'none' ? 'none' : 'block';
+      },
+      show: function (item) {
+        item.querySelector('.popover').style.display = 'block';
+      },
+      hide: function (item) {
+        item.querySelector('.popover').style.display = 'none';
+      },
+      formData: function (item) {
+        return new FormData(item.querySelector('form'));
+      },
+      submit: function (e) {
+        e.preventDefault();
+        var item = e.target;
+        while (item.nodeName != 'LI') {
+          item = item.parentNode;
+        }
+        var chart = ReportsList.Chart.instance(item);
+        chart.canvas.dispatchEvent(new CustomEvent('formchange', {
+          detail: { chart: chart, item: item }
+        }));
+      }
+    }
+  };
+})();
+
+// debug
+(function () {
+  function request(type, data, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'set/js/_sample/report-' + type + '.json');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        callback(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.send(data);
+  }
+
+  function customOptions(options, item, daily) {
+    switch (item.dataset.type) {
+      case 'sales':
+        options.scales.yAxes[0].scaleLabel.labelString = '金額 (円)';
+        options.tooltips.format = '{value}円';
+        break;
+      case 'alerts':
+        options.showLines = false;
+        options.elements.point.radius = 6;
+        options.scales.yAxes[0].ticks.beginAtZero = true;
+        options.scales.yAxes[0].ticks.stepSize = 1;
+        if (daily) {
+          options.scales.yAxes[0].scaleLabel.labelString = 'アラート回数';
+          options.scales.yAxes[0].ticks.format = '{value}';
+          options.tooltips.format = '{value}回';
+        }
+        else {
+          options.scales.yAxes[0].scaleLabel.labelString = '重要度';
+          options.scales.yAxes[0].ticks.format = function (value) {
+            switch (value) {
+              case 1: return '低';
+              case 2: return '中';
+              case 3: return '高';
+              default: return '';
+            }
+          };
+          options.tooltips.format = function (value) {
+            switch (value) {
+              case 1: return '重要度 低';
+              case 2: return '重要度 中';
+              case 3: return '重要度 高';
+              default: return '';
+            }
+          };
+        }
+        break;
+    }
+    return options;
+  }
+
+  document.querySelectorAll('#reports-list .reports > li').forEach(function (item) {
+    // オプションを設定してグラフを初期化
+    var options = customOptions(ReportsList.Chart.defaultOptions(), item, false);
+    var chart = ReportsList.Chart.init(item.querySelector('canvas'), options);
+
+    // 更新イベントを待機
+    chart.canvas.addEventListener('formchange', function (e) {
+      var chart = e.detail.chart;
+      var item = e.detail.item;
+
+      var formData = ReportsFilter.formData();
+      for ([key, value] of ReportsList.Popover.formData(item).entries()) {
+        formData.append(key, value);
+      }
+
+      var daily = formData.get('date-range') == 'yes';
+      chart.options = customOptions(chart.options, item, daily);
+
+      request(item.dataset.type + (daily ? '-daily' : ''), formData, function (json) {
+        chart.set(json);
+        chart.update();
+      });
+    });
+
+    // 初期データをリクエスト
+    request(item.dataset.type, null, function (json) {
+      chart.set(json);
+      chart.update();
+    });
+  });
+})();
+</script>
+</body>
+</html>

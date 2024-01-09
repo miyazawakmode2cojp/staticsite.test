@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/live-cameras/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map active"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>車両番号、系統 (経由)、行き先エリア</h1>
+  </nav>
+  <main>
+    <!-- live-cameras-list -->
+    <section id="live-cameras-list" class="carousel slide" data-interval="false" data-wrap="false">
+      <nav>
+        <a href="#live-cameras-list" class="btn btn-default disabled" data-slide="prev"><i class="material-icons">chevron_left</i></a>
+        <a href="#live-cameras-list" class="btn btn-default" data-slide="next"><i class="material-icons">chevron_right</i></a>
+      </nav>
+      <div class="carousel-inner">
+        <div class="item active">
+          <ul class="cameras">
+            <li><!-- .fault=異常発生中, .calling=通話中 -->
+              <p>入口</p>
+              <div class="camera">
+                <a class="refresh"><i class="material-icons">refresh</i></a>
+                <a class="fullscreen"><i class="material-icons">fullscreen</i></a>
+                <img src="set/img/_sample/live-cameras-camera-1.jpg" width="100%" />
+              </div>
+              <!--
+              <div class="no-camera">
+                <p><i class="material-icons">videocam_off</i> カメラがありません</p>
+                <img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" />
+              </div>
+              -->
+            </li>
+            <li><p>車内</p><div class="camera"><a class="refresh"><i class="material-icons">refresh</i></a><a class="fullscreen"><i class="material-icons">fullscreen</i></a><img src="set/img/_sample/live-cameras-camera-2.jpg" width="100%" /></div></li>
+            <li><p>前方</p><div class="camera"><a class="refresh"><i class="material-icons">refresh</i></a><a class="fullscreen"><i class="material-icons">fullscreen</i></a><img src="set/img/_sample/live-cameras-camera-3.jpg" width="100%" /></div></li>
+            <li><p>右側</p><div class="no-camera"><p><i class="material-icons">videocam_off</i> カメラがありません</p><img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" /></div></li>
+            <li><p>左側</p><div class="camera"><a class="refresh"><i class="material-icons">refresh</i></a><a class="fullscreen"><i class="material-icons">fullscreen</i></a><img src="set/img/_sample/live-cameras-camera-5.jpg" width="100%" /></div></li>
+            <li><p>後方</p><div class="camera"><a class="refresh"><i class="material-icons">refresh</i></a><a class="fullscreen"><i class="material-icons">fullscreen</i></a><img src="set/img/_sample/live-cameras-camera-6.jpg" width="100%" /></div></li>
+          </ul>
+        </div>
+        <div class="item">
+          <ul class="cameras">
+            <li><p>○○○</p><div class="no-camera"><p><i class="material-icons">videocam_off</i> カメラがありません</p><img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" /></div></li>
+            <li><p>○○○</p><div class="no-camera"><p><i class="material-icons">videocam_off</i> カメラがありません</p><img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" /></div></li>
+            <li><p>○○○</p><div class="no-camera"><p><i class="material-icons">videocam_off</i> カメラがありません</p><img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" /></div></li>
+            <li><p>○○○</p><div class="no-camera"><p><i class="material-icons">videocam_off</i> カメラがありません</p><img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" /></div></li>
+            <li><p>○○○</p><div class="no-camera"><p><i class="material-icons">videocam_off</i> カメラがありません</p><img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" /></div></li>
+            <li><p>○○○</p><div class="no-camera"><p><i class="material-icons">videocam_off</i> カメラがありません</p><img src="set/img/live-cameras/live-cameras-list-empty.png" width="100%" /></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <aside id="drawer"></aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var LiveCamerasList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 左右スライドボタンの切替え
+    (function () {
+      $('#live-cameras-list').on('slide.bs.carousel', function (e) {
+        document.querySelectorAll('#live-cameras-list nav a').forEach(function (btn) {
+          btn.classList.toggle('disabled');
+        });
+      });
+    })();
+  });
+
+  return {};
+})();
+</script>
+</body>
+</html>

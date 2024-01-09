@@ -1,0 +1,153 @@
+@charset "utf-8";
+
+#routes-list {
+  padding-top: 25px;
+}
+#routes-list th:nth-child(1), #alerts-list td:nth-child(1) { width: 10%; }
+#routes-list th:nth-child(2), #alerts-list td:nth-child(2) { width: 10%; }
+#routes-list th:nth-child(3), #alerts-list td:nth-child(3) { width: 40%; }
+#routes-list th:nth-child(4), #alerts-list td:nth-child(4) { width: 20%; }
+#routes-list th:nth-child(5), #alerts-list td:nth-child(5) { width: 20%; }
+
+#routes-editor {
+  height: 100%;
+}
+#routes-editor .form-horizontal {
+  height: calc(100% - 45px);
+  overflow: auto;
+  margin-right: -25px;
+  margin-left: -25px;
+  padding: 25px 10px;
+}
+#routes-editor .form-group {
+  margin: 0 0 10px 0;
+}
+#routes-editor .form-group:last-child {
+  margin-top: 30px;
+}
+#routes-editor .form-group:last-child .btn {
+  width: 180px;
+}
+#routes-editor .form-group:last-child > div:nth-child(3) {
+  text-align: center;
+  padding-top: 20px;
+}
+#routes-editor .form-group:last-child > div:nth-child(3) .btn {
+  width: 390px;
+  position: relative;
+}
+#routes-editor .form-group:last-child > div:nth-child(3) .btn i {
+  color: #9e9ea3;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+#routes-editor .color .dropdown-menu li {
+  position: relative;
+}
+#routes-editor .color .dropdown-menu a {
+  cursor: pointer;
+}
+#routes-editor .color .form-control.r,
+#routes-editor .color .form-control.g,
+#routes-editor .color .form-control.b {
+  text-align: center;
+  border-left: none;
+  width: 60px;
+}
+#routes-editor .color .form-control.hex {
+  width: 163px;
+  border-left: none;
+  border-radius: 0;
+}
+#routes-editor .color .input-group-addon {
+  height: 34px;
+}
+#routes-editor .color.rgb .dropdown-menu li.rgb:after,
+#routes-editor .color.hex .dropdown-menu li.hex:after {
+  content: "\e013";
+  font-family: "Glyphicons Halflings";
+  line-height: 1;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  display: block;
+}
+#routes-editor .color.rgb .dropdown-toggle .hex,
+#routes-editor .color.rgb .form-control.hex,
+#routes-editor .color.hex .dropdown-toggle .rgb,
+#routes-editor .color.hex .form-control.r,
+#routes-editor .color.hex .form-control.g,
+#routes-editor .color.hex .form-control.b {
+  display: none;
+}
+#routes-editor .color-sample .route {
+  font-size: 13px;
+  text-align: center;
+  line-height: 23px;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 11px;
+  padding: 0 22px;
+  min-width: 70px;
+  height: 22px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 0;
+  display: inline-block;
+}
+#routes-editor .stops {
+  list-style: none;
+  margin-bottom: 10px;
+  padding-left: 0;
+}
+#routes-editor .stops > li {
+  margin-bottom: 10px;
+}
+#routes-editor .stops .input-group-addon {
+  border: none;
+  padding: 0;
+}
+#routes-editor .stops a.delete {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #ff3b30;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 36px;
+  padding: 5px 0;
+  cursor: pointer;
+  display: inline-block;
+}
+#routes-editor .stops a.delete:active {
+  background-color: #c9302c;
+}
+#routes-editor .stops a.delete i {
+  display: block;
+}
+#routes-editor .stops + a.add {
+  text-decoration: none;
+  text-align: center;
+  color: #abb0c8;
+  border: 2px dashed #abb0c8;
+  border-radius: 6px;
+  padding: 3px 0;
+  cursor: pointer;
+  display: block;
+}
+#routes-editor .stops + a.add:active {
+  background-color: #e6e6e6;
+}
+#routes-editor .stops + a.add i {
+  display: block;
+}
+
+@media (hover) {
+  #routes-editor .stops a.delete:hover {
+    background-color: #c9302c;
+  }
+  #routes-editor .stops + a.add:hover {
+    background-color: #e6e6e6;
+  }
+}

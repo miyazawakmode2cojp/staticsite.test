@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/fares/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting active"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>運賃設定</h1>
+  </nav>
+  <main>
+    <header><h2>系統番号：101　系統名称：都01　区間：新橋 - 渋谷　経路番号：102　経路名称：六本木四丁目</h2></header>
+    <div id="main-container">
+      <!-- fares-list -->
+      <section id="fares-list" class="container-fluid">
+        <ul class="fares">
+          <li>
+            <dl>
+              <dt>新橋駅前</dt>
+              <dd>220</dd>
+              <dd>220</dd>
+              <dd>220</dd>
+              <dd>220</dd>
+              <dd>220</dd>
+              <dd>220</dd>
+              <dd>380</dd>
+              <dd>430</dd>
+              <dd>560</dd>
+              <dd>640</dd>
+              <dd>720</dd>
+              <dd>860</dd>
+              <dd>860</dd>
+              <dd>860</dd>
+              <dd>1,850</dd>
+              <dd>1,900</dd>
+              <dd>1,900</dd>
+              <dd>1,950</dd>
+              <dd>2,000</dd>
+            </dl>
+          </li>
+          <li><dl><dt>新橋駅北口</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd><dd>1,600</dd><dd>1,600</dd><dd>1,850</dd><dd>1,900</dd><dd>1,950</dd></dl></li>
+          <li><dl><dt>西新橋一丁目</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd><dd>1,600</dd><dd>1,600</dd><dd>1,850</dd><dd>1,900</dd></dl></li>
+          <li><dl><dt>虎ノ門</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd><dd>1,600</dd><dd>1,600</dd><dd>1,850</dd></dl></li>
+          <li><dl><dt>霞が関三丁目</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd><dd>1,600</dd><dd>1,600</dd><dd>1,850</dd></dl></li>
+          <li><dl><dt>溜池</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd><dd>1,600</dd><dd>1,600</dd></dl></li>
+          <li><dl><dt>赤坂アークヒルズ前</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd><dd>1,600</dd></dl></li>
+          <li><dl><dt>赤坂アークヒルズ</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd><dd>1,600</dd></dl></li>
+          <li><dl><dt>六本木一丁目駅前</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd><dd>860</dd></dl></li>
+          <li><dl><dt>六本木四丁目</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd></dl></li>
+          <li><dl><dt>六本木駅前</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd></dl></li>
+          <li><dl><dt>EXシアター六本木前</dt><dd>220</dd><dd>220</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd><dd>720</dd><dd>860</dd></dl></li>
+          <li><dl><dt>西麻布</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>430</dd><dd>560</dd><dd>640</dd></dl></li>
+          <li><dl><dt>南青山七丁目</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>430</dd><dd>560</dd></dl></li>
+          <li><dl><dt>青山学院中等部前</dt><dd>220</dd><dd>220</dd><dd>220</dd><dd>380</dd><dd>430</dd></dl></li>
+          <li><dl><dt>渋谷三丁目</dt><dd>220</dd><dd>220</dd><dd>380</dd><dd>430</dd></dl></li>
+          <li><dl><dt>南青山六丁目</dt><dd>220</dd><dd>220</dd><dd>220</dd></dl></li>
+          <li><dl><dt>青山学院前</dt><dd>220</dd><dd>220</dd></dl></li>
+          <li><dl><dt>渋谷二丁目</dt><dd>220</dd></dl></li>
+          <li><dl><dt>渋谷駅前</dt></dl></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <aside id="drawer">
+    <!-- fares-editor -->
+    <section id="fares-editor" class="container-fluid">
+      <header>
+        <h2>運賃設定</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">乗車駅</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">六本木駅前</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">降車駅</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">渋谷三丁目</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label">距離</label>
+            <div class="col-xs-10">
+              <p class="form-control-static">4.3 km</p>
+            </div>
+          </div>
+          <div class="form-group has-message"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-4 control-label">大人現金</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control" value="430" /> 円
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group has-warning"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">大人IC</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" value="424" /> 円
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group has-error"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-4 control-label">子供現金</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control" value="210" /> 円
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">子供IC</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" value="204" /> 円
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <p class="alert alert-message">通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6">
+              <button type="submit" class="btn btn-primary btn-lg pull-right">更新</button>
+            </div>
+            <div class="col-xs-6">
+              <button onClick="Drawer.hide()" type="button" class="btn btn-default btn-gray btn-lg">キャンセル</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var FaresList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 運賃表のセルを設定
+    (function () {
+      document.querySelectorAll('#fares-list dl').forEach(function (list, col) {
+        list.querySelector('dt').classList.add('col' + col);
+        list.querySelector('dt').classList.add('row' + col);
+        list.querySelectorAll('dd').forEach(function (item, i) {
+          item.classList.add('col' + col);
+          item.classList.add('row' + (col + i + 1));
+          item.dataset.selector = '.' + item.className.replace(' ', ',.');
+          item.dataset.col = col;
+          item.dataset.row = col + i + 1;
+          item.addEventListener('mouseover', FaresList.hover);
+          item.addEventListener('mouseout', FaresList.hover);
+          item.addEventListener('click', FaresList.select);
+          item.addEventListener('edit', FaresList.edit);
+
+          // https://getbootstrap.com/docs/3.3/javascript/#popovers
+          $(item).popover({
+            trigger: 'manual',
+            animation: false,
+            html: true,
+            container: '#fares-list',
+            title: ' ', // https://github.com/twbs/bootstrap/issues/12563
+            content: function () {
+              return FaresList.Popover.content(this);
+            },
+            placement: function (popover, item) {
+              popover.dataset.col = item.dataset.col;
+              popover.dataset.row = item.dataset.row;
+              return item.dataset.row < 6 ? 'bottom' : 'top';
+            }
+          });
+        });
+      });
+    })();
+
+    // ドロワーを閉じた際に編集状態を解除
+    (function () {
+      new MutationObserver(function (mutations) {
+        if (!mutations[0].target.classList.contains('with-drawer')) {
+          document.querySelector('#fares-list').classList.remove('disabled');
+          var current = document.querySelector('#fares-list dd.active');
+          if (current) {
+            FaresList.Popover.show(current);
+          }
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {
+    hover: function (e) {
+      document.querySelector('#fares-list')
+        .querySelectorAll(e.target.dataset.selector).forEach(function (item) {
+          switch (e.type) {
+            case 'mouseover':
+              item.classList.add('hover');
+              break;
+            case 'mouseout':
+              item.classList.remove('hover');
+              break;
+          }
+        });
+    },
+    select: function (e) {
+      var container = document.querySelector('#fares-list');
+      container.classList.remove('disabled');
+
+      var current = container.querySelector('dd.active');
+      if (current) {
+        current.classList.remove('active');
+        container.querySelectorAll('.selected').forEach(function (item) {
+          item.classList.remove('selected');
+        });
+        FaresList.Popover.hide(current);
+      }
+
+      var item = e.target;
+      if (item != current) {
+        item.classList.add('active');
+        container.querySelectorAll(item.dataset.selector).forEach(function (item) {
+          item.classList.add('selected');
+        });
+        FaresList.Popover.show(item);
+      }
+    },
+    edit: function (e) {
+      document.querySelector('#fares-list').classList.add('disabled');
+      var item = e.target;
+      FaresList.Popover.hide(item);
+      Drawer.show();
+      FaresList.scroll(item);
+    },
+    scroll: function (item) {
+      var container = document.querySelector('#main-container');
+      var scrollLeft = item.parentNode.offsetLeft
+        + item.parentNode.querySelector('dt').getBoundingClientRect().width
+        - container.getBoundingClientRect().width;
+
+      if (scrollLeft > container.scrollLeft) {
+        $(container).stop().animate({ scrollLeft: scrollLeft });
+      }
+    },
+    Popover: {
+      content: function (item) {
+        var content = document.createElement('div');
+        content.insertAdjacentHTML('beforeend', '\
+          <h3>運賃</h3>\
+          <a class="close"></a>\
+          <dl class="info">\
+            <dt>六本木駅前 <small>乗</small></dt>\
+            <dt>渋谷三丁目 <small>降</small></dt>\
+            <dt>距離</dt>\
+            <dd>4.3 <small>km</small></dd>\
+            <dt>大人</dt>\
+            <dd><small>現金</small> 430 <small>円</small> / <small>IC</small> 424 <small>円</small></dd>\
+            <dt>子供</dt>\
+            <dd><small>現金</small> 210 <small>円</small> / <small>IC</small> 204 <small>円</small></dd>\
+          </dl>\
+          <a class="btn btn-primary">編集</a>\
+        ');
+        content.querySelector('.close').addEventListener('click', function (e) {
+          item.dispatchEvent(new Event('click'));
+        });
+        content.querySelector('.btn-primary').addEventListener('click', function (e) {
+          item.dispatchEvent(new Event('edit'));
+        });
+        return content;
+      },
+      toggle: function (item) {
+        $(item).popover('toggle');
+      },
+      show: function (item) {
+        $(item).popover('show');
+      },
+      hide: function (item) {
+        $(item).popover('hide');
+      }
+    }
+  };
+})();
+</script>
+</body>
+</html>

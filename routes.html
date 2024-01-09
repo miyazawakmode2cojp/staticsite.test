@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/datatables.min.js"></script>
+<script src="lib/js/bootstrap-colorpicker.min.js"></script>
+<link href="lib/css/bootstrap-datatables.min.css" rel="stylesheet">
+<link href="lib/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/routes/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting active"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>系統一覧</h1>
+  </nav>
+  <main>
+    <!-- routes-list -->
+    <section id="routes-list" class="container-fluid">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>系統番号</th>
+            <th>系統名称</th>
+            <th>区間</th>
+            <th>経路</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onClick="RoutesList.select(event)">
+            <td>101</td>
+            <td>新01</td>
+            <td>新橋 - 豊洲</td>
+            <td>晴海一丁目経由</td>
+            <td></td>
+          </tr>
+          <tr onClick="RoutesList.select(event)"><td>102</td><td>新02</td><td>新橋 - 渋谷</td><td>六本木経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>103</td><td>新03</td><td>新橋 - 原宿</td><td>六本木経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>104</td><td>新04</td><td>新橋 - 品川</td><td>浜松町経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>105</td><td>東01</td><td>東京駅八重洲口 - ビックサイト</td><td>晴海一丁目経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>106</td><td>東02</td><td>東京駅八重洲口 - お台場海浜公園</td><td>浜松町経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>107</td><td>東03</td><td>東京駅八重洲口 - 国際展示場</td><td>晴海一丁目経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>108</td><td>東04</td><td>東京駅八重洲口 - 木場</td><td>月島経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>109</td><td>東05</td><td>東京駅八重洲口 - 木場</td><td>人形町経由</td><td></td></tr>
+          <tr onClick="RoutesList.select(event)"><td>110</td><td>東06</td><td>東京駅八重洲口 - 両国</td><td>日本橋経由</td><td></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <aside id="drawer">
+    <!-- routes-editor -->
+    <section id="routes-editor" class="container-fluid">
+      <header>
+        <h2>系統詳細情報</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <form class="form-horizontal" onSubmit="event.preventDefault()">
+        <fieldset>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">系統番号</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" value="103" />
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">系統略称</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" value="新03" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">系統正式<br />名称</label>
+            <div class="col-xs-9">
+              <textarea class="form-control" rows="2">天神〜旧伊藤伝右衛門邸・嘉穂劇場（でんえもん号）</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">系統説明文</label>
+            <div class="col-xs-9">
+              <textarea class="form-control" rows="1"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">系統URL</label>
+            <div class="col-xs-9">
+              <textarea class="form-control" rows="1">http://www.nishitetsu.jp/bus/rosen/denemon.html</textarea>
+            </div>
+          </div>
+          <div class="form-group color rgb">
+            <label class="col-xs-3 control-label">系統カラー</label>
+            <div class="col-xs-9">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="rgb">RGB</span><span class="hex">16進数</span> <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="rgb"><a>RGB</a></li>
+                    <li class="hex"><a>16進数</a></li>
+                  </ul>
+                </div>
+                <input type="text" class="form-control r" maxlength="3" />
+                <input type="text" class="form-control g" maxlength="3" />
+                <input type="text" class="form-control b" maxlength="3" />
+                <div class="picker">
+                  <input type="text" class="form-control hex" maxlength="7" value="#066bbd" />
+                  <span class="input-group-addon"><i></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group color rgb">
+            <label class="col-xs-3 control-label">系統文字色</label>
+            <div class="col-xs-9">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="rgb">RGB</span><span class="hex">16進数</span> <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="rgb"><a>RGB</a></li>
+                    <li class="hex"><a>16進数</a></li>
+                  </ul>
+                </div>
+                <input type="text" class="form-control r" maxlength="3" />
+                <input type="text" class="form-control g" maxlength="3" />
+                <input type="text" class="form-control b" maxlength="3" />
+                <div class="picker">
+                  <input type="text" class="form-control hex" maxlength="7" value="#ffffff" />
+                  <span class="input-group-addon"><i></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group color-sample">
+            <label class="col-xs-3 control-label">サンプル</label>
+            <div class="col-xs-9"><p class="route">新03</p></div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">始発</label>
+            <div class="col-xs-9">
+              <div class="form-control-group autosuggest"></div>
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">終点</label>
+            <div class="col-xs-9">
+              <div class="form-control-group autosuggest"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">経由バス停</label>
+            <div class="col-xs-9">
+              <ol class="stops">
+                <li class="has-error"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+                  <div class="input-group">
+                    <div class="form-control-container autosuggest"></div>
+                    <div class="input-group-addon"><a class="delete"><i class="material-icons">delete</i></a></div>
+                  </div>
+                  <p class="alert alert-message">メッセージ</p>
+                  <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+                  <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+                </li>
+                <li>
+                  <div class="input-group">
+                    <div class="form-control-container autosuggest"></div>
+                    <div class="input-group-addon"><a class="delete"><i class="material-icons">delete</i></a></div>
+                  </div>
+                </li>
+                <li>
+                  <div class="input-group">
+                    <div class="form-control-container autosuggest"></div>
+                    <div class="input-group-addon"><a class="delete"><i class="material-icons">delete</i></a></div>
+                  </div>
+                </li>
+              </ol>
+              <a class="add"><i class="material-icons">add</i></a>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <p class="alert alert-message">通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6">
+              <button type="submit" class="btn btn-primary btn-lg pull-right">更新</button>
+            </div>
+            <div class="col-xs-6">
+              <button onClick="Drawer.hide()" type="button" class="btn btn-default btn-gray btn-lg">キャンセル</button>
+            </div>
+            <div class="col-xs-12">
+              <button type="button" class="btn btn-default btn-lg"><i class="material-icons">chevron_right</i> 経路編集</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var RoutesList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://datatables.net/reference/option/
+    $('#routes-list table').DataTable({
+      dom: '<"top"i>t<"bottom"p><"clear">',
+      columnDefs: [{ targets: [], orderable: false }],
+      language: {
+        info: '全 _TOTAL_ 件中 _START_-_END_ 件',
+        paginate: { previous: '前のページ', next: '次のページ' }
+      }
+    });
+
+    // ドロワーを閉じた際に選択状態を解除
+    (function () {
+      new MutationObserver(function (mutations) {
+        if (!mutations[0].target.classList.contains('with-drawer')) {
+          var current = document.querySelector('main tr.active');
+          if (current) {
+            current.classList.remove('active');
+          }
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {
+    select: function (e) {
+      var current = document.querySelector('main tr.active');
+      if (current) {
+        current.classList.remove('active');
+      }
+
+      var item = e.target.parentNode;
+      if (item != current) {
+        item.classList.add('active');
+        Drawer.show();
+      }
+      else {
+        Drawer.hide();
+      }
+    }
+  };
+})();
+
+var RoutesEditor = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://farbelous.github.io/bootstrap-colorpicker/
+    document.querySelectorAll('#routes-editor .color').forEach(function (formgroup) {
+      // RGB／16進数の切替え
+      formgroup.querySelectorAll('.dropdown-menu a').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          formgroup.classList.remove('rgb');
+          formgroup.classList.remove('hex');
+          formgroup.classList.add(e.target.parentNode.className);
+        });
+      });
+
+      // RGB入力欄からカラーを設定
+      formgroup.querySelectorAll('.form-control:not(.hex)').forEach(function (field) {
+        field.addEventListener('change', function (e) {
+          var r = formgroup.querySelector('.r').value;
+          var g = formgroup.querySelector('.g').value;
+          var b = formgroup.querySelector('.b').value;
+
+          $(formgroup).find('.picker').colorpicker('setValue', 'rgb(' + [
+            !isNaN(r) ? Math.min(Math.abs(r), 255) : 0,
+            !isNaN(g) ? Math.min(Math.abs(g), 255) : 0,
+            !isNaN(b) ? Math.min(Math.abs(b), 255) : 0
+          ].join(',') + ')');
+        });
+      });
+
+      // カラーをRGB入力欄とサンプルに反映
+      $(formgroup).find('.picker').colorpicker({ format: 'hex' })
+        .on('create', function (e) {
+          $(e.target).colorpicker('update');
+        })
+        .on('changeColor', function (e) {
+          var rgb = $(e.target).data('colorpicker').color.toRGB();
+          formgroup.querySelector('.r').value = rgb.r;
+          formgroup.querySelector('.g').value = rgb.g;
+          formgroup.querySelector('.b').value = rgb.b;
+
+          var sample = document.querySelector('#routes-editor .color-sample .route');
+          var pickers = $('#routes-editor .color .picker');
+          sample.style.background = pickers.eq(0).colorpicker('getValue');
+          sample.style.color = pickers.eq(1).colorpicker('getValue');
+        });
+    });
+
+    // スクロール時にカラーピッカーの位置を更新
+    (function () {
+      document.querySelector('#routes-editor form').addEventListener('scroll', function (e) {
+        $('#routes-editor .color .picker').colorpicker('reposition');
+      });
+    })();
+  });
+
+  return {};
+})();
+</script>
+
+<!-- debug -->
+<script src="https://unpkg.com/react@15.4.2/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15.4.2/dist/react-dom.js"></script>
+<script src="https://unpkg.com/react-autosuggest@9.3.1/dist/standalone/autosuggest.js"></script>
+<script src="https://unpkg.com/autosuggest-highlight@3.1.0/umd/match/index.js"></script>
+<script src="https://unpkg.com/autosuggest-highlight@3.1.0/umd/parse/index.js"></script>
+<script src="set/js/_sample/routes-editor-react-autosuggest.js"></script>
+<script>
+document.querySelectorAll('#routes-editor .autosuggest').forEach(function (root) {
+  ReactDOM.render(React.createElement(App, null), root);
+});
+</script>
+</body>
+</html>

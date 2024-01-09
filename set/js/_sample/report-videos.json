@@ -1,0 +1,130 @@
+{
+  "timeline": [
+    {
+      "label": "1001",
+      "from": { "x": "2017-11-06T10:00:00", "info": "新橋" },
+      "to": { "x": "2017-11-06T11:35:00", "info": "原宿" }
+    },
+    {
+      "label": "1002",
+      "from": { "x": "2017-11-06T13:00:00", "info": "渋谷" },
+      "to": { "x": "2017-11-06T14:25:00", "info": "新橋" }
+    },
+    {
+      "label": "回送便",
+      "from": { "x": "2017-11-06T15:00:00", "info": "新橋" },
+      "to": { "x": "2017-11-06T16:25:00", "info": "渋谷" },
+      "outofservice": true
+    }
+  ],
+  "datasets": [
+    {
+      "label": "急発進・急加速",
+      "type": "videos",
+      "score": "C",
+      "point": 8,
+      "data": [
+        [
+          { "x": "2017-11-06T10:42:00", "duration": 15, "videoID": "jHv2Auar" },
+          { "x": "2017-11-06T11:11:00", "duration": 15, "videoID": "igWpnKYW" }
+        ],
+        [
+          { "x": "2017-11-06T13:29:00", "duration": 20, "videoID": "CVRBLQ3O" }
+        ],
+        []
+	    ]
+    },
+    {
+      "label": "急停止・急減速",
+      "type": "videos",
+      "score": "B+",
+      "point": 13,
+      "data": [
+        [
+          { "x": "2017-11-06T10:30:00", "duration": 15, "videoID": "vdAWUBK1" }
+        ],
+        [],
+        []
+	    ]
+    },
+    {
+      "label": "急旋回",
+      "type": "videos",
+      "score": "A",
+      "point": 18,
+      "data": [
+        [],
+        [],
+        []
+	    ]
+    },
+    {
+      "label": "速度オーバー",
+      "type": "videos",
+      "score": "B",
+      "point": 10,
+      "data": [
+        [
+          { "x": "2017-11-06T10:05:00", "duration": 10, "videoID": "611kcFqF" },
+          { "x": "2017-11-06T11:05:00", "duration": 20, "videoID": "UsUsDxK4" }
+        ],
+        [
+          { "x": "2017-11-06T13:59:00", "duration": 15, "videoID": "JJF9bDOM" }
+        ],
+        []
+	    ]
+    },
+    {
+      "label": "アイドリング",
+      "type": "videos",
+      "score": "B",
+      "point": 10,
+      "data": [
+        [],
+        [],
+        []
+	    ]
+    },
+    {
+      "label": "走行中移動",
+      "type": "videos",
+      "score": "C",
+      "point": 9,
+      "data": [
+        [
+          { "x": "2017-11-06T10:15:00", "duration": 15, "videoID": "BVZ45gQc" }
+        ],
+        [
+          { "x": "2017-11-06T13:12:00", "duration": 25, "videoID": "PuL3gDKE" }
+        ],
+        [
+          { "x": "2017-11-06T15:40:00", "duration": 15, "videoID": "ATQvgOKA" }
+        ]
+	    ]
+    },
+    {
+      "label": "発車前移動",
+      "type": "videos",
+      "score": "B",
+      "point": 10,
+      "data": [
+        [],
+        [],
+        []
+	    ]
+    },
+    {
+      "label": "転倒",
+      "type": "videos",
+      "score": "B",
+      "point": 11,
+      "data": [
+        [
+          { "x": "2017-11-06T10:51:00", "duration": 30, "videoID": "bIFc2IFy" }
+        ],
+        [],
+        []
+	    ]
+    }
+  ]
+}

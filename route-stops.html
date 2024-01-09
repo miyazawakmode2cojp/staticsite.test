@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/datatables.min.js"></script>
+<link href="lib/css/bootstrap-datatables.min.css" rel="stylesheet">
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/route-stops/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting active"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>経路一覧</h1>
+  </nav>
+  <main>
+    <header><h2>系統番号：101　系統名称：新01　区間：新橋 - 豊洲</h2></header>
+    <div id="main-container">
+      <!-- route-stops-filter -->
+      <section id="route-stops-filter" class="container-fluid">
+        <form>
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-8">
+                <div class="form-group">
+                  <label class="control-label">経路番号 :</label>
+                  <select class="form-control">
+                    <option>全て</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">経路名称 :</label>
+                  <select class="form-control">
+                    <option>全て</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <button type="button" class="btn btn-default pull-right">新規経路を作成する</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <!-- route-stops-list -->
+      <section id="route-stops-list" class="container-fluid">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>経路番号</th>
+              <th>経路名称</th>
+              <th>区間 (主要バス停)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onClick="RouteStopsList.select(event)">
+              <td>101</td>
+              <td>本線</td>
+              <td>新橋 - 銀座四丁目 - 月島 - 豊洲</td>
+            </tr>
+            <tr onClick="RouteStopsList.select(event)"><td>102</td><td>晴海線</td><td>新橋 - 銀座四丁目 - 晴海三丁目 - 豊洲</td></tr>
+            <tr onClick="RouteStopsList.select(event)"><td>103</td><td>勝どき線</td><td>新橋 - 銀座四丁目 - 勝どき - 豊洲</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+  <aside id="drawer">
+    <!-- route-stops-editor -->
+    <section id="route-stops-editor" class="container-fluid">
+      <header>
+        <h2>経路設定</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <form class="form-horizontal" onSubmit="event.preventDefault()">
+        <fieldset>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-6 control-label">経路番号</label>
+            <div class="col-xs-6">
+              <input type="text" class="form-control" value="101" />
+            </div>
+            <p class="alert alert-message">メッセージ</p>
+            <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+            <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-4 control-label">経路名称</label>
+            <div class="col-xs-8">
+              <input type="text" class="form-control" value="晴海線" />
+            </div>
+            <p class="alert alert-message">メッセージ</p>
+            <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+            <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">区間</label>
+            <div class="col-xs-9">
+              <div class="form-control-group autosuggest"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+                <input type="text" class="form-control" value="新橋発" />
+              </div>
+              <div class="form-control-group"><span class="glyphicon glyphicon-minus"></span></div>
+              <div class="form-control-group autosuggest"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+                <input type="text" class="form-control" value="豊洲行" />
+              </div>
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">経由</label>
+            <div class="col-xs-9">
+              <div class="form-control-group autosuggest">
+                <input type="text" class="form-control" value="月島経由" />
+              </div>
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">停車バス停</label>
+            <div class="col-xs-9"><a class="reverse">方向を逆にする</a></div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <ol class="stops">
+                <li><label><input type="checkbox" checked /><i></i></label> 新橋</li>
+                <li><label><input type="checkbox" checked /><i></i></label> 銀座西六丁目</li>
+                <li><label><input type="checkbox" checked /><i></i></label> 銀座六丁目</li>
+                <li><label><input type="checkbox" checked /><i></i></label> 銀座四丁目</li>
+                <li><label><input type="checkbox" /><i></i></label> 築地</li>
+                <li><label><input type="checkbox" /><i></i></label> 築地三丁目</li>
+                <li><label><input type="checkbox" checked /><i></i></label> 月島</li>
+                <li><label><input type="checkbox" checked /><i></i></label> 新月島公園前</li>
+                <li><label><input type="checkbox" checked /><i></i></label> 日本ユニシス本社</li>
+                <li><label><input type="checkbox" checked /><i></i></label> 豊洲</li>
+              </ol>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <p class="alert alert-message">通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6">
+              <button type="submit" class="btn btn-primary btn-lg pull-right">決定</button>
+            </div>
+            <div class="col-xs-6">
+              <button onClick="Drawer.hide()" type="button" class="btn btn-default btn-gray btn-lg">キャンセル</button>
+            </div>
+            <div class="col-xs-12">
+              <button type="button" class="btn btn-default btn-gray btn-lg">便を設定する</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var RouteStopsList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://datatables.net/reference/option/
+    $('#route-stops-list table').DataTable({
+      dom: '<"top"i>t<"bottom"p><"clear">',
+      columnDefs: [{ targets: [2], orderable: false }],
+      language: {
+        info: '全 _TOTAL_ 件中 _START_-_END_ 件',
+        paginate: { previous: '前のページ', next: '次のページ' }
+      }
+    });
+
+    // ドロワーを閉じた際に選択状態を解除
+    (function () {
+      new MutationObserver(function (mutations) {
+        if (!mutations[0].target.classList.contains('with-drawer')) {
+          var current = document.querySelector('main tr.active');
+          if (current) {
+            current.classList.remove('active');
+          }
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {
+    select: function (e) {
+      var current = document.querySelector('main tr.active');
+      if (current) {
+        current.classList.remove('active');
+      }
+
+      var item = e.target.parentNode;
+      if (item != current) {
+        item.classList.add('active');
+        Drawer.show();
+      }
+      else {
+        Drawer.hide();
+      }
+    }
+  };
+})();
+
+var RouteStopsEditor = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 停車バス停の終点移動
+    (function () {
+      document.querySelectorAll('#route-stops-editor .stops input').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function (e) {
+          var current = document.querySelector('#route-stops-editor .stops li.last');
+          if (current) {
+            current.classList.remove('last');
+          }
+
+          var checkbox = Array.from(
+            document.querySelectorAll('#route-stops-editor .stops input:checked')).pop() ||
+            document.querySelector('#route-stops-editor .stops li:first-child input');
+
+          var item = checkbox.parentNode.parentNode;
+          item.classList.add('last');
+        });
+      });
+    })();
+  });
+
+  return {};
+})();
+</script>
+
+<!-- debug -->
+<script src="https://unpkg.com/react@15.4.2/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15.4.2/dist/react-dom.js"></script>
+<script src="https://unpkg.com/react-autosuggest@9.3.1/dist/standalone/autosuggest.js"></script>
+<script src="https://unpkg.com/autosuggest-highlight@3.1.0/umd/match/index.js"></script>
+<script src="https://unpkg.com/autosuggest-highlight@3.1.0/umd/parse/index.js"></script>
+<script src="set/js/_sample/routes-editor-react-autosuggest.js"></script>
+<script>
+document.querySelectorAll('#route-stops-editor .autosuggest').forEach(function (root) {
+  ReactDOM.render(React.createElement(App, null), root);
+});
+</script>
+</body>
+</html>

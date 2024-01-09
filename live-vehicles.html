@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/datatables.min.js"></script>
+<link href="lib/css/bootstrap-datatables.min.css" rel="stylesheet">
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/live-vehicles/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map active"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>車両情報一覧</h1>
+  </nav>
+  <main>
+    <!-- live-vehicles-list -->
+    <section id="live-vehicles-list" class="container-fluid">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>遅延時間</th>
+            <th>乗客数</th>
+            <th>定員</th>
+            <th>室温</th>
+            <th>運賃</th>
+            <th>ドア</th>
+            <th>次降車</th>
+            <th>燃料</th>
+            <th>充電</th>
+            <th>冷却水温</th>
+            <th>タコ</th>
+            <th>タイヤ</th>
+            <th>車両機器</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onClick="LiveVehiclesList.select(event)" class="fault"><!-- .fault=異常発生中, .out=回送中 -->
+            <td>
+              <p class="state">異常</p>
+              <p class="number">B-03</p>
+              <p class="route" style="color:#ffffff;background:#00beea">下3</p>
+              <p class="destination">行先：砂津</p>
+            </td>
+            <td>10分</td>
+            <td>12人</td>
+            <td>15人</td>
+            <td>28&#8451;</td>
+            <td>210円</td>
+            <td>閉</td>
+            <td>あり</td>
+            <td>46%</td>
+            <td>70%</td>
+            <td>30&#8451;</td>
+            <td>680r/min</td>
+            <td>200kPa</td>
+            <td class="fault">異常</td><!-- .fault=異常, .warning=警告 -->
+          </tr>
+          <tr onClick="LiveVehiclesList.select(event)">
+            <td><p class="state">正常</p> <p class="number">B-01</p> <p class="route" style="color:#ffffff;background:#066bbd">上12</p> <p class="destination">行先：砂津</p></td>
+            <td>5分</td><td>5人</td><td>15人</td><td>23&#8451;</td><td>210円</td><td>閉</td><td>なし</td><td>86%</td><td>56%</td><td>22&#8451;</td><td>1,082r/min</td><td>200kPa</td><td>正常</td>
+          </tr>
+          <tr onClick="LiveVehiclesList.select(event)">
+            <td><p class="state">正常</p> <p class="number">B-02</p> <p class="route" style="color:#ffffff;background:#066bbd">上7</p> <p class="destination">行先：砂津</p></td>
+            <td>0分</td><td>9人</td><td>15人</td><td>22&#8451;</td><td>210円</td><td>閉</td><td>あり</td><td>70%</td><td class="warning">6%</td><td>20&#8451;</td><td>1,290r/min</td><td>200kPa</td><td>正常</td>
+          </tr>
+          <tr onClick="LiveVehiclesList.select(event)" class="out">
+            <td><p class="state">回送</p> <p class="number">B-04</p> <p class="route" style="color:#ffffff;background:#ec8c2b">上2</p> <p class="destination">行先：砂津</p></td>
+            <td>-5分</td><td>0人</td><td>15人</td><td>20&#8451;</td><td>210円</td><td>閉</td><td>なし</td><td class="warning">34%</td><td>46%</td><td>12&#8451;</td><td>0r/min</td><td>200kPa</td><td>正常</td>
+          </tr>
+          <tr onClick="LiveVehiclesList.select(event)" class="out">
+            <td><p class="state">回送</p> <p class="number">B-05</p> <p class="route" style="color:#ffffff;background:#00beea">下12</p> <p class="destination">行先：砂津</p></td>
+            <td>0分</td><td>0人</td><td>15人</td><td>19&#8451;</td><td>210円</td><td>閉</td><td>なし</td><td>44%</td><td>34%</td><td>16&#8451;</td><td>0r/min</td><td>200kPa</td><td>正常</td>
+          </tr>
+          <tr onClick="LiveVehiclesList.select(event)">
+            <td><p class="state">正常</p> <p class="number">B-06</p> <p class="route" style="color:#ffffff;background:#066bbd">上9</p> <p class="destination">行先：砂津</p></td>
+            <td>0分</td><td>0人</td><td>15人</td><td>23&#8451;</td><td>210円</td><td>閉</td><td>なし</td><td>76%</td><td>44%</td><td>22&#8451;</td><td>0r/min</td><td>200kPa</td><td>正常</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <aside id="drawer"></aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var LiveVehiclesList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://datatables.net/reference/option/
+    $('#live-vehicles-list table').DataTable({
+      dom: '<"top">t<"bottom"><"clear">',
+      ordering: false, paging: false
+    });
+  });
+
+  return {
+    select: function (e) {
+      location.href = 'live.html';
+    }
+  };
+})();
+</script>
+</body>
+</html>

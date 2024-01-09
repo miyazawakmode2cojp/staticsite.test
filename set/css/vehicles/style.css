@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+#vehicles-filter {
+  border-bottom: 1px solid #dcdee0;
+  margin-bottom: 25px;
+  padding-top: 25px;
+  padding-bottom: 10px;
+}
+#vehicles-filter .row + .row {
+  margin-top: 15px;
+}
+#vehicles-filter .control-label {
+  margin-right: 5px;
+}
+#vehicles-filter .form-group {
+  white-space: nowrap;
+  margin-right: 25px;
+  display: inline-block;
+}
+#vehicles-filter .row:nth-child(1) > div:nth-child(2) button {
+  width: 120px;
+}
+#vehicles-filter .row:nth-child(2) .bootstrap-select {
+  width: 200px;
+}
+
+#vehicles-list {}
+#vehicles-list th:nth-child(1), #vehicles-list td:nth-child(1) { width: 10%; }
+#vehicles-list th:nth-child(2), #vehicles-list td:nth-child(2) { width: 25%; }
+#vehicles-list th:nth-child(3), #vehicles-list td:nth-child(3) { width: 35%; }
+#vehicles-list th:nth-child(4), #vehicles-list td:nth-child(4) { width: 15%; }
+#vehicles-list th:nth-child(5), #vehicles-list td:nth-child(5) { width: 15%; }
+#vehicles-list tbody td.error {
+  color: #ffcc00;
+}
+
+#vehicles-editor {
+  height: 100%;
+}
+#vehicles-editor .form-horizontal {
+  height: calc(100% - 45px);
+  overflow: auto;
+  margin-right: -25px;
+  margin-left: -25px;
+  padding: 25px 10px;
+}
+#vehicles-editor .form-group {
+  margin: 0 0 10px 0;
+}
+#vehicles-editor .form-group.photo {
+  margin-bottom: 25px;
+  clear: both;
+}
+#vehicles-editor .form-group:last-child {
+  margin-top: 30px;
+}
+#vehicles-editor .form-group:last-child .btn {
+  width: 180px;
+}
+#vehicles-editor .form-control-static.fault {
+  color: #ff3b30;
+}
+#vehicles-editor .form-control-static.error {
+  color: #ffcc00;
+}

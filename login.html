@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/login/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <header id="header">
+    <div class="logo">SB Drive</div>
+  </header>
+  <main>
+    <!-- login-form -->
+    <section id="login-form">
+      <form>
+        <fieldset>
+          <h2>「Connected」<br />運行管理システム <small>by SBドライブ株式会社</small></h2>
+          <div class="form-group">
+            <label>パートナーの方</label>
+            <p>以下のボタンからログインしてください。</p>
+            <button type="submit" class="btn-link"><img src="https://s.yimg.jp/images/login/btn/btn_login_a_392.png" width="196" height="38" alt="Yahoo! JAPAN IDでログイン" /></button>
+          </div>
+          <div class="form-group">
+            <label>パートナー未登録の方</label>
+            <p>以下のリンクからSBドライブ株式会社にご連絡ください。</p>
+            <a href="#">SBドライブ株式会社 (パートナー登録お問い合わせ)</a>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+
+    <!-- login-background -->
+    <section id="login-background"><div></div></section>
+  </main>
+  <footer id="footer">
+    <ul>
+      <li><a href="#">SBドライブ株式会社ホームページ</a></li>
+      <li><a href="#">情報セキュリティポリシー</a></li>
+      <li><a href="#">個人情報の取り扱いについて</a></li>
+      <li><a href="#">免責事項</a></li>
+    </ul>
+  </footer>
+</div>
+<script>
+var LoginBackground = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 背景画像をランダムに設定
+    (function () {
+      var i = Math.floor(Math.random() * LoginBackground.images.length);
+      document.querySelector('#login-background > div').style.backgroundImage =
+        'url(' + LoginBackground.images[i] + ')';
+    })();
+  });
+
+  return { images: [] };
+})();
+
+// debug
+LoginBackground.images = [
+  "set/img/login/534A0048.jpg",
+  "set/img/login/534A0062.jpg",
+  "set/img/login/534A0086.jpg",
+  "set/img/login/534A0215.jpg",
+  "set/img/login/534A0244.jpg",
+  "set/img/login/534A1858.jpg",
+  "set/img/login/534A1886.jpg",
+  "set/img/login/534A2486.jpg",
+  "set/img/login/534A2614.jpg",
+  "set/img/login/534A2622.jpg",
+  "set/img/login/534A2712.jpg",
+  "set/img/login/534A2756.jpg",
+  "set/img/login/534A2762.jpg",
+  "set/img/login/534A2884.jpg",
+  "set/img/login/534A3076.jpg",
+  "set/img/login/534A3214.jpg",
+  "set/img/login/534A3216.jpg",
+  "set/img/login/534A3217.jpg",
+  "set/img/login/534A3284.jpg",
+  "set/img/login/534A3302.jpg",
+  "set/img/login/534A3323.jpg",
+  "set/img/login/534A3710.jpg"
+];
+</script>
+</body>
+</html>

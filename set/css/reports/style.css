@@ -1,0 +1,215 @@
+@charset "utf-8";
+
+#reports-filter {
+  border-bottom: 1px solid #dcdee0;
+  margin-bottom: 25px;
+  padding-top: 25px;
+  padding-bottom: 10px;
+}
+#reports-filter .datetimepicker-group {
+  white-space: nowrap;
+  margin-right: 45px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+#reports-filter .datetimepicker-group .form-group {
+  vertical-align: middle;
+  margin-bottom: 0;
+  display: inline-block;
+}
+#reports-filter .datetimepicker-group + .form-group {
+  margin-bottom: 15px;
+  display: inline-block;
+}
+#reports-filter .datetimepicker-group + .form-group .btn-primary {
+  border-radius: 4px;
+  outline: none;
+  width: 180px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+#reports-filter .datetimepicker {
+  display: table;
+}
+#reports-filter .datetimepicker .form-control {
+  width: 100px;
+}
+#reports-filter .btn-switch-group {
+  margin-right: 5px;
+}
+#reports-filter .btn-switch-group.no ~ .form-group:nth-child(3),
+#reports-filter .btn-switch-group.no ~ .form-group:nth-child(4) {
+  display: none;
+}
+#reports-filter .btn-switch {
+  width: 60px;
+}
+
+#reports-list {}
+#reports-list .reports {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+#reports-list .reports > li {
+  background-color: #ffffff;
+  margin-bottom: 25px;
+  padding: 0 20px 20px 20px;
+  position: relative;
+}
+#reports-list .reports header {
+  border-bottom: 1px solid #eceff1;
+  height: 45px;
+  margin: 0 -20px 20px -20px;
+  padding: 0 20px;
+}
+#reports-list .reports header h2 {
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: middle;
+  line-height: 45px;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: inline-block;
+}
+#reports-list .reports header a.setting {
+  vertical-align: middle;
+  background: url(../../img/common/icon-setting-gray.svg) center center no-repeat;
+  background-size: 18px 18px;
+  width: 50px;
+  height: 100%;
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+}
+#reports-list .reports header .btn-download {
+  border-color: #cccfd1;
+  box-shadow: none;
+  margin-right: 10px;
+  padding-left: 26px;
+  position: relative;
+  display: inline-block;
+}
+#reports-list .reports header .btn-download i {
+  font-size: 20px;
+  color: #9e9ea3;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  display: block;
+}
+#reports-list .popover {
+  width: 500px;
+  max-width: 500px;
+  margin-top: 5px;
+  margin-left: 185px;
+}
+#reports-list .popover .arrow {
+  margin-left: -195px;
+}
+#reports-list .popover form {
+  padding: 45px 25px 25px 25px;
+}
+#reports-list .popover .form-group {
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+#reports-list .popover .form-group + .form-group {
+  margin-top: 20px;
+}
+#reports-list .popover .form-group:last-child .btn-primary {
+  outline: none;
+  width: 140px;
+}
+#reports-list .popover .btn-switch-group {
+  margin-right: 5px;
+}
+#reports-list .popover .btn-switch {
+  width: 60px;
+}
+#reports-list .popover .bootstrap-select {
+  width: 200px;
+}
+
+#reports-setting {
+  height: 100%;
+}
+#reports-setting .form-horizontal {
+  height: calc(100% - 45px);
+  overflow: auto;
+  margin-right: -25px;
+  margin-left: -25px;
+  padding: 25px 10px;
+}
+#reports-setting .form-group {
+  margin: 0 0 10px 0;
+}
+#reports-setting .form-group:nth-child(1) .control-label {
+  text-align: left;
+}
+#reports-setting .form-group:nth-child(1) .control-label + div {
+  text-align: right;
+}
+#reports-setting .form-group:nth-child(1) .control-label + div select {
+  width: 200px;
+  display: inline-block;
+}
+#reports-setting .reports {
+  list-style: none;
+  background-color: #f7f9fa;
+  border: 1px solid #dcdee0;
+  margin-bottom: 0;
+  padding-right: 25px;
+  padding-left: 25px;
+}
+#reports-setting .reports li {
+  border-bottom: 1px solid #dcdee0;
+  padding: 15px 0;
+  position: relative;
+}
+#reports-setting .reports li:last-child {
+  border-bottom: none;
+}
+#reports-setting .reports label {
+  font-weight: bold;
+  margin-bottom: 0;
+  padding-left: 30px;
+  position: relative;
+  cursor: pointer;
+}
+#reports-setting .reports input {
+  display: none;
+}
+#reports-setting .reports i {
+  background: url(../../img/common/icon-delete.svg) no-repeat;
+  background-size: 100% 100%;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 1px;
+  left: 0;
+  display: block;
+}
+#reports-setting .reports input:not(:checked) ~ i {
+  background-image: url(../../img/common/icon-add.svg);
+}
+#reports-setting .reports input:not(:checked) ~ span {
+  font-weight: normal;
+}
+#reports-setting .reports a.drag {
+  background: url(../../img/common/icon-drag.svg) center center no-repeat;
+  background-size: 6px 18px;
+  width: 50px;
+  height: 40px;
+  position: absolute;
+  top: 5px;
+  right: -20px;
+  cursor: move;
+  display: block;
+}
+
+@media (hover) {
+  #reports-list .reports header a.setting:hover {
+    opacity: 0.5;
+  }
+}

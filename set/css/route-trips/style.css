@@ -1,0 +1,431 @@
+@charset "utf-8";
+
+#route-trips-list {
+  height: 100%;
+  display: flex;
+}
+#route-trips-list .route {
+  width: 280px;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  z-index: 99;
+}
+#route-trips-list .route.floating {
+  box-shadow: 1px 0 8px 0 rgba(0,0,0,0.15);
+}
+#route-trips-list .route form {
+  text-align: center;
+  border-bottom: 1px solid #dcdee0;
+  height: 115px;
+  padding-top: 20px;
+  position: relative;
+}
+#route-trips-list .route form:after {
+  content: "";
+  background-image: linear-gradient(to right, #dcdee0, #dcdee0 1px, transparent 1px, transparent 3px);
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+  width: 25px;
+  height: 1px;
+  position: absolute;
+  right: -25px;
+  bottom: -1px;
+  display: block;
+}
+#route-trips-list .route form .btn-switch {
+  width: 100px;
+}
+#route-trips-list .stops {
+  list-style: none;
+  margin-bottom: 99px; /* for scrolling */
+  padding-left: 0;
+}
+#route-trips-list .stops li {
+  border-bottom: 1px solid #dcdee0;
+  height: 70px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#route-trips-list .stops li:before {
+  content: "";
+  border-left: 2px solid #abb0c8;
+  height: 71px;
+  position: absolute;
+  top: 0;
+  left: 7px;
+  display: block;
+}
+#route-trips-list .stops li:first-child:before {
+  top: 36px;
+}
+#route-trips-list .stops li:last-child:before {
+  height: 20px;
+}
+#route-trips-list .stops li:last-child:after {
+  content: "";
+  border: 6px solid transparent;
+  border-top: 8px solid #abb0c8;
+  border-bottom: none;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 20px;
+  left: 2px;
+  display: block;
+}
+#route-trips-list .stops p {
+  max-height: 70px;
+  overflow: hidden;
+  margin-bottom: 0;
+  padding: 5px 0 5px 20px;
+}
+#route-trips-list .stops p:before {
+  content: "";
+  background-color: #abb0c8;
+  border-radius: 6px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 29px;
+  left: 2px;
+  display: block;
+}
+#route-trips-list .stops p:after {
+  content: "";
+  background-image: linear-gradient(to right, #dcdee0, #dcdee0 1px, transparent 1px, transparent 3px);
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+  width: 25px;
+  height: 1px;
+  position: absolute;
+  right: -25px;
+  bottom: -1px;
+  display: block;
+}
+#route-trips-list .workspace {
+  width: calc(100% - 280px);
+  height: 100%;
+  overflow: auto;
+  display: flex;
+}
+#route-trips-list .trips {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex;
+}
+#route-trips-list .trips > li {
+  width: 290px;
+  margin-right: 25px;
+  flex-shrink: 0;
+}
+#route-trips-list .trips > li.active header .info,
+#route-trips-list .trips > li.active .stop-times {
+  background-color: #fffcdb;
+}
+#route-trips-list .trips header {
+  height: 115px;
+  position: relative;
+}
+#route-trips-list .trips header:after {
+  content: "";
+  background-image: linear-gradient(to right, #dcdee0, #dcdee0 1px, transparent 1px, transparent 3px);
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+  width: 25px;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  left: -25px;
+  display: block;
+}
+#route-trips-list .trips header a.delete {
+  background: url(../../img/common/icon-delete-forever.svg) no-repeat;
+  background-size: 100% 100%;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 26px;
+  left: 0;
+  cursor: pointer;
+  display: block;
+}
+#route-trips-list .trips header h3 {
+  font-size: 16px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 267px;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  position: absolute;
+  top: 26px;
+  left: 23px;
+  display: inline-block;
+}
+#route-trips-list .trips header .info {
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid #dcdee0;
+  width: 100%;
+  height: 65px;
+  margin-bottom: 0;
+  padding: 0 55px 0 25px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+}
+#route-trips-list .trips header .info li {
+  width: 100%;
+  max-height: 42px;
+  overflow: hidden;
+}
+#route-trips-list .trips header a.edit {
+  background: url(../../img/common/icon-edit.svg) center no-repeat;
+  background-size: 18px 18px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 58px;
+  right: 5px;
+  cursor: pointer;
+  display: block;
+}
+#route-trips-list .trips + .empty {
+  width: 315px;
+  padding-top: 50px;
+  padding-right: 25px;
+  flex-shrink: 0;
+}
+#route-trips-list .trips + .empty a {
+  text-decoration: none;
+  text-align: center;
+  border: 4px dashed #ffffff;
+  height: 345px;
+  cursor: pointer;
+  display: block;
+}
+#route-trips-list .trips + .empty i {
+  font-size: 48px;
+  color: #adb2ca;
+  margin-top: 120px;
+  margin-bottom: 5px;
+  display: block;
+}
+#route-trips-list .stop-times {
+  list-style: none;
+  background-color: #f7f9fa;
+  border: 1px solid #dcdee0;
+  border-top: none;
+  border-bottom: none;
+  margin-bottom: 25px;
+  padding-left: 0;
+}
+#route-trips-list .stop-times li:nth-child(odd) {
+  border-bottom: 1px solid #dcdee0;
+  height: 70px;
+  padding: 13px 25px 0 25px;
+  position: relative;
+}
+#route-trips-list .stop-times li:nth-child(odd):before {
+  content: "";
+  background-image: linear-gradient(to right, #dcdee0, #dcdee0 1px, transparent 1px, transparent 3px);
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+  width: 25px;
+  height: 1px;
+  position: absolute;
+  bottom: -1px;
+  left: -25px;
+  display: block;
+}
+#route-trips-list .stop-times li:nth-child(odd) p {
+  font-size: 12px;
+  color: #abb0c8;
+  margin-bottom: 0;
+}
+#route-trips-list .stop-times li:nth-child(odd) p:nth-child(1):first-letter,
+#route-trips-list .stop-times li:nth-child(odd) p:nth-child(2):first-letter {
+  margin-left: -18px;
+  margin-right: 6px;
+}
+#route-trips-list .stop-times li:nth-child(odd) p:nth-child(3) {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+}
+#route-trips-list .stop-times li:nth-child(odd) p.has-time {
+  color: #424242;
+}
+#route-trips-list .stop-times li:nth-child(odd) p time.arr,
+#route-trips-list .stop-times li:nth-child(odd) p time.dep {
+  font-size: 16px;
+  color: #424242;
+  margin-right: 4px;
+  display: inline-block;
+}
+#route-trips-list .stop-times li:nth-child(odd) p time.wait {
+  font-size: 14px;
+  display: block;
+}
+#route-trips-list .stop-times li:nth-child(even) {
+  text-align: center;
+  height: 10px;
+  margin-top: -10px;
+}
+#route-trips-list .stop-times li:nth-child(even) p {
+  margin-bottom: 0;
+}
+#route-trips-list .stop-times li:nth-child(even) p time.duration {
+  line-height: 1;
+  background-color: #c7cac7;
+  border-radius: 10px;
+  height: 20px;
+  padding: 3px 20px;
+  position: relative;
+  display: inline-block;
+}
+
+#route-trips-editor {
+  height: 100%;
+}
+#route-trips-editor .form-horizontal {
+  height: calc(100% - 45px);
+  overflow: auto;
+  margin-right: -25px;
+  margin-left: -25px;
+  padding: 25px 10px;
+}
+#route-trips-editor .form-group {
+  margin: 0 0 10px 0;
+}
+#route-trips-editor .form-group:nth-child(1) .form-control {
+  width: 30%;
+}
+#route-trips-editor .form-group:nth-child(2) {
+  border: 1px solid #dcdee0;
+  margin: 0 15px;
+  padding: 15px;
+}
+#route-trips-editor .form-group:nth-child(2) .control-label {
+  padding-right: 5px;
+  padding-left: 0;
+}
+#route-trips-editor .form-group:last-child {
+  margin-top: 30px;
+}
+#route-trips-editor .form-group:last-child .btn {
+  width: 180px;
+}
+#route-trips-editor .stop-times {
+  list-style: none;
+  background-color: #f7f9fa;
+  border: 1px solid #dcdee0;
+  border-top: none;
+  max-height: 550px;
+  overflow: auto;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+#route-trips-editor .stop-times li:nth-child(odd) {
+  border-bottom: 1px solid #dcdee0;
+  height: 70px;
+  padding: 0 120px 0 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#route-trips-editor .stop-times li:nth-child(odd):last-child {
+  border-bottom: none;
+}
+#route-trips-editor .stop-times li:nth-child(odd) p:nth-of-type(1) {
+  line-height: 1.2;
+  max-height: 38px;
+  overflow: hidden;
+  margin-bottom: 0;
+  padding: 5px 0;
+}
+#route-trips-editor .stop-times li:nth-child(odd) p:nth-of-type(1):before {
+  content: "";
+  background-color: #abb0c8;
+  border-radius: 6px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 29px;
+  left: 20px;
+  display: block;
+}
+#route-trips-editor .stop-times li:nth-child(odd) label {
+  font-size: 12px;
+  font-weight: normal;
+  color: #abb0c8;
+  margin-bottom: 0;
+  position: absolute;
+  right: 15px;
+}
+#route-trips-editor .stop-times li:nth-child(odd) label:nth-of-type(1) {
+  top: 6px;
+}
+#route-trips-editor .stop-times li:nth-child(odd) label:nth-of-type(2) {
+  bottom: 6px;
+}
+#route-trips-editor .stop-times li:nth-child(odd) label.has-message ~ .alert-message,
+#route-trips-editor .stop-times li:nth-child(odd) label.has-warning ~ .alert-warning,
+#route-trips-editor .stop-times li:nth-child(odd) label.has-error ~ .alert-error {
+  font-size: 12px;
+  text-align: right;
+  max-width: 180px;
+  min-height: 57px;
+  margin-top: 0;
+  margin-bottom: 0;
+  position: absolute;
+  top: 6px;
+  right: 110px;
+  display: inline-block;
+}
+#route-trips-editor .stop-times li:nth-child(odd) .form-control {
+  text-align: center;
+  width: 70px;
+  height: 26px;
+  margin-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: inline-block;
+}
+#route-trips-editor .stop-times li:nth-child(even) {
+  height: 10px;
+  padding-left: 20px;
+  margin-top: -10px;
+}
+#route-trips-editor .stop-times li:nth-child(even) p {
+  margin-bottom: 0;
+}
+#route-trips-editor .stop-times li:nth-child(even) p time.duration {
+  line-height: 1;
+  background-color: #c7cac7;
+  border-radius: 10px;
+  height: 20px;
+  padding: 3px 20px;
+  position: relative;
+  display: inline-block;
+}
+
+@media (hover) {
+  #route-trips-list .trips header a.delete:hover {
+    background-image: url(../../img/common/icon-delete-forever-active.svg);
+  }
+  #route-trips-list .trips header a.edit:hover {
+    transform: scale(1.2);
+  }
+  #route-trips-list .trips + .empty a:hover {
+    background-color: #e6e6e6;
+  }
+}

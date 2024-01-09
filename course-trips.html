@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/course-trips/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting active"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>行路設定</h1>
+  </nav>
+  <main>
+    <header>
+      <h2>行路・2　新橋・原宿／渋谷・新橋／新橋・渋谷</h2>
+    </header>
+    <div id="main-container">
+      <!-- course-trips-list -->
+      <section id="course-trips-list">
+        <div class="course">
+          <form>
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-default btn-switch active"><input type="radio" checked /> 平日</label>
+              <label class="btn btn-default btn-switch"><input type="radio" /> 休祝日</label>
+            </div>
+          </form>
+          <ul class="trips">
+            <li>
+              <h3>便・1</h3>
+              <ol class="stop-times">
+                <li>
+                  <p>新橋</p>
+                  <p>翌<time class="arr">10:00</time> 着</p>
+                  <p>翌<time class="dep">10:00</time> 発</p>
+                </li>
+                <li>
+                  <p>原宿</p>
+                  <p><!--翌--><time class="arr">11:35</time> 着</p>
+                  <p><!--翌--><time class="dep">11:35</time> 発</p>
+                </li>
+              </ol>
+            </li>
+            <li>
+              <h3>便・2</h3>
+              <ol class="stop-times">
+                <li><p>渋谷</p><p><time class="arr">15:00</time> 着</p><p><time class="dep">15:00</time> 発</p></li>
+                <li><p>新橋</p><p><time class="arr">16:25</time> 着</p><p><time class="dep">16:25</time> 発</p></li>
+              </ol>
+            </li>
+            <li>
+              <h3>便・3</h3>
+              <ol class="stop-times">
+                <li><p>新橋</p><p><time class="arr">16:50</time> 着</p><p><time class="dep">16:50</time> 発</p></li>
+                <li><p>豊洲</p><p><time class="arr">17:45</time> 着</p><p><time class="dep">17:45</time> 発</p></li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+        <div class="workspace">
+          <ul class="trips">
+            <li>
+              <header>
+                <a class="delete"></a>
+                <h3>便・1</h3>
+                <a class="move-left"><i class="material-icons">chevron_left</i></a>
+                <a class="move-right"><i class="material-icons">chevron_right</i></a>
+                <ul class="info">
+                  <li><strong>便番号／便名：</strong>1001</li>
+                </ul>
+              </header>
+              <ol class="stop-times">
+                <li>
+                  <p>新橋</p>
+                  <p>翌<time class="arr">10:00</time> 着</p>
+                  <p>翌<time class="dep">10:00</time> 発</p>
+                </li>
+                <li><p>汐留</p><p><time class="arr">10:15</time> 着</p><p><time class="dep">10:15</time> 発</p></li>
+                <li><p>浜松町</p><p><time class="arr">10:35</time> 着</p><p><time class="dep">10:35</time> 発</p></li>
+                <li><p>東京タワー</p><p><time class="arr">10:50</time> 着</p><p><time class="dep">11:00</time> 発</p></li>
+                <li><p>六本木</p><p><time class="arr">11:15</time> 着</p><p><time class="dep">11:15</time> 発</p></li>
+                <li><p>渋谷</p><p><time class="arr">11:25</time> 着</p><p><time class="dep">11:25</time> 発</p></li>
+                <li><p>原宿</p><p><time class="arr">11:35</time> 着</p><p><time class="dep">11:35</time> 発</p></li>
+              </ol>
+            </li>
+            <li>
+              <header><a class="delete"></a><h3>便・2</h3><a class="move-left"><i class="material-icons">chevron_left</i></a><a class="move-right"><i class="material-icons">chevron_right</i></a><ul class="info"><li><strong>便番号／便名：</strong>1002</li></ul></header>
+              <ol class="stop-times">
+                <li><p>渋谷</p><p><time class="arr">15:00</time> 着</p><p><time class="dep">15:00</time> 発</p></li>
+                <li><p>六本木</p><p><time class="arr">15:15</time> 着</p><p><time class="dep">15:15</time> 発</p></li>
+                <li><p>東京タワー</p><p><time class="arr">15:35</time> 着</p><p><time class="dep">15:35</time> 発</p></li>
+                <li><p>浜松町</p><p><time class="arr">15:50</time> 着</p><p><time class="dep">16:00</time> 発</p></li>
+                <li><p>汐留</p><p><time class="arr">16:15</time> 着</p><p><time class="dep">16:15</time> 発</p></li>
+                <li><p>新橋</p><p><time class="arr">16:25</time> 着</p><p><time class="dep">16:25</time> 発</p></li>
+              </ol>
+            </li>
+            <li>
+              <header><a class="delete"></a><h3>便・3</h3><a class="move-left"><i class="material-icons">chevron_left</i></a><a class="move-right"><i class="material-icons">chevron_right</i></a><ul class="info"><li><strong>便番号／便名：</strong>1003</li></ul></header>
+              <ol class="stop-times">
+                <li><p>新橋</p><p><time class="arr">16:50</time> 着</p><p><time class="dep">16:50</time> 発</p></li>
+                <li><p>汐留</p><p><time class="arr">16:05</time> 着</p><p><time class="dep">16:05</time> 発</p></li>
+                <li><p>浜松町</p><p><time class="arr">16:25</time> 着</p><p><time class="dep">16:25</time> 発</p></li>
+                <li><p>東京タワー</p><p><time class="arr">17:00</time> 着</p><p><time class="dep">17:20</time> 発</p></li>
+                <li><p>六本木</p><p><time class="arr">17:35</time> 着</p><p><time class="dep">17:35</time> 発</p></li>
+                <li><p>渋谷</p><p><time class="arr">17:45</time> 着</p><p><time class="dep">17:45</time> 発</p></li>
+              </ol>
+            </li>
+          </ul>
+          <div class="empty"><a onClick="CourseTripsList.add()" class="add"><i class="material-icons">add</i> この行路に便を追加する</a></div>
+        </div>
+        <div class="workspace-footer">
+          <form>
+            <fieldset>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg">決定</button>
+                <button type="button" class="btn btn-default btn-gray btn-lg">キャンセル</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+  <aside id="drawer">
+    <!-- course-trips-editor -->
+    <section id="course-trips-editor" class="container-fluid">
+      <header>
+        <h2>行路設定</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">系統</label>
+            <div class="col-xs-9">
+              <select class="form-control">
+                <option>-</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">経路</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">便番号／便名</label>
+            <div class="col-xs-9">
+              <select class="form-control">
+                <option>-</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <p class="alert alert-message">通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg center-block">検索する</button>
+            </div>
+          </div>
+          <div class="form-group results">
+            <h3>検索結果</h3>
+            <ul class="trips">
+              <li>
+                <dl class="info">
+                  <dt>系統</dt><dd>新01</dd>
+                  <dt>経路</dt><dd>渋谷 - 新橋</dd>
+                  <dt>便番号／便名</dt><dd>1004</dd>
+                </dl>
+                <a class="add"><i class="material-icons">add</i></a>
+              </li>
+              <li><dl class="info"><dt>系統</dt><dd>新01</dd><dt>経路</dt><dd>原宿 - 新橋</dd><dt>便番号／便名</dt><dd>1005</dd></dl><a class="add"><i class="material-icons">add</i></a></li>
+              <li><dl class="info"><dt>系統</dt><dd>新01</dd><dt>経路</dt><dd>渋谷 - 新宿</dd><dt>便番号／便名</dt><dd>1015</dd></dl><a class="add"><i class="material-icons">add</i></a></li>
+            </ul>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var CourseTripsList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 平日／休祝日の切替え
+    (function () {
+      document.querySelectorAll('#course-trips-list .btn-switch').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          if (!e.target.classList.contains('active')) {
+            document.querySelector('main').classList.toggle('holiday');
+          }
+        });
+      });
+    })();
+
+    // スクロール時に固定エリアに影を付ける
+    (function () {
+      document.querySelector('#course-trips-list .workspace').addEventListener('scroll', function (e) {
+        var side = document.querySelector('#course-trips-list .course');
+        if (e.target.scrollLeft > 0) {
+          side.classList.add('floating');
+        }
+        else {
+          side.classList.remove('floating');
+        }
+      });
+    })();
+
+    // 便の高さを揃える
+    (function () {
+      function setSize() {
+        var items = document.querySelectorAll('#course-trips-list .workspace .stop-times');
+        var height = 0;
+        items.forEach(function (item) {
+          height = Math.max(height, item.getBoundingClientRect().height);
+        });
+        items.forEach(function (item) {
+          item.style.height = height + 'px';
+        });
+      }
+
+      setSize();
+      new MutationObserver(setSize)
+        .observe(document.querySelector('#course-trips-list .workspace .trips'), { childList: true });
+    })();
+  });
+
+  return {
+    add: function () {
+      Drawer.show();
+      CourseTripsList.scroll(document.querySelector('#course-trips-list .workspace .empty'));
+    },
+    scroll: function (item) {
+      var container = document.querySelector('#course-trips-list .workspace');
+      var scrollLeft = item.offsetLeft + item.getBoundingClientRect().width + 25
+        - document.querySelector('#course-trips-list .course').getBoundingClientRect().width
+        - container.getBoundingClientRect().width;
+
+      if (scrollLeft > container.scrollLeft) {
+        $(container).stop().animate({ scrollLeft: scrollLeft });
+      }
+    }
+  };
+})();
+
+// debug
+(function () {
+  document.querySelectorAll('#course-trips-editor .trips a').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var n = document.querySelectorAll('#course-trips-list .course .trips > li').length+1;
+
+      (function () {
+        document.querySelector('#course-trips-list .course .trips').insertAdjacentHTML('beforeend', '\
+          <li>\
+            <h3>便・' + n + '</h3>\
+            <ol class="stop-times">\
+              <li>\
+                <p>◯◯◯</p>\
+                <p><time class="arr">00:00</time> 着</p>\
+                <p><time class="dep">00:00</time> 発</p>\
+              </li>\
+              <li>\
+                <p>◯◯◯</p>\
+                <p><time class="arr">00:00</time> 着</p>\
+                <p><time class="dep">00:00</time> 発</p>\
+              </li>\
+            </ol>\
+          </li>\
+        ');
+      })();
+
+      (function () {
+        var item = document.createElement('li');
+        item.insertAdjacentHTML('beforeend', '\
+          <header>\
+            <a class="delete"></a>\
+            <h3>便・' + n + '</h3>\
+            <a class="move-left"><i class="material-icons">chevron_left</i></a>\
+            <a class="move-right"><i class="material-icons">chevron_right</i></a>\
+            <ul class="info">\
+              <li><strong>便番号／便名：</strong>0000</li>\
+            </ul>\
+          </header>\
+          <ol class="stop-times"></ol>\
+        ');
+
+        var times = item.querySelector('.stop-times');
+        for (var i = 0, ix = Math.floor(Math.random()*(20-2)+2); i < ix; i++) {
+          times.insertAdjacentHTML('beforeend', '\
+            <li>\
+              <p>◯◯◯</p>\
+              <p><time class="arr">00:00</time> 着</p>\
+              <p><time class="dep">00:00</time> 発</p>\
+            </li>\
+          ');
+        }
+
+        document.querySelector('#course-trips-list .workspace .trips').appendChild(item);
+        CourseTripsList.scroll(document.querySelector('#course-trips-list .workspace .empty'));
+      })();
+    });
+  });
+})();
+</script>
+</body>
+</html>

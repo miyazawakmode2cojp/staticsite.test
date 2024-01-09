@@ -1,0 +1,219 @@
+@charset "utf-8";
+
+#fares-list {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  position: relative;
+}
+#fares-list.disabled .fares dd {
+  pointer-events: none;
+}
+#fares-list.disabled .fares dt:not(.selected),
+#fares-list.disabled .fares dd:not(.selected) {
+  color: #aaaaaa;
+}
+#fares-list .fares {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex;
+}
+#fares-list .fares > li {
+  align-self: flex-end;
+}
+#fares-list .fares > li:first-child dt,
+#fares-list .fares > li:first-child dd {
+  border-left: 1px solid #dcdee0;
+}
+#fares-list .fares > li:first-child dd:after {
+  border-left: none !important;
+}
+#fares-list .fares > li:last-child dt {
+  margin-right: 100px;
+  position: relative;
+}
+#fares-list .fares dl {
+  margin-bottom: 0;
+  padding-top: 30px;
+  position: relative;
+}
+#fares-list .fares dt,
+#fares-list .fares dd {
+  white-space: nowrap;
+  background-color: #ffffff;
+  border-top: 1px solid #dcdee0;
+  border-right: 1px solid #dcdee0;
+  min-width: 65px;
+  padding: 5px 10px 0 10px;
+}
+#fares-list .fares dt {
+  text-align: center;
+  border-bottom: 1px solid #dcdee0;
+  height: 31px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#fares-list .fares dt.selected {
+  color: #ffffff;
+  background-color: #066bbd;
+}
+#fares-list .fares dd {
+  text-align: right;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+}
+#fares-list .fares dd:after {
+  content: "";
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  z-index: 99;
+}
+#fares-list .fares dd:last-child {
+  border-bottom: 1px solid #dcdee0;
+  height: 31px;
+}
+#fares-list .fares dd:last-child:after {
+  border-bottom: none !important;
+}
+#fares-list .fares dd.selected {
+  background-color: #f4f6f5;
+}
+#fares-list .fares dt.selected ~ dd.selected:after {
+  border-right: 1px solid #bcbec0;
+  border-left: 1px solid #bcbec0;
+}
+#fares-list .fares dt:not(.selected) ~ dd.selected:after {
+  border-top: 1px solid #bcbec0;
+  border-bottom: 1px solid #bcbec0;
+}
+#fares-list .fares dd.active {
+  background-color: #fffcdb !important;
+}
+#fares-list .fares dd.active:after {
+  border: none !important;
+}
+#fares-list .popover {
+  width: 400px;
+  max-width: 400px;
+}
+#fares-list .popover[data-col="0"] {
+  margin-left: 185px;
+}
+#fares-list .popover[data-col="1"] {
+  margin-left: 120px;
+}
+#fares-list .popover[data-col="2"] {
+  margin-left: 55px;
+}
+#fares-list .popover[data-col="0"] .arrow {
+  margin-left: -190px;
+}
+#fares-list .popover[data-col="1"] .arrow {
+  margin-left: -132px;
+}
+#fares-list .popover[data-col="2"] .arrow {
+  margin-left: -67px;
+}
+#fares-list .popover .info {
+  margin-bottom: 0;
+  padding: 10px 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+#fares-list .popover .info dt,
+#fares-list .popover .info dd {
+  margin-bottom: 5px;
+}
+#fares-list .popover .info dt {
+  font-weight: normal;
+  width: 13%;
+}
+#fares-list .popover .info dt:nth-of-type(1),
+#fares-list .popover .info dt:nth-of-type(2) {
+  width: 100%;
+}
+#fares-list .popover .info dd {
+  width: 87%;
+}
+#fares-list .popover .info small {
+  font-size: 12px;
+  color: #abb0c8;
+}
+#fares-list .popover .btn-primary {
+  width: 120px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+#fares-editor {
+  height: 100%;
+}
+#fares-editor .form-horizontal {
+  height: calc(100% - 45px);
+  overflow: auto;
+  margin-right: -25px;
+  margin-left: -25px;
+  padding: 25px 10px;
+}
+#fares-editor .form-group {
+  margin: 0 0 10px 0;
+}
+#fares-editor .form-group:nth-child(3):after {
+  content: "";
+  border-bottom: 1px solid #dcdee0;
+  height: 10px;
+  margin: 0 15px 20px 15px;
+  display: block;
+}
+#fares-editor .form-group:nth-child(4),
+#fares-editor .form-group:nth-child(5),
+#fares-editor .form-group:nth-child(6),
+#fares-editor .form-group:nth-child(7) {
+  width: 50%;
+  float: left;
+}
+#fares-editor .form-group:nth-child(4) .control-label + div,
+#fares-editor .form-group:nth-child(5) .control-label + div,
+#fares-editor .form-group:nth-child(6) .control-label + div,
+#fares-editor .form-group:nth-child(7) .control-label + div {
+  padding-right: 0;
+}
+#fares-editor .form-group:nth-child(4) .form-control,
+#fares-editor .form-group:nth-child(5) .form-control,
+#fares-editor .form-group:nth-child(6) .form-control,
+#fares-editor .form-group:nth-child(7) .form-control {
+  text-align: right;
+  vertical-align: bottom;
+  display: inline-block;
+}
+#fares-editor .form-group:nth-child(6),
+#fares-editor .form-group:nth-child(8) {
+  clear: both;
+}
+#fares-editor .form-group:last-child {
+  margin-top: 30px;
+}
+#fares-editor .form-group:last-child .btn {
+  width: 180px;
+}
+#fares-editor .form-group .control-label {
+  padding-right: 0;
+}
+#fares-editor .form-group .form-control {
+  width: 100px;
+}
+
+@media (hover) {
+  #fares-list .fares dd.hover {
+    background-color: #f4f6f5;
+  }
+  #fares-list .fares dd:hover {
+    background-color: #e4e6e5;
+  }
+}

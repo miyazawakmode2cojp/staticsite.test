@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/setting/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting active"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <h1>設定</h1>
+    <form>
+      <fieldset>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="キーワード検索" />
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default btn-gray"><span class="glyphicon glyphicon-search"></span></button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </nav>
+  <main>
+    <!-- setting-list -->
+    <section id="setting-list" class="container-fluid">
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>車両</h2>
+          <ul>
+            <li><a href="#" class="btn btn-default"><span class="icon vehicles"></span> 車両一覧</a></li>
+          </ul>
+        </div>
+        <div class="col-xs-6">
+          <h2>系統・経路・運賃</h2>
+          <ul>
+            <li><a href="#" class="btn btn-default"><span class="icon routes"></span> 系統・経路</a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon courses"></span> 行路</a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon fares"></span> 運賃</a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon stops"></span> バス停</a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon translations"></span> 外国語翻訳</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>会社情報</h2>
+          <ul>
+            <li><a href="#" class="btn btn-default"><span class="icon employees"></span> 社員一覧</a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon offices"></span> 営業所一覧</a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon agency"></span> 事業者</a></li>
+          </ul>
+        </div>
+        <div class="col-xs-6">
+          <h2>その他</h2>
+          <ul>
+            <li><a href="#" class="btn btn-default"><span class="icon operation"></span> 運行設定</a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon shift"></span> シフト設定</a></li>
+            <li class="disabled"><p>Phase 2.0 予定</p><a class="btn btn-default"><span class="icon import"></span> インポート <small>バス共有フォーマット</small></a></li>
+            <li class="disabled"><p>Phase 2.0 予定</p><a class="btn btn-default"><span class="icon export"></span> エクスポート <small>バス共有フォーマット</small></a></li>
+            <li><a href="#" class="btn btn-default"><span class="icon logs"></span> 操作ログ</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <aside id="drawer"></aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+</script>
+</body>
+</html>

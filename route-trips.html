@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/moment-with-locales.min.js"></script>
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/route-trips/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting active"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>便設定</h1>
+  </nav>
+  <main class="holiday"><!-- .holiday=休祝日 -->
+    <header><h2>経路・2　新橋 - 原宿線　東京タワー経由</h2></header>
+    <div id="main-container">
+      <!-- route-trips-list -->
+      <section id="route-trips-list">
+        <div class="route">
+          <form>
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-default btn-switch"><input type="radio" /> 平日</label>
+              <label class="btn btn-default btn-switch active"><input type="radio" checked /> 休祝日</label>
+            </div>
+          </form>
+          <ol class="stops">
+            <li><p>新橋</p></li>
+            <li><p>汐留</p></li>
+            <li><p>浜松町</p></li>
+            <li><p>東京タワー</p></li>
+            <li><p>六本木</p></li>
+            <li><p>渋谷</p></li>
+            <li><p>金王坂上</p></li>
+            <li><p>国連大学</p></li>
+            <li><p>原宿</p></li>
+          </ol>
+        </div>
+        <div class="workspace">
+          <ul class="trips">
+            <li>
+              <header>
+                <a class="delete"></a>
+                <h3>便・1</h3>
+                <ul class="info">
+                  <li><strong>便番号／便名：</strong>(便番号／便名が長い場合は折り返されます)</li>
+                </ul>
+                <a onClick="RouteTripsList.select(event)" class="edit"></a>
+              </header>
+              <ol class="stop-times">
+                <li>
+                  <p>翌<time class="arr">10:00</time> 着</p>
+                  <p>翌<time class="dep">10:00</time> 発</p>
+                  <p class="has-time">停車時間 <time class="wait">23:59</time></p><!-- .has-time=停車時間がある -->
+                </li>
+                <li>
+                  <p><time class="duration">00:15</time></p>
+                </li>
+                <li><p><time class="arr">10:15</time> 着</p><p><time class="dep">10:15</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:20</time></p></li>
+                <li><p><time class="arr">10:35</time> 着</p><p><time class="dep">10:35</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">10:50</time> 着</p><p><time class="dep">11:00</time> 発</p><p class="has-time">停車時間 <time class="wait">00:10</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">11:15</time> 着</p><p><time class="dep">11:15</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">11:25</time> 着</p><p><time class="dep">11:25</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">11:40</time> 着</p><p><time class="dep">11:40</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">11:50</time> 着</p><p><time class="dep">11:50</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">12:00</time> 着</p><p><time class="dep">12:00</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+              </ol>
+            </li>
+            <li>
+              <header><a class="delete"></a><h3>便・2</h3><ul class="info"><li><strong>便番号／便名：</strong>1002</li></ul><a onClick="RouteTripsList.select(event)" class="edit"></a></header>
+              <ol class="stop-times">
+                <li><p><time class="arr">15:00</time> 着</p><p><time class="dep">15:00</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">15:15</time> 着</p><p><time class="dep">15:15</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:20</time></p></li>
+                <li><p><time class="arr">15:35</time> 着</p><p><time class="dep">15:35</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">15:50</time> 着</p><p><time class="dep">16:00</time> 発</p><p class="has-time">停車時間 <time class="wait">00:10</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">16:15</time> 着</p><p><time class="dep">16:15</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">16:25</time> 着</p><p><time class="dep">16:25</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">16:40</time> 着</p><p><time class="dep">16:40</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">16:50</time> 着</p><p><time class="dep">16:50</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">17:00</time> 着</p><p><time class="dep">17:00</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+              </ol>
+            </li>
+            <li>
+              <header><a class="delete"></a><h3>便・3</h3><ul class="info"><li><strong>便番号／便名：</strong>1003</li></ul><a onClick="RouteTripsList.select(event)" class="edit"></a></header>
+              <ol class="stop-times">
+                <li><p><time class="arr">19:00</time> 着</p><p><time class="dep">19:00</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">19:15</time> 着</p><p><time class="dep">19:15</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:20</time></p></li>
+                <li><p><time class="arr">19:35</time> 着</p><p><time class="dep">19:35</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">19:50</time> 着</p><p><time class="dep">20:00</time> 発</p><p class="has-time">停車時間 <time class="wait">00:10</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">20:15</time> 着</p><p><time class="dep">20:15</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">20:25</time> 着</p><p><time class="dep">20:25</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p><time class="arr">20:40</time> 着</p><p><time class="dep">20:40</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">20:50</time> 着</p><p><time class="dep">20:50</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p><time class="arr">21:00</time> 着</p><p><time class="dep">21:00</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+              </ol>
+            </li>
+          </ul>
+          <div class="empty"><a onClick="RouteTripsList.add()" class="add"><i class="material-icons">add</i> 便を追加する</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <aside id="drawer">
+    <!-- route-trips-editor -->
+    <section id="route-trips-editor" class="container-fluid">
+      <header>
+        <h2>経路設定</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <form class="form-horizontal" onSubmit="event.preventDefault()">
+        <fieldset>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <input type="text" class="form-control" value="便・2" />
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">便番号／便名</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" value="1002" />
+              <p class="alert alert-message">メッセージ</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <ol class="stop-times">
+                <li>
+                  <p>新橋</p>
+                  <label class="nextday"><input type="text" class="form-control" value="15:00" /> 着</label><!-- .nextday=翌日, .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+                  <label class="nextday"><input type="text" class="form-control" value="15:00" /> 発</label><!-- .nextday=翌日, .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+                  <p class="alert alert-message">メッセージ</p>
+                  <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+                  <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+                </li>
+                <li>
+                  <p><time class="duration">00:15</time></p>
+                </li>
+                <li><p>汐留</p><label><input type="text" class="form-control" value="15:15" /> 着</label><label><input type="text" class="form-control" value="15:15" /> 発</label></li>
+                <li><p><time class="duration">00:20</time></p></li>
+                <li><p>浜松町</p><label><input type="text" class="form-control" value="15:35" /> 着</label><label><input type="text" class="form-control" value="15:35" /> 発</label></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p>東京タワー</p><label><input type="text" class="form-control" value="15:50" /> 着</label><label><input type="text" class="form-control" value="16:00" /> 発</label></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p>六本木</p><label><input type="text" class="form-control" value="16:15" /> 着</label><label><input type="text" class="form-control" value="16:15" /> 発</label></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p>渋谷</p><label><input type="text" class="form-control" value="16:25" /> 着</label><label><input type="text" class="form-control" value="16:25" /> 発</label></li>
+                <li><p><time class="duration">00:15</time></p></li>
+                <li><p>金王坂上</p><label><input type="text" class="form-control" value="16:40" /> 着</label><label><input type="text" class="form-control" value="16:40" /> 発</label></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p>国連大学</p><label><input type="text" class="form-control" value="16:50" /> 着</label><label><input type="text" class="form-control" value="16:50" /> 発</label></li>
+                <li><p><time class="duration">00:10</time></p></li>
+                <li><p>原宿</p><label><input type="text" class="form-control" value="17:00" /> 着</label><label><input type="text" class="form-control" value="17:00" /> 発</label></li>
+              </ol>
+            </div>
+          </div>
+          <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <p class="alert alert-message">通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6">
+              <button type="submit" class="btn btn-primary btn-lg pull-right">更新</button>
+            </div>
+            <div class="col-xs-6">
+              <button onClick="Drawer.hide()" type="button" class="btn btn-default btn-gray btn-lg">キャンセル</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var RouteTripsList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 平日／休祝日の切替え
+    (function () {
+      document.querySelectorAll('#route-trips-list .btn-switch').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          if (!e.target.classList.contains('active')) {
+            document.querySelector('main').classList.toggle('holiday');
+          }
+        });
+      });
+    })();
+
+    // スクロール位置を同期、固定エリアに影を付ける
+    (function () {
+      document.querySelector('#route-trips-list .route').addEventListener('wheel', function (e) {
+        document.querySelector('#route-trips-list .workspace').scrollTop += e.deltaY;
+      });
+      document.querySelector('#route-trips-list .workspace').addEventListener('scroll', function (e) {
+        var side = document.querySelector('#route-trips-list .route');
+        side.scrollTop = e.target.scrollTop;
+
+        if (e.target.scrollLeft > 0) {
+          side.classList.add('floating');
+        }
+        else {
+          side.classList.remove('floating');
+        }
+      });
+    })();
+
+    // ドロワーを閉じた際に選択状態を解除
+    (function () {
+      new MutationObserver(function (mutations) {
+        if (!mutations[0].target.classList.contains('with-drawer')) {
+          var current = document.querySelector('main li.active');
+          if (current) {
+            current.classList.remove('active');
+          }
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {
+    select: function (e) {
+      var current = document.querySelector('main li.active');
+      if (current) {
+        current.classList.remove('active');
+      }
+
+      var item = e.target.parentNode.parentNode;
+      if (item != current) {
+        item.classList.add('active');
+        Drawer.show();
+        RouteTripsList.scroll(item);
+      }
+      else {
+        Drawer.hide();
+      }
+    },
+    add: function () {
+      Drawer.show();
+      RouteTripsList.scroll(document.querySelector('#route-trips-list .workspace .empty'));
+    },
+    scroll: function (item) {
+      var container = document.querySelector('#route-trips-list .workspace');
+      var scrollLeft = item.offsetLeft + item.getBoundingClientRect().width + 25
+        - document.querySelector('#route-trips-list .route').getBoundingClientRect().width
+        - container.getBoundingClientRect().width;
+
+      if (scrollLeft > container.scrollLeft) {
+        $(container).stop().animate({ scrollLeft: scrollLeft });
+      }
+    }
+  };
+})();
+
+var RouteTripsEditor = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 時刻の入力値整形
+    (function () {
+      document.querySelectorAll('#route-trips-editor .stop-times input').forEach(function (field) {
+        field.addEventListener('change', function (e) {
+          e.target.value = RouteTripsEditor.format(e.target.value);
+        });
+      });
+    })();
+  });
+
+  return {
+    format: function (value) {
+      var value = value.replace(/[０-９：]/g, function (s) {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+      });
+      if (value.replace(/[^\d\:]/g, '').length == 3) {
+        value = '0' + value;
+      }
+      if (/^(2\d)(.*)/.test(value)) {
+        value = ('0' + (parseInt(RegExp.$1) % 24)).slice(-2) + RegExp.$2;
+      }
+
+      var m = moment(value, 'HH:mm');
+      if (!m.isValid()) {
+        m = moment({ hour: 4, minute: 0 });
+      }
+
+      return m.hour() < 4 ? (m.hour() + 24) + m.format(':mm') : m.format('HH:mm');
+    }
+  };
+})();
+</script>
+</body>
+</html>

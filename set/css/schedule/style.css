@@ -1,0 +1,589 @@
+@charset "utf-8";
+@font-face {
+  font-family: "Roboto Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("https://fonts.gstatic.com/l/font?kit=rhYZ0A32KusJ1bGYWIuxAsu-dBwwy2LVm0L8J7b2otg&skey=c06e7213f788649e&v=v16") format("woff2");
+}
+
+#main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+#schedule-calendar {
+  width: 250px;
+  height: 265px;
+  padding: 15px 20px;
+}
+#schedule-calendar header {
+  height: 20px;
+  margin-bottom: 5px;
+  position: relative;
+}
+#schedule-calendar header h2 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#schedule-calendar header nav {
+  width: 45px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+#schedule-calendar header nav a {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: block;
+}
+#schedule-calendar header nav a:before {
+  content: "";
+  border: 6px solid transparent;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 4px;
+  display: block;
+}
+#schedule-calendar header nav a.prev:before {
+  border-right: 8px solid #8e8e93;
+  border-left: none;
+  left: 5px;
+}
+#schedule-calendar header nav a.next:before {
+  border-right: none;
+  border-left: 8px solid #8e8e93;
+  right: 5px;
+}
+#schedule-calendar .wdays {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex;
+}
+#schedule-calendar .wdays li {
+  font-size: 12px;
+  text-align: center;
+  line-height: 30px;
+  width: 30px;
+  height: 30px;
+}
+#schedule-calendar .wdays li:first-child {
+  color: #ff7537;
+}
+#schedule-calendar .wdays li:last-child {
+  color: #6991b0;
+}
+#schedule-calendar .days {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+#schedule-calendar .days li {
+  font-size: 13px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+#schedule-calendar .days li.today,
+#schedule-calendar .days li.active {
+  font-family: "Roboto Bold", sans-serif;
+  font-weight: bold;
+}
+#schedule-calendar .days li.active {
+  color: #448aff !important;
+}
+#schedule-calendar .days li.active a {
+  background-color: rgba(3,155,229,0.2);
+}
+#schedule-calendar .days li.outside {
+  color: #abb0c8;
+}
+#schedule-calendar .days li:before {
+  content: "";
+  background-color: #ffffff;
+  width: 30px;
+  height: 20px;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  display: block;
+}
+#schedule-calendar .days li.past:before {
+  display: none;
+}
+#schedule-calendar .days li.unassigned:after {
+  content: "";
+  background-color: #ff3b30;
+  width: 22px;
+  height: 2px;
+  position: absolute;
+  bottom: 2px;
+  left: 4px;
+  display: block;
+}
+#schedule-calendar .days li a {
+  text-decoration: none;
+  line-height: 25px;
+  color: inherit;
+  border-radius: 13px;
+  width: 26px;
+  height: 26px;
+  padding-top: 1px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  z-index: 9;
+  cursor: pointer;
+  display: block;
+}
+
+#schedule-operators {
+  width: 250px;
+  height: calc(100% - 265px);
+  padding: 0 20px;
+}
+#schedule-operators h2 {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 40px;
+  border-bottom: 1px solid #dcdee0;
+  height: 40px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#schedule-operators .operators {
+  list-style: none;
+  height: calc(100% - 40px);
+  overflow: auto;
+  margin-bottom: 0;
+  padding: 7px 0;
+}
+#schedule-operators .operators li {
+  font-size: 13px;
+  padding: 5px 0 5px 20px;
+  position: relative;
+}
+#schedule-operators .operators li:before {
+  content: "";
+  background-color: #9fc6e7;
+  border: 1px solid #668dae;
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  top: 7px;
+  left: 0;
+  display: block;
+}
+#schedule-operators .operators li.unassigned:before {
+  background-color: #e5e5ea;
+  border-color: #8e8e93;
+}
+
+#schedule {
+  background: #ffffff;
+  width: calc(100% - 250px);
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+#schedule > header {
+  border-bottom: 1px solid #eceff1;
+  width: 100%;
+  height: 45px;
+  padding: 0 25px;
+}
+#schedule > header h2 {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 45px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#schedule .timeline-header {
+  border-bottom: 1px solid #dcdee0;
+  width: calc(100% - 49px);
+  overflow: hidden;
+  margin-left: 49px;
+  padding: 19px 0 10px 1px;
+  position: relative;
+}
+#schedule .timeline-header .courses:after { /* for scrolling */
+  content: "";
+  width: 99px;
+  height: 1px;
+  display: block;
+  flex-shrink: 0;
+}
+#schedule .timeline-side {
+  width: 50px;
+  height: calc(100% - 155px);
+  overflow: hidden;
+  padding-bottom: 99px; /* for scrolling */
+}
+#schedule .timeline-side .hours li {
+  text-align: right;
+  border-right: 1px solid #dcdee0;
+  padding-right: 5px;
+}
+#schedule .timeline {
+  width: calc(100% - 50px);
+  height: calc(100% - 155px);
+  overflow: auto;
+  position: relative;
+}
+#schedule .timeline .hours li {
+  border-bottom: 1px solid #dcdee0;
+}
+#schedule .timeline .courses {
+  height: 1104px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#schedule .hours {
+  list-style: none;
+  width: 100%;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+#schedule .hours li {
+  height: 46px;
+  position: relative;
+}
+#schedule .hours li time {
+  text-indent: 100%;
+  white-space: nowrap;
+  background-image: linear-gradient(to right, #dcdee0, #dcdee0 1px, transparent 1px, transparent 3px);
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  top: 22px;
+  left: 0;
+  display: block;
+}
+#schedule .courses {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 10px;
+  display: flex;
+}
+#schedule .courses > li {
+  width: 140px;
+  margin-right: 25px;
+  margin-bottom: 0;
+  position: relative;
+  flex-shrink: 0;
+}
+#schedule .courses > li:last-child {
+  margin-right: 10px;
+}
+#schedule .courses > li.active header,
+#schedule .courses > li.active .info {
+  background-color: #fffcdb !important;
+  border-color: #dcdee0 !important;
+}
+#schedule .courses > li.unassigned .info {
+  background-color: #e5e5ea;
+  border-color: #8e8e93;
+}
+#schedule .courses > li.unassigned .info h3 {
+  color: #ff3b30;
+}
+#schedule .courses header {
+  border: 1px solid #dcdee0;
+  height: 100%;
+  min-height: 80px;
+  padding: 10px;
+  position: relative;
+}
+#schedule .courses header h3 {
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 7px;
+  padding-right: 20px;
+}
+#schedule .courses header .assignments {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+#schedule .courses header .assignments li {
+  font-size: 13px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  padding-left: 20px;
+  position: relative;
+}
+#schedule .courses header .assignments li:last-child {
+  margin-bottom: 0;
+}
+#schedule .courses header .assignments li:before {
+  content: "";
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+#schedule .courses header .assignments li.driver:before {
+  background-image: url(../../img/common/icon-driver.svg);
+}
+#schedule .courses header .assignments li.driver.unassigned:before {
+  background-image: url(../../img/common/icon-driver-unassigned.svg);
+}
+#schedule .courses header .assignments li.vehicle:before {
+  background-image: url(../../img/common/icon-vehicle.svg);
+}
+#schedule .courses header .assignments li.vehicle.unassigned:before {
+  background-image: url(../../img/common/icon-vehicle-unassigned.svg);
+}
+#schedule .courses header a.edit {
+  background: url(../../img/common/icon-edit.svg) center no-repeat;
+  background-size: 18px 18px;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  display: block;
+}
+#schedule .courses .info {
+  list-style: none;
+  background-color: #9fc6e7;
+  border: 1px solid #668dae;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#schedule .courses .info > li {
+  margin-bottom: 10px;
+}
+#schedule .courses .info > li:nth-child(2),
+#schedule .courses .info > li:nth-child(3) {
+  display: none;
+}
+#schedule .courses .info > li:last-child {
+  margin-bottom: 0;
+}
+#schedule .courses .info h3 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+#schedule .courses .info ul {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+#schedule .courses .info ul li {
+  font-size: 13px;
+  padding-left: 1em;
+  position: relative;
+}
+#schedule .courses .info ul li:before {
+  content: "fiber_manual_record";
+  font-size: 10px;
+  font-family: "Material Icons";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  display: block;
+  transform: scale(0.5);
+}
+#schedule .courses .info time {
+  font-size: 13px;
+  margin-left: 1em;
+  display: block;
+}
+
+#schedule-editor {
+  height: 100%;
+}
+#schedule-editor .form-horizontal {
+  height: calc(100% - 45px);
+  overflow: auto;
+  margin-right: -25px;
+  margin-left: -25px;
+  padding: 25px 10px;
+}
+#schedule-editor .form-group {
+  margin: 0 0 10px 0;
+}
+#schedule-editor .form-group:nth-child(3),
+#schedule-editor .form-group:nth-child(4) {
+  width: 50%;
+  float: left;
+}
+#schedule-editor .form-group:nth-child(5) {
+  clear: both;
+}
+#schedule-editor .form-group:nth-child(6),
+#schedule-editor .form-group:nth-child(7) {
+  width: 50%;
+  float: left;
+}
+#schedule-editor .form-group:nth-child(6) .control-label + div,
+#schedule-editor .form-group:nth-child(7) .control-label + div {
+  padding-right: 0;
+}
+#schedule-editor .form-group:nth-child(8) {
+  clear: both;
+}
+#schedule-editor .form-group:nth-child(8) .control-label + div {
+  padding-top: 10px;
+}
+#schedule-editor .form-group:last-child {
+  margin-top: 30px;
+}
+#schedule-editor .form-group:last-child .btn {
+  width: 180px;
+}
+#schedule-editor .form-group .control-label {
+  padding-right: 0;
+}
+#schedule-editor .form-group select {
+  width: 135px;
+}
+#schedule-editor .trips {
+  list-style: none;
+  max-height: 500px;
+  overflow: auto;
+  margin-bottom: 0;
+  padding-left: 80px;
+}
+#schedule-editor .trips > li {
+  position: relative;
+}
+#schedule-editor .trips > li:after {
+  content: "";
+  border-left: 2px dotted #abb0c8;
+  width: 0;
+  height: calc(50% + 25px);
+  position: absolute;
+  bottom: -25px;
+  left: -17px;
+  display: block;
+}
+#schedule-editor .trips > li:last-child:after {
+  display: none;
+}
+#schedule-editor .trips h3 {
+  font-size: 13px;
+  font-weight: bold;
+  text-align: right;
+  width: 50px;
+  margin-top: 0;
+  margin-bottom: 0;
+  position: absolute;
+  top: 0;
+  left: -80px;
+}
+#schedule-editor .stop-times {
+  list-style: none;
+  margin-bottom: 25px;
+  padding-left: 0;
+}
+#schedule-editor .stop-times li {
+  border-left: 2px solid #abb0c8;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  position: relative;
+  left: -17px;
+}
+#schedule-editor .stop-times li:last-child {
+  border-color: transparent;
+  padding-bottom: 0;
+}
+#schedule-editor .stop-times li:last-child:before {
+  content: "";
+  background-color: #ffffff;
+  width: 2px;
+  height: 5px;
+  position: absolute;
+  top: -5px;
+  left: -2px;
+  z-index: 99;
+  display: block;
+}
+#schedule-editor .stop-times li:last-child:after {
+  content: "";
+  border: 6px solid transparent;
+  border-top: 8px solid #abb0c8;
+  border-bottom: none;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: -12px;
+  left: -7px;
+  z-index: 99;
+  display: block;
+}
+#schedule-editor .stop-times li p {
+  margin-bottom: 0;
+  position: relative;
+  top: -3px;
+}
+#schedule-editor .stop-times li p:nth-child(1):before {
+  content: "";
+  background-color: #abb0c8;
+  border-radius: 6px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 3px;
+  left: -22px;
+  display: block;
+}
+#schedule-editor .stop-times li p:nth-child(2) {
+  font-size: 12px;
+  color: #abb0c8;
+}
+#schedule-editor .stop-times li p:nth-child(2):first-letter {
+  margin-right: 3px;
+}
+#schedule-editor .stop-times li p time {
+  font-size: 14px;
+  color: #424242;
+  display: inline-block;
+}
+
+@media (hover) {
+  #schedule-calendar header nav a.prev:hover:before {
+    border-right-color: #424242;
+  }
+  #schedule-calendar header nav a.next:hover:before {
+    border-left-color: #424242;
+  }
+  #schedule-calendar .days li a:hover {
+    background-color: rgba(3,155,229,0.2);
+  }
+  #schedule .courses header a.edit:hover {
+    transform: scale(1.2);
+  }
+}

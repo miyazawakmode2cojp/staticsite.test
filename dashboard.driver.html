@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/moment-with-locales.min.js"></script>
+<script src="lib/js/chart.min.js"></script>
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/dashboard/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard active"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <h1>ダッシュボード</h1>
+  </nav>
+  <main><!-- .holiday=休祝日 -->
+    <div id="main-container">
+      <div class="row">
+        <!-- dashboard-filter -->
+        <section id="dashboard-filter" class="disabled"><!-- .disabled=乗務員切替えなし -->
+          <h2>おはようございます。◯◯◯◯さん</h2>
+          <form>
+            <fieldset>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="form-group">
+                    <label class="control-label">乗務員名</label>
+                    <select class="form-control">
+                      <option>汐留 太郎</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="乗務員名検索" />
+                    <div class="input-group-btn">
+                      <button type="submit" class="btn btn-default btn-gray"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </section>
+
+        <!-- dashboard-notification -->
+        <section id="dashboard-notifications">
+          <ul class="notifications">
+            <li class="important"><!-- .important=重要なお知らせ -->
+              <h2>未対応のアラームが5件あります。</h2>
+              <a href="#" class="goto-list">全てをみる</a>
+              <ul>
+                <li>5/18 (木) 通信モジュールエラー</li>
+                <li>5/17 (水) 通信接続エラー</li>
+                <li>5/15 (月) センサーエラー</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </div>
+      <div class="row">
+        <!-- dashboard-scores -->
+        <section id="dashboard-scores">
+          <h2>前回乗務のスコア</h2>
+          <a href="#" class="goto-list">もっと読む</a>
+          <ul class="scores">
+            <li data-category="safe">
+              <p><!--安全運転 <strong>B+</strong>--></p>
+              <div class="chart"><canvas width="180" height="135"></canvas></div>
+            </li>
+            <li data-category="eco">
+              <p><!--エコ運転 <strong>C</strong>--></p>
+              <div class="chart"><canvas width="180" height="135"></canvas></div>
+            </li>
+          </ul>
+          <div class="legend">
+            <!--<p><i></i>汐留 太郎さん</p>-->
+            <!--<p><i></i>モデルドライバー</p>-->
+          </div>
+        </section>
+
+        <!-- dashboard-comments -->
+        <section id="dashboard-comments">
+          <h2>コメント</h2>
+          <a href="#" class="goto-list">もっと読む</a>
+          <form class="form-inline">
+            <fieldset>
+              <ul class="comments">
+                <li>
+                  <header>
+                    <span class="initials">TS</span>
+                    <span class="name">汐留 太郎</span>
+                    <span class="date">2017/11/06 (木) 18:05</span>
+                  </header>
+                  <p>今日は市内で市民祭りが開かれていて徐行箇所が多かった。</p>
+                  <div class="reply">
+                    <header><span class="initials">SK</span><span class="name">上村 繁</span><span class="date">2017/11/07 (金) 09:51</span></header>
+                    <p>ダイヤが遅延しやすい交通状況の際に、急発進が多くなるので気を付けましょう。</p>
+                    <header><span class="initials">TS</span><span class="name">汐留 太郎</span><span class="date">2017/11/07 (金) 12:35</span></header>
+                    <p>返信サンプル</p>
+                  </div>
+                </li>
+                <li>
+                  <header><span class="initials">TS</span><span class="name">汐留 太郎</span><span class="date">2017/11/06 (木) 19:20</span></header>
+                  <p>コメントサンプル</p>
+                </li>
+              </ul>
+            </fieldset>
+          </form>
+        </section>
+
+        <!-- dashboard-schedule -->
+        <section id="dashboard-schedule">
+          <h2>本日の予定</h2>
+          <div class="timeline">
+            <ul class="hours">
+              <li><time>00:00</time></li>
+              <li><time>01:00</time></li>
+              <li><time>02:00</time></li>
+              <li><time>03:00</time></li>
+              <li><time>04:00</time></li>
+              <li><time>05:00</time></li>
+              <li><time>06:00</time></li>
+              <li><time>07:00</time></li>
+              <li><time>08:00</time></li>
+              <li><time>09:00</time></li>
+              <li><time>10:00</time></li>
+              <li><time>11:00</time></li>
+              <li><time>12:00</time></li>
+              <li><time>13:00</time></li>
+              <li><time>14:00</time></li>
+              <li><time>15:00</time></li>
+              <li><time>16:00</time></li>
+              <li><time>17:00</time></li>
+              <li><time>18:00</time></li>
+              <li><time>19:00</time></li>
+              <li><time>20:00</time></li>
+              <li><time>21:00</time></li>
+              <li><time>22:00</time></li>
+              <li><time>23:00</time></li>
+            </ul>
+            <ul class="trips">
+              <li onClick="DashboardSchedule.select(event)" class="active before"><!-- .active=選択状態, before=前日の便 -->
+                <div>
+                  <p>前<time class="dep">23:50</time> 発</p>
+                  <p><!--翌--><time class="arr">1:15</time> 着</p>
+                </div>
+                <p>(前日からの便は00:00の位置になります)</p>
+              </li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">2:00</time> 発</p><p><time class="arr">2:45</time> 着</p></div><p>(時間が短い場合は1行になります)</p></li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">3:00</time> 発</p><p><time class="arr">3:01</time> 着</p></div><p>(時間が極端に短い場合でも1行分の高さが確保されます)</p></li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">4:15</time> 発</p><p><time class="arr">7:45</time> 着</p></div><p>(時間が長い場合)</p></li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">9:05</time> 発</p><p><time class="arr">10:15</time> 着</p></div><p>東15 (東京駅八重洲口 - ビッグサイト) 1115便</p></li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">11:10</time> 発</p><p><time class="arr">12:25</time> 着</p></div><p>東16 (ビッグサイト - 東京駅八重洲口) 1257便</p></li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">13:35</time> 発</p><p><time class="arr">14:45</time> 着</p></div><p>都01 (新橋 - 渋谷) 526便</p></li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">14:55</time> 発</p><p><time class="arr">16:05</time> 着</p></div><p>都11 (渋谷 - 新橋) 527便</p></li>
+              <li onClick="DashboardSchedule.select(event)"><div><p><time class="dep">23:50</time> 発</p><p>翌<time class="arr">1:15</time> 着</p></div><p>(23:30以降は23:30の位置になります)</p></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- dashboard-trip -->
+        <section id="dashboard-trip">
+          <header>
+            <h2>東15 (東京駅八重洲口 - ビックサイト) 1115便</h2>
+            <dl class="info">
+              <dt>日時</dt><dd>2017年8月31日　9:05 〜 10:15</dd>
+              <dt>車種</dt><dd>リエッセ</dd>
+            </dl>
+          </header>
+          <ol class="stop-times">
+            <li>
+              <p>東京駅八重洲口</p>
+              <p>翌<time class="arr">9:05</time> 着</p>
+              <p>翌<time class="dep">9:05</time> 発</p>
+              <p class="has-time">停車時間 <time class="wait">00:00</time></p><!-- .has-time=停車時間がある -->
+            </li>
+            <li>
+              <p><time class="duration">00:10</time></p>
+            </li>
+            <li><p>亀島橋</p><p><time class="arr">9:15</time> 着</p><p><time class="dep">9:15</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+            <li><p><time class="duration">00:10</time></p></li>
+            <li><p>リバーシティ21</p><p><time class="arr">9:25</time> 着</p><p><time class="dep">9:25</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+            <li><p><time class="duration">00:15</time></p></li>
+            <li><p>新月島公園前</p><p><time class="arr">9:40</time> 着</p><p><time class="dep">9:50</time> 発</p><p class="has-time">停車時間 <time class="wait">00:10</time></p></li>
+            <li><p><time class="duration">00:15</time></p></li>
+            <li><p>豊洲駅前</p><p><time class="arr">10:05</time> 着</p><p><time class="dep">10:05</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+            <li><p><time class="duration">00:05</time></p></li>
+            <li><p>有明二丁目（東京都）</p><p><time class="arr">10:10</time> 着</p><p><time class="dep">10:10</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+            <li><p><time class="duration">00:05</time></p></li>
+            <li><p>東京ビックサイト〔バス〕</p><p><time class="arr">10:10</time> 着</p><p><time class="dep">10:10</time> 発</p><p>停車時間 <time class="wait">00:00</time></p></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </main>
+  <aside id="drawer"></aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var DashboardScores = (function () {
+  return {
+    Chart: {
+      colors: [
+        '#f491b6',
+        '#a3c3f1'
+      ],
+      color: function (index) {
+        return this.colors[index % this.colors.length];
+      },
+      bgcolor: function (index) {
+        var color = this.color(index);
+        var hex = color.match(/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+        if (hex) {
+          var r = parseInt(hex[1], 16);
+          var g = parseInt(hex[2], 16);
+          var b = parseInt(hex[3], 16);
+          return 'rgba(' + r + ',' + g + ',' + b + ',0.25)';
+        }
+        return color;
+      },
+      defaultOptions: function () {
+        // http://www.chartjs.org/docs/latest/
+        return {
+          defaultFontFamily: '"Roboto", "Noto Sans JP", sans-serif',
+          hover: { mode: 'point' },
+          layout: { padding: { top: 2, bottom: 2 }},
+          elements: {
+            point: { radius: 3, hitRadius: 6, hoverRadius: 6 },
+            line: { borderWidth: 1.5 }
+          },
+          legend: { display: false },
+          tooltips: {
+            titleFontSize: 12, titleFontStyle: 'normal', bodyFontSize: 14,
+            caretSize: 6, caretPadding: 5, xPadding: 10, yPadding: 10,
+            callbacks: {
+              label: function (tooltipItem, data) {
+                return ' ' + tooltipItem.yLabel + '点';
+              }
+            }
+          },
+          scale: { ticks: { beginAtZero: true, stepSize: 10, min: 0, max: 20 }}
+        };
+      },
+      init: function (canvas, options) {
+        var chart = new Chart(canvas.getContext('2d'), {
+          type: 'radar',
+          options: options,
+          data: { datasets: [] }
+        });
+        chart.set = this.set;
+        chart.setDatasets = this.setDatasets;
+        return chart;
+      },
+      instance: function (item) {
+        var instance = [];
+        var canvas = item.querySelector('canvas');
+        Chart.helpers.each(Chart.instances, function (chart) {
+          if (chart.canvas == canvas) {
+            instance = chart;
+          }
+        });
+        return instance;
+      },
+      set: function (dataSource) {
+        this.dataSource = dataSource;
+        this.setDatasets();
+        DashboardScores.ChartUI.set(this, dataSource);
+      },
+      setDatasets: function () {
+        var chart = this;
+        chart.data.labels = Array.from(chart.dataSource.labels);
+        chart.data.datasets = chart.dataSource.datasets.reduce(function (datasets, dataset, i) {
+          datasets.push({
+            label: dataset.label,
+            pointBackgroundColor: DashboardScores.Chart.color(i),
+            backgroundColor: DashboardScores.Chart.bgcolor(i),
+            borderColor: DashboardScores.Chart.color(i),
+            data: Array.from(dataset.data)
+          });
+          return datasets;
+        }, []);
+      }
+    },
+    ChartUI: {
+      set: function (chart, dataSource) {
+        var selfDataset;
+        dataSource.datasets.forEach(function (dataset) {
+          if (dataset.comparison == 'self') {
+            selfDataset = dataset;
+          }
+        });
+
+        var title = chart.canvas.parentNode.parentNode.querySelector('p');
+        title.textContent = null;
+        title.insertAdjacentHTML('beforeend',
+          dataSource.title + ' <strong>' + selfDataset.score + '</strong>');
+
+        var legend = document.querySelector('#dashboard-scores .legend');
+        if (!legend.querySelector('p')) {
+          dataSource.datasets.forEach(function (dataset, i) {
+            var label = document.createElement('p');
+            var labelColor = document.createElement('i');
+            labelColor.style.borderColor = DashboardScores.Chart.color(i);
+            labelColor.style.backgroundColor = DashboardScores.Chart.bgcolor(i);
+            label.appendChild(labelColor);
+            label.appendChild(document.createTextNode(dataset.label));
+            legend.appendChild(label);
+          });
+        }
+      }
+    }
+  };
+})();
+
+var DashboardSchedule = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // スクロール領域を調整
+    (function () {
+      function setSize() {
+        document.querySelector('#main-container > .row:nth-child(2)').style.height =
+          document.querySelector('#main-container').clientHeight
+        - document.querySelector('#main-container > .row:nth-child(1)').getBoundingClientRect().height + 'px';
+      }
+
+      setSize();
+      window.addEventListener('load', setSize);
+      window.addEventListener('resize', setSize);
+      new MutationObserver(function (mutations) {
+        if (mutations[0].attributeName == 'class') {
+          setSize();
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+      new MutationObserver(setSize)
+        .observe(document.querySelector('#main-container > .row:nth-child(1)'),
+          { characterData: true, subtree: true });
+    })();
+
+    // 便の位置を設定
+    (function () {
+      function setBounds() {
+        var height = document.querySelector('#dashboard-schedule .hours li').getBoundingClientRect().height;
+        document.querySelectorAll('#dashboard-schedule .trips li').forEach(function (item) {
+          var dep = moment(item.querySelector('.dep').textContent, 'HH:mm');
+          var arr = moment(item.querySelector('.arr').textContent, 'HH:mm');
+          var duration = moment.duration(arr.diff(dep)).asMinutes();
+          if (duration < 0) {
+            if (item.classList.contains('before')) {
+              dep = moment({ hour: 0, minute: 0 });
+            }
+            else {
+              arr = moment({ hour: 23, minute: 59 });
+            }
+            duration = moment.duration(arr.diff(dep)).asMinutes();
+          }
+          var minute = Math.min(dep.hour() == 23 ? 30 : 59, dep.minute());
+          item.style.top = dep.hour() * height + Math.round(height / 60 * minute) + 'px';
+          item.style.height = Math.round(height / 60 * duration) + 'px';
+        });
+      }
+
+      setBounds();
+      new MutationObserver(setBounds)
+        .observe(document.querySelector('#dashboard-schedule .trips'), { childList: true });
+    })();
+  });
+
+  return {
+    select: function (e) {
+      var current = document.querySelector('#dashboard-schedule li.active');
+      if (current) {
+        current.classList.remove('active');
+      }
+
+      var item = e.target;
+      while (item.nodeName != 'LI') {
+        item = item.parentNode;
+      }
+      item.classList.add('active');
+    }
+  };
+})();
+
+// debug
+(function () {
+  function request(type, data, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'set/js/_sample/report-' + type + '.json');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        callback(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.send(data);
+  }
+
+  document.querySelectorAll('#dashboard-scores .scores > li').forEach(function (item) {
+    var canvas = item.querySelector('canvas');
+    var options = DashboardScores.Chart.defaultOptions();
+    var chart = DashboardScores.Chart.init(canvas, options);
+
+    request('scores-' + item.dataset.category, null, function (json) {
+      chart.set(json);
+      chart.update();
+    });
+  });
+})();
+</script>
+</body>
+</html>

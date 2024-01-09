@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/moment-with-locales.min.js"></script>
+<script src="lib/js/chart.min.js"></script>
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/report-daily/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report active"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar" class="flexible">
+    <a href="#" class="back"></a>
+    <h1>個人日報</h1>
+  </nav>
+  <main>
+    <div id="main-container">
+      <div class="col">
+        <!-- report-daily-calendar -->
+        <section id="report-daily-calendar">
+          <header>
+            <h2><!--YYYY年M月--></h2>
+            <nav>
+              <a onClick="ReportDailyCalendar.prev(); sample()" class="prev"></a>
+              <a onClick="ReportDailyCalendar.next(); sample()" class="next"></a>
+            </nav>
+          </header>
+          <ul class="wdays">
+            <li>日</li>
+            <li>月</li>
+            <li>火</li>
+            <li>水</li>
+            <li>木</li>
+            <li>金</li>
+            <li>土</li>
+          </ul>
+          <ul class="days">
+            <!--<li class="today"><a onClick="ReportDailyCalendar.select(event, '2017-11-06')">6</a></li>-->
+            <!-- .today=今日, .outside=前後月, .active=選択状態, .recorded=記録あり -->
+            <script>
+            var recordedDates = [
+              "2017-10-15",
+              "2017-10-16",
+              "2017-10-17",
+              "2017-10-20",
+              "2017-10-21",
+              "2017-10-22",
+              "2017-10-23",
+              "2017-10-27",
+              "2017-10-28",
+              "2017-10-29",
+              "2017-10-31",
+              "2017-11-03",
+              "2017-11-04",
+              "2017-11-05",
+              "2017-11-06"
+            ];
+
+            function sample() {
+              document.querySelector('#report-daily-calendar h2').textContent =
+                ReportDailyCalendar.moment.format('YYYY年M月');
+
+              var list = document.querySelector('#report-daily-calendar .days');
+              list.textContent = null;
+
+              ReportDailyCalendar.days().forEach(function (day) {
+                var date = day.moment.format('YYYY-MM-DD');
+                if (recordedDates.includes(date)) {
+                  day.classList.push('recorded');
+                }
+                list.insertAdjacentHTML('beforeend', '\
+                  <li class="' + day.classList.join(' ') + '">\
+                    <a onClick="ReportDailyCalendar.select(event, \'' + date + '\')">'
+                      + day.moment.date() +
+                    '</a>\
+                  </li>\
+                ');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', sample);
+            </script>
+          </ul>
+        </section>
+
+        <!-- report-daily-info -->
+        <section id="report-daily-info">
+          <div class="info">
+            <h2>乗務便一覧</h2>
+            <a href="#trips" class="btn-collapse" data-toggle="collapse"></a>
+            <a onclick="ReportDailyInfo.Trips.reset(event)" class="btn btn-default btn-gray btn-reset btn-sm">選択解除</a>
+            <ul id="trips" class="collapse in">
+              <!--<li><time class="dep">10:00</time><i></i><time class="arr">11:35</time></li>-->
+              <!-- .active=選択状態 -->
+            </ul>
+          </div>
+          <div class="info">
+            <h2>乗務員情報</h2>
+            <a href="#info-1" class="btn-collapse collapsed" data-toggle="collapse"></a>
+            <ul id="info-1" class="collapse">
+              <li><strong>名前：</strong>汐留 太郎</li>
+              <li><strong>社員番号：</strong>123456</li>
+              <li><strong>所属：</strong>新橋営業所</li>
+            </ul>
+          </div>
+          <div class="info">
+            <h2>運行情報</h2>
+            <a href="#info-2" class="btn-collapse collapsed" data-toggle="collapse"></a>
+            <ul id="info-2" class="collapse">
+              <li><strong>運行日：</strong>2017年11月6日</li>
+              <li><strong>行路：</strong>行路001</li>
+              <li><strong>車種：</strong>ポンチョ</li>
+              <li><strong>車両番号：</strong>AB-912</li>
+              <li><strong>運行時間帯：</strong>07:00 - 14:45</li>
+              <li><strong>運行時間：</strong>7時間45分</li>
+              <li><strong>運行：</strong>43km</li>
+              <li><strong>休憩時間：</strong>75分</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <div class="col">
+        <!-- report-daily-alerts -->
+        <section id="report-daily-alerts">
+          <h2>アラート履歴</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>記録カテゴリ</th>
+                <th>評価</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--
+              <tr class="active">
+                <td>急発進・急加速</td>
+                <td><strong>C</strong><span>8点</span></td>
+                <td><a href="#video-jHv2Auar" class="play"><i class="material-icons">play_circle_filled</i></a></td>
+              </tr>
+              -->
+              <!-- .active=選択状態 -->
+            </tbody>
+          </table>
+          <div class="chart"><canvas></canvas></div>
+        </section>
+
+        <!-- report-daily-driving -->
+        <section id="report-daily-driving">
+          <h2>速度・エンジン回転数推移</h2>
+          <form>
+            <fieldset>
+              <div class="comparison">
+                <label class="control-label">比較表示 :</label>
+                <select class="form-control">
+                  <option value="self" selected>なし</option>
+                  <option value="self,modelcase">行路別モデル走行</option>
+                </select>
+              </div>
+              <div class="type">
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-default btn-switch active"><input type="radio" value="speed,rpm" checked /> 併記</label>
+                  <label class="btn btn-default btn-switch"><input type="radio" value="speed" /> 速度</label>
+                  <label class="btn btn-default btn-switch"><input type="radio" value="rpm" /> 回転数</label>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+          <div class="chart"><canvas height="330"></canvas></div>
+        </section>
+      </div>
+      <div class="col">
+        <!-- report-daily-scores -->
+        <section id="report-daily-scores">
+          <h2>スコア</h2>
+          <ul class="scores">
+            <li data-category="safe">
+              <p><!--安全運転 <strong>B+</strong>--></p>
+              <div class="chart"><canvas width="180" height="135"></canvas></div>
+            </li>
+            <li data-category="eco">
+              <p><!--エコ運転 <strong>C</strong>--></p>
+              <div class="chart"><canvas width="180" height="135"></canvas></div>
+            </li>
+          </ul>
+          <div class="legend">
+            <!--<p><i></i>汐留 太郎さん</p>-->
+            <!--<p><i></i>モデルドライバー</p>-->
+          </div>
+        </section>
+
+        <!-- report-daily-comments -->
+        <section id="report-daily-comments">
+          <h2>コメント</h2>
+          <form class="form-inline">
+            <fieldset>
+              <ul class="comments">
+                <li>
+                  <header>
+                    <span class="initials">TS</span>
+                    <span class="name">汐留 太郎</span>
+                    <span class="date">2017/11/06 (木) 18:05</span>
+                  </header>
+                  <p>今日は市内で市民祭りが開かれていて徐行箇所が多かった。</p>
+                  <div class="reply">
+                    <header><span class="initials">SK</span><span class="name">上村 繁</span><span class="date">2017/11/07 (金) 09:51</span></header>
+                    <p>ダイヤが遅延しやすい交通状況の際に、急発進が多くなるので気を付けましょう。</p>
+                    <header><span class="initials">TS</span><span class="name">汐留 太郎</span><span class="date">2017/11/07 (金) 12:35</span></header>
+                    <p>返信サンプル</p>
+                    <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+                      <span class="initials">TS</span>
+                      <div class="input-group">
+                        <textarea class="form-control" rows="1" placeholder="返信する..."></textarea>
+                        <span class="input-group-addon btn-default">送信</span>
+                      </div>
+                      <p class="alert alert-message">メッセージ</p>
+                      <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+                      <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <header><span class="initials">TS</span><span class="name">汐留 太郎</span><span class="date">2017/11/06 (木) 19:20</span></header>
+                  <p>コメントサンプル</p>
+                  <div class="reply">
+                    <div class="form-group">
+                      <span class="initials">TS</span>
+                      <div class="input-group">
+                        <textarea class="form-control" rows="1" placeholder="返信する..."></textarea>
+                        <span class="input-group-addon btn-default">送信</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="form-group"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+                <span class="initials">TS</span>
+                <div class="input-group">
+                  <textarea class="form-control" rows="1" placeholder="コメントする..."></textarea>
+                  <span class="input-group-addon btn-default">送信</span>
+                </div>
+                <p class="alert alert-message">メッセージ</p>
+                <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 警告メッセージ</p>
+                <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> エラーメッセージ</p>
+              </div>
+            </fieldset>
+          </form>
+        </section>
+
+        <!-- report-daily-download -->
+        <section id="report-daily-download">
+          <h2>レポートダウンロード</h2>
+          <a class="btn btn-default btn-download btn-sm"><i class="material-icons">file_download</i> XLS</a>
+        </section>
+      </div>
+    </div>
+  </main>
+  <aside id="drawer">
+    <!-- report-daily-videos -->
+    <section id="report-daily-videos" class="container-fluid">
+      <header>
+        <h2>アラート履歴レビュー【急発進・急加速】</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <div class="player">
+        <h3>[1/3] 2017/11/06 10:42</h3>
+        <p>新橋3丁目→新橋4丁目</p>
+        <video src="set/img/_sample/video.mp4" width="100%" controlslist="nodownload" controls></video>
+      </div>
+      <div class="playlist">
+        <table>
+          <thead>
+            <tr>
+              <th>記録開始時刻</th>
+              <th>走行区間</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="active"><!-- .active=選択状態 -->
+              <td>[1] <time>10:42</time></td>
+              <td>新橋3丁目→新橋4丁目</td>
+            </tr>
+            <tr><td>[2] <time>11:11</time></td><td>銀座7丁目→銀座6丁目</td></tr>
+            <tr><td>[3] <time>13:29</time></td><td>中央区役所前→東京駅八重洲口バスターミナル</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var ReportDailyCalendar = (function () {
+  return {
+    moment: moment().startOf('month'),
+    active: moment().startOf('day'),
+    prev: function () {
+      this.moment.subtract(1, 'M');
+    },
+    next: function () {
+      this.moment.add(1, 'M');
+    },
+    days: function () {
+      var days = [];
+      var today = moment().startOf('day');
+      var from = moment(this.moment).subtract(this.moment.day(), 'd');
+      var to = moment(this.moment).date(this.moment.daysInMonth());
+          to = to.add(Math.max(0, 7-1 - to.day()), 'd');
+      while (from.diff(to, 'day') <= 0) {
+        var classList = [];
+        if (from.diff(today, 'day') == 0) {
+          classList.push('today');
+        }
+        if (from.month() != this.moment.month()) {
+          classList.push('outside');
+        }
+        if (from.diff(this.active, 'day') == 0) {
+          classList.push('active');
+        }
+        days.push({ moment: moment(from), classList: classList });
+        from.add(1, 'd');
+      }
+      return days;
+    },
+    select: function (e, date) {
+      var current = document.querySelector('#report-daily-calendar li.active');
+      if (current) {
+        current.classList.remove('active');
+      }
+
+      var item = e.target.parentNode;
+      item.classList.add('active');
+
+      ReportDailyCalendar.active = moment(date, 'YYYY-MM-DD');
+
+      Chart.helpers.each(Chart.instances, function (chart) {
+        chart.canvas.dispatchEvent(new CustomEvent('datechange', {
+          detail: { chart: chart, date: date }
+        }));
+      });
+    }
+  };
+})();
+
+var ReportDailyInfo = (function () {
+  return {
+    Trips: {
+      set: function (dataSource) {
+        var btn = document.querySelector('#report-daily-info .btn-reset');
+        btn.style.display = 'none';
+
+        var list = document.querySelector('#report-daily-info #trips');
+        list.textContent = null;
+
+        dataSource.timeline.forEach(function (timeline, t) {
+          var item = document.createElement('li');
+          var dep = moment(timeline.from.x).format('HH:mm');
+          var arr = moment(timeline.to.x).format('HH:mm');
+          item.insertAdjacentHTML('beforeend', '\
+            <time class="dep">' + dep + '</time><i></i>\
+            <time class="arr">' + arr + '</time>\
+          ');
+          if (timeline.outofservice) {
+            item.classList.add('outofservice');
+          }
+          item.dataset.index = t;
+          item.dataset.label = timeline.label;
+          item.dataset.from = timeline.from.info;
+          item.dataset.to = timeline.to.info;
+          item.dataset.outofservice = timeline.outofservice;
+          item.addEventListener('click', ReportDailyInfo.Trips.select);
+
+          // https://getbootstrap.com/docs/3.3/javascript/#popovers
+          $(item).popover({
+            trigger: 'hover',
+            placement: 'right',
+            animation: false,
+            html: true,
+            container: '#report-daily-info',
+            title: ' ', // https://github.com/twbs/bootstrap/issues/12563
+            content: function () {
+              return ReportDailyInfo.Popover.content(this);
+            }
+          });
+
+          list.appendChild(item);
+        });
+      },
+      select: function (e) {
+        var current = document.querySelector('#report-daily-info #trips li.active');
+        if (current) {
+          current.classList.remove('active');
+        }
+
+        var item = e.target;
+        while (item.nodeName != 'LI') {
+          item = item.parentNode;
+        }
+        var btn = document.querySelector('#report-daily-info .btn-reset');
+        if (item != current) {
+          item.classList.add('active');
+          btn.style.display = 'block';
+        }
+        else {
+          btn.style.display = 'none';
+        }
+
+        Chart.helpers.each(Chart.instances, function (chart) {
+          chart.canvas.dispatchEvent(new CustomEvent('timelinechange', {
+            detail: { chart: chart, index: item != current ? item.dataset.index : NaN }
+          }));
+        });
+      },
+      reset: function (e) {
+        var current = document.querySelector('#report-daily-info #trips li.active');
+        if (current) {
+          current.dispatchEvent(new Event('click'));
+        }
+      }
+    },
+    Popover: {
+      content: function (item) {
+        var content = document.createElement('div');
+        var outofservice = item.dataset.outofservice == 'true';
+        content.insertAdjacentHTML('beforeend', '\
+          <h3>' + (outofservice ? '' : '便番号：') + item.dataset.label + '</h3>\
+          <ul class="info">\
+            <li>' + item.dataset.from + ' <small>発</small></li>\
+            <li>' + item.dataset.to + ' <small>着</small></li>\
+          </ul>\
+        ');
+        return content;
+      }
+    }
+  };
+})();
+
+var ReportDailyAlerts = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // ドロワーを閉じた際に選択状態を解除
+    (function () {
+      new MutationObserver(function (mutations) {
+        if (!mutations[0].target.classList.contains('with-drawer')) {
+          var current = document.querySelector('#report-daily-alerts tr.active');
+          if (current) {
+            current.classList.remove('active');
+          }
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {
+    Chart: {
+      defaultOptions: function () {
+        // http://www.chartjs.org/docs/latest/
+        return {
+          defaultFontFamily: '"Roboto", "Noto Sans JP", sans-serif',
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 0 },
+          hover: { mode: 'point' },
+          layout: { padding: { top: 3, right: 78, bottom: 6, left: 63 }},
+          elements: {
+            point: { radius: 0, hitRadius: 10, hoverRadius: 5 },
+            line: { fill: false, borderWidth: 10, borderCapStyle: 'round' }
+          },
+          legend: { display: false },
+          tooltips: {
+            titleFontSize: 16, titleFontStyle: 'normal', bodyFontSize: 14,
+            caretSize: 6, caretPadding: 10, xPadding: 15, yPadding: 10,
+            callbacks: {
+              title: function (tooltipItems, data) {
+                var tooltipItem = tooltipItems[0];
+                var dataset = data.datasets[tooltipItem.datasetIndex];
+                var raw = dataset.data[tooltipItem.index];
+                return tooltipItem.xLabel + ' ' + (raw.info || '');
+              },
+              label: function (tooltipItem, data) {
+                var dataset = data.datasets[tooltipItem.datasetIndex];
+                return dataset.label;
+              }
+            }
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              position: 'top',
+              time: {
+                unit: 'hour', unitStepSize: 1,
+                tooltipFormat: 'H:mm',
+                displayFormats: { minute: 'H:mm', hour: 'H:mm' }
+              },
+              gridLines: { zeroLineWidth: 0, drawBorder: false },
+              ticks: { fontSize: 14, maxRotation: 0 }
+            }],
+            yAxes: [{
+              display: false,
+              ticks: { beginAtZero: true, min: 0 }
+            }]
+          }
+        };
+      },
+      init: function (canvas, options) {
+        var chart = new Chart(canvas.getContext('2d'), {
+          type: 'line',
+          options: options,
+          data: { datasets: [] },
+          plugins: [{ beforeUpdate: this.beforeUpdate }]
+        });
+        chart.set = this.set;
+        chart.setDatasets = this.setDatasets;
+
+        canvas.addEventListener('timelinechange', function (e) {
+          chart.setDatasets(e.detail.index);
+          chart.update();
+        });
+        return chart;
+      },
+      instance: function () {
+        var instance;
+        var canvas = document.querySelector('#report-daily-alerts canvas');
+        Chart.helpers.each(Chart.instances, function (chart) {
+          if (chart.canvas == canvas) {
+            instance = chart;
+          }
+        });
+        return instance;
+      },
+      set: function (dataSource) {
+        this.dataSource = dataSource;
+        this.setDatasets();
+        ReportDailyAlerts.ChartUI.set(dataSource);
+      },
+      setDatasets: function (timelineIndex) {
+        var chart = this;
+        var count = chart.dataSource.datasets.length;
+        chart.data.datasets = chart.dataSource.datasets.reduce(function (datasets, dataset, i) {
+          datasets.push({
+            label: dataset.label,
+            pointBackgroundColor: '#abb0c8',
+            backgroundColor: '#abb0c8',
+            borderColor: '#abb0c8',
+            data: dataset.data.reduce(function (data, raws, t) {
+              if (isNaN(timelineIndex) || timelineIndex == t) {
+                var timeline = chart.dataSource.timeline[t];
+                var y = ((count-1) - i) * 2 + 1;
+                raws.forEach(function (raw) {
+                  data.push(
+                    { x: timeline.from.x, y: NaN },
+                    { x: raw.x, y: y, info: raw.info, videoID: raw.videoID },
+                    { x: moment(raw.x).add(raw.duration, 'm').format(), y: y },
+                    { x: timeline.to.x, y: NaN });
+                });
+              }
+              return data;
+            }, [])
+          });
+          return datasets;
+        }, []);
+
+        var xAxis = chart.options.scales.xAxes[0];
+        if (isNaN(timelineIndex)) {
+          var minTimeline = chart.dataSource.timeline[0];
+          var maxTimeline = chart.dataSource.timeline[chart.dataSource.timeline.length-1];
+          xAxis.time.min = moment(minTimeline.from.x).startOf('hour').valueOf();
+          xAxis.time.max = moment(maxTimeline.to.x).startOf('hour').add(1, 'h').valueOf();
+        }
+        else {
+          var timeline = chart.dataSource.timeline[timelineIndex];
+          xAxis.time.min = moment(timeline.from.x).valueOf();
+          xAxis.time.max = moment(timeline.to.x).valueOf();
+        }
+
+        var yAxis = chart.options.scales.yAxes[0];
+        yAxis.ticks.max = chart.data.datasets.length * 2;
+      },
+      beforeUpdate: function (chart) {
+        var xAxis = chart.options.scales.xAxes[0];
+        var yAxis = chart.options.scales.yAxes[0];
+        var hidden = chart.data.datasets.every(function (dataset, i) {
+          return chart.getDatasetMeta(i).hidden;
+        });
+        xAxis.ticks.display = !hidden;
+        yAxis.ticks.display = !hidden;
+      }
+    },
+    ChartUI: {
+      set: function (dataSource) {
+        var list = document.querySelector('#report-daily-alerts tbody');
+        list.textContent = null;
+
+        var height = dataSource.datasets.length * 35 + 40;
+        var canvas = ReportDailyAlerts.Chart.instance().canvas;
+        canvas.parentNode.style.height = height + 'px';
+
+        dataSource.datasets.forEach(function (dataset, i) {
+          var item = document.createElement('tr');
+          item.insertAdjacentHTML('beforeend', '\
+            <td>' + dataset.label + '</td>\
+            <td><strong>' + dataset.score + '</strong><span>' + dataset.point + '点</span></td>\
+            <td><a class="play"><i class="material-icons">play_circle_filled</i></a></td>\
+          ');
+
+          var videoID;
+          dataset.data.forEach(function (data) {
+            if (!videoID && data[0]) {
+              videoID = data[0].videoID;
+            }
+          });
+          var btn = item.querySelector('a');
+          if (videoID) {
+            btn.href = '#video-' + videoID;
+            btn.addEventListener('click', ReportDailyAlerts.ChartUI.select);
+          }
+          else {
+            btn.classList.add('disabled');
+          }
+
+          list.appendChild(item);
+        });
+      },
+      select: function (e) {
+        e.preventDefault();
+        var current = document.querySelector('#report-daily-alerts tr.active');
+        if (current) {
+          current.classList.remove('active');
+        }
+
+        var item = e.target;
+        while (item.nodeName != 'TR') {
+          item = item.parentNode;
+        }
+        if (item != current) {
+          item.classList.add('active');
+          history.replaceState(null, document.title, item.querySelector('a').href);
+          Drawer.show();
+        }
+        else {
+          Drawer.hide();
+        }
+      }
+    }
+  };
+})();
+
+var ReportDailyDriving = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // 比較表示の変更
+    (function () {
+      document.querySelector('#report-daily-driving select').addEventListener('change', function (e) {
+        var chart = ReportDailyDriving.Chart.instance();
+        var values = e.target.options[e.target.selectedIndex].value.split(',');
+        chart.filter.comparison = values;
+        chart.update();
+      });
+    })();
+
+    // 併記／速度／回転数の切替え
+    (function () {
+      document.querySelectorAll('#report-daily-driving .btn-switch').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          if (!e.target.classList.contains('active')) {
+            var chart = ReportDailyDriving.Chart.instance();
+            var values = e.target.querySelector('input').value.split(',');
+            chart.filter.type = values;
+            chart.update();
+          }
+        });
+      });
+    })();
+  });
+
+  return {
+    Chart: {
+      colors: [
+        '#f491b6',
+        '#c29dfb',
+        '#a3c3f1',
+        '#afd78b'
+      ],
+      color: function (index) {
+        return this.colors[index % this.colors.length];
+      },
+      bgcolor: function (index) {
+        var color = this.color(index);
+        var hex = color.match(/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+        if (hex) {
+          var r = parseInt(hex[1], 16);
+          var g = parseInt(hex[2], 16);
+          var b = parseInt(hex[3], 16);
+          return 'rgba(' + r + ',' + g + ',' + b + ',0.25)';
+        }
+        return color;
+      },
+      arrow: function () {
+        var img = new Image(8, 10);
+        img.src = 'data:image/svg+xml,' + encodeURIComponent(
+         '<?xml version="1.0" encoding="UTF-8"?>\
+          <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\
+          <svg viewBox="0 0 8 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">\
+            <path d="M0,0l8,5l-8,5l0,-10Z" style="fill:#abb0c8;"/>\
+          </svg>');
+        return img;
+      },
+      defaultFormat: function (value) {
+        var value = value.toString();
+        var number = value.match(/^(\-)?(\d+)(\.\d+)?$/);
+        if (number) {
+          return (number[1] || '') + number[2].replace(/(\d)(?=(\d{3})+$)/g , '$1,') + (number[3] || '');
+        }
+        return value;
+      },
+      defaultOptions: function () {
+        // http://www.chartjs.org/docs/latest/
+        return {
+          defaultFontFamily: '"Roboto", "Noto Sans JP", sans-serif',
+          responsive: true,
+          maintainAspectRatio: false,
+          hover: { mode: 'point' },
+          layout: { padding: { top: -5, bottom: -5 }},
+          elements: {
+            point: { hitRadius: 6, hoverRadius: 6 },
+            line: { fill: false, borderWidth: 1.5 }
+          },
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 20,
+              filter: function (legendItem, data) {
+                return legendItem.text !== undefined;
+              }
+            }
+          },
+          tooltips: {
+            titleFontSize: 16, titleFontStyle: 'normal', bodyFontSize: 14,
+            caretSize: 6, caretPadding: 10, xPadding: 15, yPadding: 10,
+            callbacks: {
+              title: function (tooltipItems, data) {
+                var tooltipItem = tooltipItems[0];
+                var dataset = data.datasets[tooltipItem.datasetIndex];
+                var raw = dataset.data[tooltipItem.index];
+                return tooltipItem.xLabel + ' ' + (raw.info || '');
+              },
+              label: function (tooltipItem, data) {
+                var dataset = data.datasets[tooltipItem.datasetIndex];
+                var value = ReportDailyDriving.Chart.defaultFormat(tooltipItem.yLabel);
+                switch (dataset.yAxisID) {
+                  case 'speed':
+                    return dataset.label + ' ' + value + ' km/h';
+                  case 'rpm':
+                    return dataset.label + ' ' + value + ' rpm';
+                  default:
+                    return;
+                }
+              }
+            }
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              position: 'top',
+              time: {
+                unit: 'hour', unitStepSize: 1,
+                tooltipFormat: 'H:mm',
+                displayFormats: { minute: 'H:mm', hour: 'H:mm' }
+              },
+              gridLines: { zeroLineWidth: 0, drawBorder: false },
+              ticks: { fontSize: 14, maxRotation: 0 }
+            }],
+            yAxes: [
+              {
+                id: 'speed',
+                position: 'left',
+                scaleLabel: { display: true, labelString: '速度 (km/h)' },
+                gridLines: { display: false, drawBorder: false },
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 10,
+                  padding: 5,
+                  callback: function (value, index, values) {
+                    return ' ' + ReportDailyDriving.Chart.defaultFormat(value) + '  ▸';
+                  }
+                }
+              },
+              {
+                id: 'rpm',
+                position: 'right',
+                scaleLabel: { display: true, labelString: '回転数 (rpm)' },
+                gridLines: { display: false, drawBorder: false },
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1000,
+                  padding: 5,
+                  callback: function (value, index, values) {
+                    return '◂  ' + ReportDailyDriving.Chart.defaultFormat(value) + ' ';
+                  }
+                }
+              },
+              {
+                id: 'trips',
+                display: false,
+                ticks: { beginAtZero: true, min: 0, max: 100 }
+              }
+            ]
+          }
+        };
+      },
+      init: function (canvas, options) {
+        var chart = new Chart(canvas.getContext('2d'), {
+          type: 'line',
+          options: options,
+          data: { datasets: [] },
+          plugins: [{ beforeUpdate: this.beforeUpdate }]
+        });
+        chart.set = this.set;
+        chart.setDatasets = this.setDatasets;
+        chart.filter = { comparison: ['self'] };
+
+        canvas.addEventListener('timelinechange', function (e) {
+          chart.setDatasets(e.detail.index);
+          chart.update();
+        });
+        return chart;
+      },
+      instance: function () {
+        var instance;
+        var canvas = document.querySelector('#report-daily-driving canvas');
+        Chart.helpers.each(Chart.instances, function (chart) {
+          if (chart.canvas == canvas) {
+            instance = chart;
+          }
+        });
+        return instance;
+      },
+      set: function (dataSource) {
+        this.dataSource = dataSource;
+        this.setDatasets();
+        ReportDailyDriving.ChartUI.set(dataSource);
+      },
+      setDatasets: function (timelineIndex) {
+        var chart = this;
+        chart.data.datasets = chart.dataSource.datasets.reduce(function (datasets, dataset, i) {
+          datasets.push({
+            label: dataset.label,
+            yAxisID: dataset.type,
+            pointBackgroundColor: ReportDailyDriving.Chart.color(i),
+            backgroundColor: ReportDailyDriving.Chart.bgcolor(i),
+            borderColor: ReportDailyDriving.Chart.color(i),
+            data: dataset.data.reduce(function (data, raws, t) {
+              if (isNaN(timelineIndex) || timelineIndex == t) {
+                var timeline = chart.dataSource.timeline[t];
+                data.push({ x: timeline.from.x, y: NaN });
+                raws.forEach(function (raw) {
+                  data.push({ x: raw.x, y: raw.y, info: raw.info });
+                });
+              }
+              return data;
+            }, [])
+          });
+          return datasets;
+        }, []);
+
+        var arrow = ReportDailyDriving.Chart.arrow();
+        chart.dataSource.timeline.forEach(function (timeline, t) {
+          if (isNaN(timelineIndex) || timelineIndex == t) {
+            var dataset = {
+              yAxisID: 'trips',
+              pointBackgroundColor: '#abb0c8',
+              backgroundColor: '#abb0c8',
+              borderColor: '#abb0c8',
+              borderWidth: 2,
+              pointRadius: 4,
+              pointStyle: [null, 'circle', arrow],
+              data: [
+                { x: timeline.from.x, y: NaN },
+                { x: timeline.from.x, y: 1, info: timeline.from.info },
+                { x: timeline.to.x, y: 1, info: timeline.to.info }
+              ]
+            };
+            if (timeline.outofservice) {
+              dataset.borderDash = [6, 4];
+              dataset.borderDashOffset = 6;
+            }
+            chart.data.datasets.push(dataset);
+          }
+        });
+
+        var xAxis = chart.options.scales.xAxes[0];
+        if (isNaN(timelineIndex)) {
+          xAxis.time.min = null;
+          xAxis.time.max = null;
+          chart.options.elements.point.radius = 0;
+        }
+        else {
+          var timeline = chart.dataSource.timeline[timelineIndex];
+          xAxis.time.min = moment(timeline.from.x).valueOf();
+          xAxis.time.max = moment(timeline.to.x).valueOf();
+          chart.options.elements.point.radius = 3;
+        }
+      },
+      beforeUpdate: function (chart) {
+        if (chart.dataSource) {
+          var keys = Object.keys(chart.filter || {});
+          chart.dataSource.datasets.forEach(function (dataset, i) {
+            var visible = keys.every(function (key) {
+              return chart.filter[key].includes(dataset[key]);
+            });
+            chart.getDatasetMeta(i).hidden = !visible;
+          });
+        }
+        var xAxis = chart.options.scales.xAxes[0];
+        var hidden = chart.data.datasets.every(function (dataset, i) {
+          return chart.getDatasetMeta(i).hidden;
+        });
+        xAxis.ticks.display = !hidden;
+        chart.options.scales.yAxes.forEach(function (yAxis) {
+          yAxis.ticks.display = !hidden;
+        });
+      }
+    },
+    ChartUI: {
+      set: function (dataSource) {
+        ReportDailyInfo.Trips.set(dataSource);
+      }
+    }
+  };
+})();
+
+var ReportDailyScores = (function () {
+  return {
+    Chart: {
+      colors: [
+        '#f491b6',
+        '#a3c3f1'
+      ],
+      color: function (index) {
+        return this.colors[index % this.colors.length];
+      },
+      bgcolor: function (index) {
+        var color = this.color(index);
+        var hex = color.match(/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+        if (hex) {
+          var r = parseInt(hex[1], 16);
+          var g = parseInt(hex[2], 16);
+          var b = parseInt(hex[3], 16);
+          return 'rgba(' + r + ',' + g + ',' + b + ',0.25)';
+        }
+        return color;
+      },
+      defaultOptions: function () {
+        // http://www.chartjs.org/docs/latest/
+        return {
+          defaultFontFamily: '"Roboto", "Noto Sans JP", sans-serif',
+          hover: { mode: 'point' },
+          layout: { padding: { top: 2, bottom: 2 }},
+          elements: {
+            point: { radius: 3, hitRadius: 6, hoverRadius: 6 },
+            line: { borderWidth: 1.5 }
+          },
+          legend: { display: false },
+          tooltips: {
+            titleFontSize: 12, titleFontStyle: 'normal', bodyFontSize: 14,
+            caretSize: 6, caretPadding: 5, xPadding: 10, yPadding: 10,
+            callbacks: {
+              label: function (tooltipItem, data) {
+                return ' ' + tooltipItem.yLabel + '点';
+              }
+            }
+          },
+          scale: { ticks: { beginAtZero: true, stepSize: 10, min: 0, max: 20 }}
+        };
+      },
+      init: function (canvas, options) {
+        var chart = new Chart(canvas.getContext('2d'), {
+          type: 'radar',
+          options: options,
+          data: { datasets: [] }
+        });
+        chart.set = this.set;
+        chart.setDatasets = this.setDatasets;
+        return chart;
+      },
+      instance: function (item) {
+        var instance = [];
+        var canvas = item.querySelector('canvas');
+        Chart.helpers.each(Chart.instances, function (chart) {
+          if (chart.canvas == canvas) {
+            instance = chart;
+          }
+        });
+        return instance;
+      },
+      set: function (dataSource) {
+        this.dataSource = dataSource;
+        this.setDatasets();
+        ReportDailyScores.ChartUI.set(this, dataSource);
+      },
+      setDatasets: function () {
+        var chart = this;
+        chart.data.labels = Array.from(chart.dataSource.labels);
+        chart.data.datasets = chart.dataSource.datasets.reduce(function (datasets, dataset, i) {
+          datasets.push({
+            label: dataset.label,
+            pointBackgroundColor: ReportDailyScores.Chart.color(i),
+            backgroundColor: ReportDailyScores.Chart.bgcolor(i),
+            borderColor: ReportDailyScores.Chart.color(i),
+            data: Array.from(dataset.data)
+          });
+          return datasets;
+        }, []);
+      }
+    },
+    ChartUI: {
+      set: function (chart, dataSource) {
+        var selfDataset;
+        dataSource.datasets.forEach(function (dataset) {
+          if (dataset.comparison == 'self') {
+            selfDataset = dataset;
+          }
+        });
+
+        var title = chart.canvas.parentNode.parentNode.querySelector('p');
+        title.textContent = null;
+        title.insertAdjacentHTML('beforeend',
+          dataSource.title + ' <strong>' + selfDataset.score + '</strong>');
+
+        var legend = document.querySelector('#report-daily-scores .legend');
+        if (!legend.querySelector('p')) {
+          dataSource.datasets.forEach(function (dataset, i) {
+            var label = document.createElement('p');
+            var labelColor = document.createElement('i');
+            labelColor.style.borderColor = ReportDailyScores.Chart.color(i);
+            labelColor.style.backgroundColor = ReportDailyScores.Chart.bgcolor(i);
+            label.appendChild(labelColor);
+            label.appendChild(document.createTextNode(dataset.label));
+            legend.appendChild(label);
+          });
+        }
+      }
+    }
+  };
+})();
+
+// debug
+(function () {
+  function request(type, data, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'set/js/_sample/report-' + type + '.json');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        callback(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.send(data);
+  }
+
+  // report-daily-alerts
+  (function () {
+    // オプションを設定してグラフを初期化
+    var canvas = document.querySelector('#report-daily-alerts canvas');
+    var options = ReportDailyAlerts.Chart.defaultOptions();
+    var chart = ReportDailyAlerts.Chart.init(canvas, options);
+
+    // 更新イベントを待機
+    canvas.addEventListener('datechange', function (e) {
+      var chart = e.detail.chart;
+      request('videos', { date: e.detail.date }, function (json) {
+        chart.set(json);
+        chart.update();
+      });
+    });
+
+    // 初期データをリクエスト
+    request('videos', null, function (json) {
+      chart.set(json);
+      chart.update();
+    });
+  })();
+
+  // report-daily-driving
+  (function () {
+    // オプションを設定してグラフを初期化
+    var canvas = document.querySelector('#report-daily-driving canvas');
+    var options = ReportDailyDriving.Chart.defaultOptions();
+    var chart = ReportDailyDriving.Chart.init(canvas, options);
+
+    // 更新イベントを待機
+    canvas.addEventListener('datechange', function (e) {
+      var chart = e.detail.chart;
+      request('driving', { date: e.detail.date }, function (json) {
+        chart.set(json);
+        chart.update();
+      });
+    });
+
+    // 初期データをリクエスト
+    request('driving', null, function (json) {
+      chart.set(json);
+      chart.update();
+    });
+  })();
+
+  // report-daily-scores
+  (function () {
+    document.querySelectorAll('#report-daily-scores .scores > li').forEach(function (item) {
+      // オプションを設定してグラフを初期化
+      var canvas = item.querySelector('canvas');
+      var options = ReportDailyScores.Chart.defaultOptions();
+      var chart = ReportDailyScores.Chart.init(canvas, options);
+
+      // 更新イベントを待機
+      canvas.addEventListener('datechange', function (e) {
+        var chart = e.detail.chart;
+        var item = chart.canvas.parentNode.parentNode;
+        request('scores-' + item.dataset.category, { date: e.detail.date }, function (json) {
+          chart.set(json);
+          chart.update();
+        });
+      });
+
+      // 初期データをリクエスト
+      request('scores-' + item.dataset.category, null, function (json) {
+        chart.set(json);
+        chart.update();
+      });
+    });
+  })();
+})();
+</script>
+</body>
+</html>

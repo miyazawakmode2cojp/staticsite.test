@@ -1,0 +1,94 @@
+@charset "utf-8";
+
+#live-vehicles-list {
+  margin-bottom: 5px;
+  padding-top: 25px;
+}
+#live-vehicles-list th:nth-child(1),  #live-vehicles-list td:nth-child(1)  { width: 29%; }
+#live-vehicles-list th:nth-child(2),  #live-vehicles-list td:nth-child(2)  { width:  5%; }
+#live-vehicles-list th:nth-child(3),  #live-vehicles-list td:nth-child(3)  { width:  5%; }
+#live-vehicles-list th:nth-child(4),  #live-vehicles-list td:nth-child(4)  { width:  5%; }
+#live-vehicles-list th:nth-child(5),  #live-vehicles-list td:nth-child(5)  { width:  5%; }
+#live-vehicles-list th:nth-child(6),  #live-vehicles-list td:nth-child(6)  { width:  7%; }
+#live-vehicles-list th:nth-child(7),  #live-vehicles-list td:nth-child(7)  { width:  5%; }
+#live-vehicles-list th:nth-child(8),  #live-vehicles-list td:nth-child(8)  { width:  5%; }
+#live-vehicles-list th:nth-child(9),  #live-vehicles-list td:nth-child(9)  { width:  5%; }
+#live-vehicles-list th:nth-child(10), #live-vehicles-list td:nth-child(10) { width:  5%; }
+#live-vehicles-list th:nth-child(11), #live-vehicles-list td:nth-child(11) { width:  5%; }
+#live-vehicles-list th:nth-child(12), #live-vehicles-list td:nth-child(12) { width:  7%; }
+#live-vehicles-list th:nth-child(13), #live-vehicles-list td:nth-child(13) { width:  5%; }
+#live-vehicles-list th:nth-child(14), #live-vehicles-list td:nth-child(14) { width:  7%; }
+#live-vehicles-list tbody tr.fault td {
+  background-color: #ffd8d6;
+}
+#live-vehicles-list tbody tr.fault .state {
+  color: #ffffff;
+  background-color: #ff3b30;
+  border-color: #ff3b30;
+}
+#live-vehicles-list tbody tr.out .state {
+  background-color: #ededf0;
+  border-color: #ededf0;
+}
+#live-vehicles-list tbody td {
+  vertical-align: middle;
+}
+#live-vehicles-list tbody td:nth-child(1) {
+  text-align: left;
+  padding: 20px 20px 10px 20px;
+}
+#live-vehicles-list tbody .state {
+  font-size: 13px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 22px;
+  background-color: #ffffff;
+  border: 1px solid #d6d6d6;
+  padding: 0 22px;
+  min-width: 70px;
+  height: 22px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+#live-vehicles-list tbody .number {
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 22px;
+  color: #8e8e93;
+  min-width: 70px;
+  height: 22px;
+  padding-right: 10px;
+  padding-left: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+#live-vehicles-list tbody .route {
+  font-size: 13px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 23px;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 11px;
+  padding: 0 22px;
+  min-width: 70px;
+  height: 22px;
+  overflow: hidden;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+#live-vehicles-list tbody .destination {
+  vertical-align: middle;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+@media (hover) {
+  #live-vehicles-list tbody tr.fault:hover td {
+    background-color: #ffb8b6;
+  }
+}

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SB Drive</title>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/bootstrap.min.js"></script>
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+<link href="set/css/common/bootstrap-customize.css" rel="stylesheet">
+
+<!-- import -->
+<script src="lib/js/moment-with-locales.min.js"></script>
+<script src="lib/js/bootstrap-datetimepicker.min.js"></script>
+<script src="lib/js/datatables.min.js"></script>
+<link href="lib/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<link href="lib/css/bootstrap-datatables.min.css" rel="stylesheet">
+<link href="set/css/common/style.css" rel="stylesheet">
+<link href="set/css/alerts/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <nav id="sidebar">
+    <ul>
+      <li class="icon-hamburger"><a onClick="Sidebar.toggle()"></a></li>
+      <li class="icon-dashboard active"><a href="#">ダッシュボード</a></li>
+      <li class="icon-live-map"><a href="#">車両位置情報マップ</a></li>
+      <li class="icon-schedule"><a href="#">運行スケジュール</a></li>
+      <li class="icon-report"><a href="#">レポート</a></li>
+      <li class="icon-setting"><a href="#">設定</a></li>
+    </ul>
+  </nav>
+  <header id="header">
+    <div class="logo">SB Drive</div>
+    <div class="icon-notification"><a href="#"><span class="badge">3</span></a></div>
+    <div class="icon-user"><img src="set/img/common/icon-user-default.png" /></div>
+  </header>
+  <nav id="navbar">
+    <a href="#" class="back"></a>
+    <h1>アラートリスト</h1>
+  </nav>
+  <main>
+    <!-- alerts-filter -->
+    <section id="alerts-filter" class="container-fluid">
+      <form>
+        <fieldset>
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="キーワード検索" />
+                <div class="input-group-btn">
+                  <button type="submit" class="btn btn-default btn-gray"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-8">
+              <button type="button" class="btn btn-default pull-right">新規チケットを作成する</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label class="control-label">ステータス :</label>
+                <label class="checkbox-inline"><input type="checkbox" checked /> 未対応</label>
+                <label class="checkbox-inline"><input type="checkbox" /> 対応済み</label>
+              </div>
+              <div class="datetimepicker-group">
+                <label class="control-label">発生日</label>
+                <div class="form-group">
+                  <div class="datetimepicker">
+                    <div class="input-group">
+                      <input type="text" class="form-control" />
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group"><span class="glyphicon glyphicon-minus"></span></div>
+                <div class="form-group">
+                  <div class="datetimepicker">
+                    <div class="input-group">
+                      <input type="text" class="form-control" />
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+
+    <!-- alerts-list -->
+    <section id="alerts-list" class="container-fluid">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>チケット番号</th>
+            <th>カテゴリ</th>
+            <th>車両番号</th>
+            <th>重要度</th>
+            <th>ステータス</th>
+            <th>アラート内容</th>
+            <th>発生日時</th>
+            <th>更新日</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onClick="AlertsList.select(event)">
+            <td>0001</td>
+            <td>車内異常</td>
+            <td>B-03</td>
+            <td class="high">高</td><!-- .high=高 -->
+            <td>未対応</td>
+            <td>走行中の立ち上がり</td>
+            <td>2017/08/31 18:35:59</td>
+            <td>-</td>
+          </tr>
+          <tr onClick="AlertsList.select(event)"><td>0002</td><td>通信設備</td><td>B-04</td><td>中</td><td>未対応</td><td>通信接続エラー</td><td>2017/08/31 13:32:17</td><td>-</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0003</td><td>通信設備</td><td>B-01</td><td>中</td><td>未対応</td><td>通信モジュールエラー</td><td>2017/08/30 16:05:17</td><td>2017/08/30</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0004</td><td>車内異常</td><td>B-02</td><td class="high">高</td><td>未対応</td><td>乗客の体調不良</td><td>2017/08/29 17:28:41</td><td>2017/08/29</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0005</td><td>車内異常</td><td>B-01</td><td>中</td><td>未対応</td><td>通信モジュールエラー</td><td>2017/08/29 09:26:27</td><td>2017/08/30</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0006</td><td>道路状況</td><td>B-06</td><td>低</td><td>未対応</td><td>落下物</td><td>2017/08/25 08:45:31</td><td>2017/08/25</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0007</td><td>車両設備</td><td>B-03</td><td class="high">高</td><td>未対応</td><td>車内カメラ破損</td><td>2017/08/25 15:47:21</td><td>2017/08/26</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0008</td><td>その他</td><td>B-01</td><td>低</td><td>未対応</td><td>燃料減少</td><td>2017/08/23 21:24:56</td><td>2017/08/23</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0009</td><td>その他</td><td>B-04</td><td>低</td><td>未対応</td><td>冷却水温の上昇</td><td>2017/08/23 10:25:24</td><td>2017/08/23</td></tr>
+          <tr onClick="AlertsList.select(event)"><td>0010</td><td>通信設備</td><td>B-05</td><td>中</td><td>未対応</td><td>通信接続エラー</td><td>2017/08/19 20:12:56</td><td>2017/08/20</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <aside id="drawer">
+    <!-- alerts-editor -->
+    <section id="alerts-editor" class="container-fluid">
+      <header>
+        <h2>0003 通信モジュールエラー</h2>
+        <a onClick="Drawer.hide()" class="close"></a>
+      </header>
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group map">
+            <div class="col-xs-12"><img src="set/img/_sample/alerts-editor-map.png" width="100%" /></div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">詳細</label>
+            <div class="col-xs-9">
+              <textarea class="form-control" rows="6">2017年8月29日 (火)
+09:26:27から11:06:21 エラー発生
+
+■エラーコード
+　ERR0032
+
+■対応方法
+　・車両のセンサーに以上がないか確認してください
+　・◯◯◯◯を確認してください
+　・上記で解決しない場合はSBドライブに連絡してください</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">発生日時</label>
+            <div class="col-xs-9">
+              <p class="form-control-static">2017年8月29日 (火) 09:26:27</p>
+            </div>
+          </div>
+          <div class="form-group has-warning"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">車両</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" placeholder="車両名" />
+              <p class="alert alert-message">車両名を入力してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 車両名を入力してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 車両名を入力してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">ステータス</label>
+            <div class="col-xs-9">
+              <select class="form-control">
+                <option>未対応</option>
+                <option>対応済み</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group has-error"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <label class="col-xs-3 control-label">担当者</label>
+            <div class="col-xs-9">
+              <select class="form-control">
+                <option>-</option>
+                <option>田中 太郎</option>
+              </select>
+              <p class="alert alert-message">担当者を選択してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 担当者を選択してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 担当者を選択してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3 control-label">更新日時</label>
+            <div class="col-xs-9">
+              <p class="form-control-static">2017年8月30日</p>
+            </div>
+          </div>
+          <div class="form-group has-error"><!-- .has-message=メッセージ, .has-warning=警告, .has-error=エラー -->
+            <div class="col-xs-12">
+              <p class="alert alert-message">通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+              <p class="alert alert-error"><span class="glyphicon glyphicon-alert"></span> 通信に失敗しました。時間を置いて再度実行してください。</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6">
+              <button type="submit" class="btn btn-primary btn-lg pull-right">更新</button>
+            </div>
+            <div class="col-xs-6">
+              <button onClick="Drawer.hide()" type="button" class="btn btn-default btn-gray btn-lg">キャンセル</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </aside>
+</div>
+<script>
+var Sidebar = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-sidebar');
+  }
+};
+
+var Drawer = {
+  toggle: function () {
+    document.querySelector('#app').classList.toggle('with-drawer');
+  },
+  show: function () {
+    document.querySelector('#app').classList.add('with-drawer');
+  },
+  hide: function () {
+    document.querySelector('#app').classList.remove('with-drawer');
+  }
+};
+
+var AlertsFilter = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://eonasdan.github.io/bootstrap-datetimepicker/Options/
+    $('#alerts-filter .datetimepicker .input-group').datetimepicker({
+      locale: 'ja', format: 'YYYY/MM/DD'
+    });
+  });
+
+  return {};
+})();
+
+var AlertsList = (function () {
+  document.addEventListener('DOMContentLoaded', function (e) {
+    // https://datatables.net/reference/option/
+    $('#alerts-list table').DataTable({
+      dom: '<"top"i>t<"bottom"p><"clear">',
+      columnDefs: [{ targets: [1,4,5], orderable: false }],
+      language: {
+        info: '全 _TOTAL_ 件中 _START_-_END_ 件',
+        paginate: { previous: '前のページ', next: '次のページ' }
+      }
+    });
+
+    // ドロワーを閉じた際に選択状態を解除
+    (function () {
+      new MutationObserver(function (mutations) {
+        if (!mutations[0].target.classList.contains('with-drawer')) {
+          var current = document.querySelector('main tr.active');
+          if (current) {
+            current.classList.remove('active');
+          }
+        }
+      }).observe(document.querySelector('#app'), { attributes: true });
+    })();
+  });
+
+  return {
+    select: function (e) {
+      var current = document.querySelector('main tr.active');
+      if (current) {
+        current.classList.remove('active');
+      }
+
+      var item = e.target.parentNode;
+      if (item != current) {
+        item.classList.add('active');
+        Drawer.show();
+      }
+      else {
+        Drawer.hide();
+      }
+    }
+  };
+})();
+</script>
+</body>
+</html>
