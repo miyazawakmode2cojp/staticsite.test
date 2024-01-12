@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>【プレテスト】Tayoriフォーム動作確認ページ</title>
+</head>
+<body>
+<h1>【プレテスト】Tayoriフォーム動作確認ページ</h1>
+<script>(function(t,a,y,o,r,i){r=a.createElement(y),i=a.getElementsByTagName(y)[0];r.type='text/javascript';r.async=1;r.src='//tayori.com/form/b8a3e6b29504fb806ee66f65cd154f7b6dcaf1b3/tag.js';r.id='tayori-tag';i.parentNode.insertBefore(r,i)})(window,document,'script');</script>
+</body>
+</html>
