@@ -1,0 +1,169 @@
+@charset "UTF-8";
+#tayori-form select,#tayori-form input,#tayori-form button,#tayori-form textarea,#tayori-form button {font-family: arial, helvetica, clean, sans-serif}
+.tf-c-form-control-checkbox label::before,.tf-c-form-control-radio label::before{top:12px!important;left:2px;width:14px;height:14px;background:var(--tayori-theme_input_background_color)}
+.tf-c-form-control-checkbox input,.tf-c-form-control-radio input{margin:4px 0 0;padding:0;line-height:normal;position:absolute;cursor:pointer}
+.tf-c-form,.tf-c-form-sentence,.tf-c-form__label,.tf-p-faq{color:var(--tayori-theme_page_font_color)}
+.tf-c-form__label,.tf-c-form__label-sub{margin-bottom:.3em;font-weight:700;line-height:2;word-wrap:break-word;overflow-wrap:anywhere}
+.tf-c-form__label{display:block;margin-top:1em;font-size:16px}
+.tf-c-form__label__required,[data-form-control-has-error=true] .tf-c-form__label{color:red}
+.tf-c-form__label__required{display:inline-block;margin-left:.25em}
+.tf-c-form__label-sub{margin-top:2em;color:var(--tayori-theme_page_font_color);font-size:13px}
+.tf-c-form__control-label,[data-form-control-has-error=true] .tf-c-form-control-radio label,[data-form-control-has-error=true] .tf-c-form__label-sub{color:var(--tayori-theme_input_danger_color)}
+.tf-c-form__label-sub:first-of-type{margin-top:0}
+.tf-c-form-control,.tayori-input, .form-parts input[type="text"], .form-parts input[type="email"], .form-parts textarea{-webkit-appearance:none;-moz-appearance:none;appearance:none;display:block;width:100%;min-height:50px;margin:0;padding:.75em .85em;border:1px solid rgba(0,0,0,.15);border-radius:4px;outline:0;background-clip:border-box;background-color:transparent;background-color:var(--tayori-theme_input_background_color);color:var(--tayori-theme_input_font_color);font-size:16px;font-weight:400;line-height:1.5;-webkit-transition:border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out}
+.tf-c-form-control::-webkit-input-placeholder{color:rgba(0,0,0,.2)}
+.tf-c-form-control::-moz-placeholder{color:rgba(0,0,0,.2)}
+.tf-c-form-control:-ms-input-placeholder{color:rgba(0,0,0,.2)}
+.tf-c-form-control:-moz-placeholder{color:rgba(0,0,0,.2)}
+.tf-c-form-control:focus{border:none;outline:0;border:solid 1px var(--tayori-theme_input_focus_color)}
+.tf-c-form-control:disabled{opacity:.5}
+[data-form-control-has-error=true] .tf-c-form-control{border:2px solid var(--tayori-theme_input_danger_color);color:var(--tayori-theme_input_danger_color)}
+.tf-c-form-control-select{display:block;position:relative;cursor:pointer}
+.tf-c-form-control-radio label,.tf-c-form-control-select select{cursor:pointer}
+.tf-c-form-control-select select::-ms-expand{display:none}
+.tf-c-form-control-select:before{position:absolute;top:28px;right:10px;width:0;height:0;margin:-4px 0 0;border:5px solid transparent;border-top:5px solid var(--tayori-theme_input_font_color);content:"";pointer-events:none}
+.tf-c-form-control-checkbox,.tf-c-form-control-radio{display:block;position:relative;margin-top:2px;margin-bottom:2px;padding-top:6px;padding-bottom:6px;padding-left:26px;font-size:16px}
+.tf-c-form-control-radio input{display:none}
+.tf-c-form-control-radio input:disabled{cursor:not-allowed}
+.tf-c-form-control-radio input:disabled+label{cursor:not-allowed;opacity:.5}
+.tf-c-form-control-radio input:checked+label::before{-webkit-box-shadow:0 0 0 2px var(--tayori-theme_input_focus_color);box-shadow:0 0 0 2px var(--tayori-theme_input_focus_color);border:solid 3px var(--tayori-theme_input_background_color);background:var(--tayori-theme_input_focus_color);-webkit-animation:.3s form-bound;animation:.3s form-bound;opacity:1}
+.tf-c-form-control-radio label::before{display:inline-block;position:absolute;border-radius:100%;-webkit-box-shadow:0 0 0 2px var(--tayori-theme_page_font_color);box-shadow:0 0 0 2px var(--tayori-theme_page_font_color);content:""}
+[data-form-control-has-error=true] .tf-c-form-control-radio label::before{-webkit-box-shadow:0 0 0 2px var(--tayori-theme_input_danger_color);box-shadow:0 0 0 2px var(--tayori-theme_input_danger_color);opacity:1}
+.tf-c-form-control-checkbox--inline{display:inline-block;margin-right:2em}
+.tf-c-form-control-checkbox input{display:none}
+.tf-c-form-control-checkbox input:disabled{cursor:not-allowed}
+.tf-c-form-control-checkbox input:disabled+label{cursor:not-allowed;opacity:.5}
+.tf-c-form-control-checkbox input:checked+label::before{-webkit-box-shadow:0 0 0 2px var(--tayori-theme_input_focus_color);box-shadow:0 0 0 2px var(--tayori-theme_input_focus_color);background:var(--tayori-theme_input_focus_color);-webkit-animation:.3s form-bound;animation:.3s form-bound;opacity:1}
+.tf-c-form-control-checkbox input:checked+label::after{-webkit-transform:scale(1,1);transform:scale(1,1)}
+.tf-c-form-control-checkbox input:checked+label svg{opacity:1}
+.tf-c-form-control-checkbox label{cursor:pointer}
+[data-form-control-has-error=true] .tf-c-form-control-checkbox label{color:var(--tayori-theme_input_danger_color)}
+.tf-c-form-control-checkbox label::before{display:inline-block;position:absolute;border-radius:2px;-webkit-box-shadow:0 0 0 2px var(--tayori-theme_page_font_color);box-shadow:0 0 0 2px var(--tayori-theme_page_font_color);content:""}
+[data-form-control-has-error=true] .tf-c-form-control-checkbox label::before{-webkit-box-shadow:0 0 0 2px var(--tayori-theme_input_danger_color);box-shadow:0 0 0 2px var(--tayori-theme_input_danger_color);opacity:1}
+.tf-c-form-control-checkbox label svg{fill:var(--tayori-theme_input_background_color);position:absolute;top:10px;left:1px;width:16px;height:16px;opacity:0}
+.tf-c-form-control-tel-row,.tf-c-form-zip-code{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}
+.tf-c-form-control-tel-row--center,.tf-u-grid-row--center{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}
+.tf-c-form-control-tel-row__col{margin-left:5px}
+.tf-c-form-control-tel-row__col--input{max-width:120px}
+.tf-c-form-control-tel-row__col:first-child{margin-left:0}
+.tf-c-form-term__foot .tf-c-form-control-checkbox{display:inline-block}
+.tf-c-form__label{margin-top:2em;font-size:14px}
+.tf-c-form__control-label,.tf-c-form__label-sub{font-size:12px}
+.tf-c-form-control-tel-row__col{margin-left:10px}
+
+.tayori-input,.form-parts input[type="text"],.form-parts input[type="email"],.form-parts textarea {
+    background: white;
+    min-height: 20px;
+    width: calc( 100% - 1.5em);
+}
+
+.tayori-input:focus,.form-parts input:focus {
+    border: none;
+    outline: 0;
+    border: solid 1px blue}
+
+#tayori-form .validation-error input,#tayori-form .validation-error textarea,#tayori-form .validation-error .checkbox {
+    border: none;
+    outline: 0;
+    border: solid 1px red;
+    background-color: rgb(255, 230, 230)
+}
+
+#tayori-form .validation-error .checkbox {
+    padding: 0.6em 0;
+}
+
+.tf-c-form__label .en {
+    font-weight: lighter;
+}
+
+.required {
+    color: red
+    display: inline-block;
+    margin-left: .25em;
+}
+
+#tayori-form textarea:focus {
+    border: solid 1px blue
+}
+
+.form-parts ul li {
+    font-weight: bolder;
+    list-style-type: none;
+    margin-left: -3em;
+}
+
+.form-parts li li {
+    font-weight: normal;
+    list-style-type: disc;
+    margin-left: -1.5em;
+}
+
+.form-parts div ul ul {
+    margin-bottom: 1em;
+}
+
+.form-parts .contact {
+    list-style-type: none;
+    margin-left: -2.3em;
+}
+
+#tayori-form hr {
+    margin: 1em 3em;
+}
+
+#tayori-form label hr {
+    margin: 0.4em 1em 0.4em 0;
+}
+
+#tayori-form .terms {
+    background-color: white;
+    border: 1px #ccc solid;
+    font-size: 85%;
+    margin: 1em 0;
+    padding: 0 1.5em;
+}
+
+#tayori-form .checkbox {
+    display: flex
+}
+
+#tayori-form .checkbox input {
+    margin: 1.5em 1.5em 3em 1em;
+}
+
+#tayori-form .checkbox label {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#tayori-form .error-message {
+    color: red;
+    font-size: 0.7em;
+    font-weight: 600
+    padding-top: 0.5em;
+}
+
+#tayori-form .error-message::after {
+    content: "／Please input the required item.";
+}
+
+#tayori-form .description {
+    font-size: 0.7em;
+    opacity: 0.8
+    padding-top: 0.2em;
+}
+
+#tayori-form .submit {
+    background: black;
+    border-radius: 2em;
+    box-sizing: border-box;
+    color: #FFF;
+    display: block;
+    font-size: 1em;
+    font-weight: bolder;
+    margin: 0.5em auto;
+    padding: 0.5em;
+    text-align: center;
+    width: 50%;
+}

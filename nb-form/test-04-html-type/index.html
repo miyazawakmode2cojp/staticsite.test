@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>【テスト環境04】Tayoriフォーム動作確認ページ（非iframe）</title>
+<style>
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+    font-size:100%;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline
+}
+.container {
+  width:600px;
+  margin: 0 auto;
+}
+@media screen and (max-width: 640px) {
+  .container {
+    width:calc(100% - 2em);
+    margin: 0 auto;
+  }
+}
+</style>
+<link rel='stylesheet' href='./css/form.css' type='text/css' media='all' />
+</head>
+<body>
+<h1>【テスト環境04】Tayoriフォーム動作確認ページ（非iframe）</h1>
+<section class="container">
+<p>↓以下div要素がTayori標準HTML</p>
+<div id="tayori-form">
+    <form action="https://tayori.com/form_html/6157002f6018666f460e775e7f1fb959fffb94c9/" method="post" enctype="multipart/form-data">
+        <div class="parts-error-message"></div>
+        <div class="form-parts" id="4405dd5cd03573be6e60da33236ff40c3a74c88c">
+            <div class="tf-c-form__label">
+                お名前<span class="en">／Your Name</span><span class="tf-c-form__label__required">*</span>
+            </div>
+            <div>
+                <input type="text" class="tayori-input" id="9300cdd474210b787743045ad2f41865dd6ef785" name="form_answers[parts][4405dd5cd03573be6e60da33236ff40c3a74c88c][9300cdd474210b787743045ad2f41865dd6ef785]" placeholder="お名前を入力してください／Please input your NAME here."
+                />
+                <div class="error-message"></div>
+            </div>
+            <div class="description">（必須／required）</div>
+        </div>
+        <div class="form-parts" id="071717eb1de70db31c226c68f0504c6c88686de2">
+            <div class="tf-c-form__label">
+                お名前カナ<span class="en">／Your Name in Kana letters</span>
+            </div>
+            <div>
+                <input type="text" id="bcd7e46322e1382a34942576f721bc24da4cee91" name="form_answers[parts][071717eb1de70db31c226c68f0504c6c88686de2][bcd7e46322e1382a34942576f721bc24da4cee91]" placeholder="お名前カナを入力してください／Please input your NAME in KANA here." />
+                <div class="error-message"></div>
+            </div>
+        </div>
+        <div class="form-parts" id="5e3a990c5da9fba48865c566797109ade402b815">
+            <div class="tf-c-form__label">
+                メールアドレス<span class="en">／Your E-mail</span><span class="tf-c-form__label__required">*</span>
+            </div>
+            <div>
+                <input type="email" id="97080bb250aa398770d99d3c94e433603e1ca90a" name="form_answers[parts][5e3a990c5da9fba48865c566797109ade402b815][97080bb250aa398770d99d3c94e433603e1ca90a]" placeholder="メールアドレスを入力してください／Please input your email address here." />
+                <div class="error-message"></div>
+            </div>
+            <div class="description">（必須／required）</div>
+            <div class="tf-c-form__label">
+                メールアドレス（確認用）<span class="en">／Your E-mail (confirmation)</span><span class="tf-c-form__label__required">*</span>
+            </div>
+            <div>
+                <input type="email" id="97080bb250aa398770d99d3c94e433603e1ca90a-confirm" name="form_answers[parts][5e3a990c5da9fba48865c566797109ade402b815][97080bb250aa398770d99d3c94e433603e1ca90a-confirm]" placeholder="メールアドレスを入力してください／Please input your email address here."
+                />
+                <div class="error-message"></div>
+            </div>
+            <div class="description">（必須／required）</div>
+        </div>
+        <div class="form-parts" id="8d07cf52a1f9f62e15d4ee9734af56087a2dc760">
+            <div class="tf-c-form__label">
+                お問い合わせ内容<span class="en">／Your Inquiry</span><span class="tf-c-form__label__required">*</span>
+            </div>
+            <div>
+                <textarea id="c1662473ed36fc124614b7c042129b0f88f59b2d" name="form_answers[parts][8d07cf52a1f9f62e15d4ee9734af56087a2dc760][c1662473ed36fc124614b7c042129b0f88f59b2d]" placeholder="お問い合せ内容を入力してください／Please input your inquiry here."></textarea>
+                <div class="error-message"></div>
+            </div>
+            <div class="description">（必須／required）</div>
+        </div>
+        <div class="form-parts" id="94030ce610c2c7742b10d29184fa47ae9eeda861">
+            <div class="tf-c-form__label">
+                個人情報の取扱いについて<span class="en">／Our &laquo;Handling of Personal Information&raquo;</span>
+            </div>
+            <div class="terms">
+                <ul>
+                    <li>個人情報の利用目的
+                        <ul>
+                            <li>このお問い合わせフォームでご提供いただく個人情報は、適切にお問い合わせに対応して管理するため、及び弊社が提供するサービスに関する情報を電子メール等でご提供するために利用します。</li>
+                        </ul>
+                    </li>
+                    <li>個人情報の第三者提供について
+                        <ul>
+                            <li>当個人情報を第三者に提供することはありません。</li>
+                        </ul>
+                    </li>
+                    <li>個人情報の委託について
+                        <ul>
+                            <li>当個人情報の取扱いを委託することがあります。委託にあたっては、委託先における個人情報の安全管理が図られるよう、委託先に対する必要かつ適切な監督を行います。</li>
+                        </ul>
+                    </li>
+                    <li>取得した個人情報の開示等及びお問合せ窓口
+                        <ul>
+                            <li>当個人情報の利用目的の通知、開示、内容の訂正・追加または削除、利用の停止・消去および第三者への提供の停止（「開示等」といいます。）を受け付けております。開示等の求めは、以下の「個人情報苦情及び相談窓口」で受け付けます。</li>
+                        </ul>
+                    </li>
+                    <li>その他
+                        <ul>
+                            <li>任意項目の情報のご提供がない場合、最適なご回答ができない場合があります。</li>
+                            <li>当ホームページではご利用状況の統計調査のためクッキー等を用いておりますが、これによる個人情報の取得、利用は行っておりません。</li>
+                        </ul>
+                    </li>
+                    <li>個人情報保護管理者
+                        <ul>
+                            <li class="contact">MONET Technologies株式会社　事業統括部長</li>
+                        </ul>
+                    </li>
+                    <li>個人情報苦情及び相談窓口
+                        <ul>
+                            <li class="contact">MONET Technologies株式会社　個人情報問い合わせ窓口責任者　事業統括部長</li>
+                            <li class="contact">メール:privacy_inquiry@monet-technologies.com</li>
+                        </ul>
+                    </li>
+                </ul>
+                <hr>
+                <ul>
+                    <li>About our &laquo;Handling of Personal Information&raquo;
+                        <ul>
+                            <li class="contact">Please refer to our &laquo;Handling of Personal Information&raquo; stated above in Japanese.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="tf-c-form__label">
+                個人情報の取扱いへの同意<span class="en">／Consent to our Handling of Personal Information</span>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" id="7f061534062948cd8d391bd2795ae96d2a5fda75" name="form_answers[parts][94030ce610c2c7742b10d29184fa47ae9eeda861][7f061534062948cd8d391bd2795ae96d2a5fda75]" value="1" /><label for="7f061534062948cd8d391bd2795ae96d2a5fda75">上記【個人情報の取り扱いについて】を確認の上、同意する。<hr>I understand and hereby consent to the &laquo;Handling of Personal Information&raquo; as described above.</label>
+            </div>
+            <div class="error-message"></div>
+            <div class="description">（必須／required）</div>
+        </div>
+        <div>
+            <button class="submit" type="button">送信／Submit</button>
+        </div>
+    </form>
+    <script>
+        (function(t, a, y, o, r, i) {
+            r = a.createElement(y), i = a.getElementsByTagName(y)[0];
+            r.type = 'text/javascript';
+            r.async = 1;
+            r.src = 'https://tayori.com/form_html/6157002f6018666f460e775e7f1fb959fffb94c9//tag.js';
+            r.id = 'tayori-tag';
+            i.parentNode.insertBefore(r, i)
+        })(window, document, 'script');
+
+    </script>
+</div>
+</section>
+</body>
+</html>
